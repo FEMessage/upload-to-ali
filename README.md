@@ -10,6 +10,11 @@
 * 可拓展自定义 loading 和默认上传样式
 * 可限制上传文件大小和上传文件数量
 
+## documentation
+
+* [full api doc](https://femessage.github.io/upload-to-ali/)
+* [online demo](https://femessage.github.io/upload-to-ali/storybook/)
+
 ## install
 
 ```sh
