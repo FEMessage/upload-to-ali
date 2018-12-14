@@ -49,36 +49,36 @@
        * @link https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7
        */
       accessKeyId: {
-        type: String
-        //default: process.env.OSS_KEY
+        type: String,
+        default: process.env.OSS_KEY
       },
       /**
        * 阿里云控制台创建的access secret
        */
       accessKeySecret: {
-        type: String
-        //default: process.env.OSS_SECRET
+        type: String,
+        default: process.env.OSS_SECRET
       },
       /**
        * 存储空间的名字
        */
       bucket: {
-        type: String
-        //default: process.env.OSS_BUCKET
+        type: String,
+        default: process.env.OSS_BUCKET
       },
       /**
        * 根据 存储空间 所在的存储区域, 相应的上传域名
        */
       region: {
-        type: String
-        //default: process.env.OSS_REGION
+        type: String,
+        default: process.env.OSS_REGION
       },
       /**
        * 目录名, 一定要/结尾
        */
       dir: {
-        type: String
-        //default: process.env.OSS_DIR || ''
+        type: String,
+        default: process.env.OSS_DIR || ''
       },
       /**
        * 自定义域名, 该字段有值时, 返回的文件url拼接规则为: customDomain + / + dir + filename
@@ -86,8 +86,8 @@
        * 域名不需要/结尾
        */
       customDomain: {
-        type: String
-        //default: process.env.OSS_CUSTOM_DOMAIN
+        type: String,
+        default: process.env.OSS_CUSTOM_DOMAIN
       },
       /**
        * 图片地址, 支持v-model
