@@ -11,8 +11,8 @@ export default {
   data() {
     return {
       url: [
-        '//moby-oss-dev.oss-cn-beijing.aliyuncs.com/undefinedWechatIMG3-1543636527415.jpeg',
-        '//moby-oss-dev.oss-cn-beijing.aliyuncs.com/undefinedWechatIMG14-1543644359792.jpeg'
+        '//deepexi-moby.oss-cn-shenzhen.aliyuncs.com/undefinedtooopen_sy_231281461769-1544864776323.jpg',
+        '//deepexi-moby.oss-cn-shenzhen.aliyuncs.com/undefined头像-1544260671963.jpg'
       ]
     }
   }
