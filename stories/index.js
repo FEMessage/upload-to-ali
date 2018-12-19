@@ -7,6 +7,7 @@ import SlotExample from './slot-example.vue'
 import ImgPreview from './img-preview.vue'
 import OnClick from './on-click.vue'
 import NoModel from './no-model.vue'
+import SlotFile from './slot-file.vue'
 
 storiesOf('upload-to-ali', module)
   .add('basic usage', () => ({
@@ -40,4 +41,8 @@ storiesOf('upload-to-ali', module)
   .add('no-model', () => ({
     components: {NoModel},
     template: `<no-model/>`
+  }))
+  .add('slot-file', () => ({
+    components: {SlotFile},
+    template: `<slot-file/>`
   }))
