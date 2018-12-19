@@ -9,10 +9,10 @@
     </template>
 
     <!--上传区域-->
-    <div class="upload-area" :class="{disabled: disabled}" @click="selectFiles">
+    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles">
       <!--@slot 自定义上传区域-->
       <slot>
-        <div class="upload-box" v-if="canUpload">
+        <div class="upload-box">
           <!--@slot 自定义loading内容 -->
           <slot name="spinner" v-if="uploading">
             <div class="upload-loading">
@@ -252,6 +252,10 @@ export default {
       this.$emit('delete', url, index)
     },
     selectFiles() {
+      if (!this.canUpload) {
+        alert('已达到上传的最大数量')
+        return
+      }
       this.$refs.uploadInput.click()
     },
     async upload(e) {
