@@ -38,6 +38,7 @@ const imageCompressor = new ImageCompressor()
 
 let doubleSlash = '//'
 let oneKB = 1024
+const image = 'image'
 
 export default {
   name: 'UploadToAli',
@@ -280,7 +281,8 @@ export default {
          */
         this.$emit('loading', name)
 
-        file = await imageCompressor.compress(file, this.compressOptions)
+        if (file.type.indexOf(image) > -1)
+          file = await imageCompressor.compress(file, this.compressOptions)
 
         //文件名-时间戳 作为上传文件key
         let pos = name.lastIndexOf('.')
