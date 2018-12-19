@@ -4,6 +4,17 @@
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
 
+## Table of Contents
+
+1.  **[feature](#feature)**
+2.  **[documentation](#documentation)**
+3.  **[install](#install)**
+4.  **[config](#config)**
+5.  **[dotenv](#dotenv)**
+6.  **[example](#example)**
+7.  **[api](#api)**
+8.  **[event](#event)**
+
 ## feature
 
 * 纯前端实现，不需要后台配合
@@ -12,10 +23,14 @@
 * 可拓展自定义 loading 和默认上传样式
 * 可限制上传文件大小和上传文件数量
 
+**[⬆ Back to Top](#table-of-contents)**
+
 ## documentation
 
 * [full api doc](https://femessage.github.io/upload-to-ali/)
 * [online demo](https://femessage.github.io/upload-to-ali/storybook/)
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## install
 
@@ -23,6 +38,8 @@
 # 需要同时安装预览组件
 yarn add @femessage/img-preview @femessage/upload-to-ali
 ```
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## config
 
@@ -37,6 +54,8 @@ yarn add @femessage/img-preview @femessage/upload-to-ali
 `region` - `根据 存储空间 所在的存储区域, 相应的上传域名`
 
 [使用前请务必设置跨域 及 ACL](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## dotenv
 
@@ -65,6 +84,8 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 
 `dotenv` 文档参考 https://www.npmjs.com/package/dotenv
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## example
 
@@ -262,6 +283,8 @@ export default {
 </script>
 ```
 
+**[⬆ Back to Top](#table-of-contents)**
+
 ## api
 
 | 参数            | 说明                                                                                                                                                                                             | 类型            | 默认值                                      |
@@ -290,6 +313,8 @@ export default {
 
 * selectFiles 手动触发选择文件事件
 
+**[⬆ Back to Top](#table-of-contents)**
+
 ## event
 
 `@loaded` - 上传完成后触发的事件
@@ -310,3 +335,5 @@ multiple模式返回（全部的文件列表[Array]，上传文件列表[Array]�
 `@fail` - 上传失败事件
 
 `@cancel` - 上传操作被取消事件
+
+**[⬆ Back to Top](#table-of-contents)**
