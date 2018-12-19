@@ -1,10 +1,12 @@
 <template>
   <div class="upload-to-oss">
     <!--图片的展示区域-->
-    <div v-if="!$slots.default" v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
-      <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
-      <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
-    </div>
+    <template v-if="!$slots.default">
+      <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
+        <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
+        <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
+      </div>
+    </template>
 
     <!--上传区域-->
     <div class="upload-area" :class="{disabled: disabled}" @click="selectFiles">
