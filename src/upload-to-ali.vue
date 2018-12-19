@@ -1,27 +1,30 @@
 <template>
   <div class="upload-to-oss">
     <!--图片的展示区域-->
-    <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
+    <div v-if="!$slots.default" v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
       <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
       <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
     </div>
 
     <!--上传区域-->
-    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles">
-      <div class="upload-box">
-        <!--@slot 自定义loading内容 -->
-        <slot name="spinner" v-if="uploading">
-          <div class="upload-loading">
-            <svg class="circular" viewBox="25 25 50 50">
-              <circle class="path" cx="50" cy="50" r="20" fill="none"/>
-            </svg>
-          </div>
-        </slot>
-        <!--@slot 自定义placeholder内容 -->
-        <slot name="placeholder" v-else>
-          <div class="upload-placeholder"></div>
-        </slot>
-      </div>
+    <div class="upload-area" :class="{disabled: disabled}" @click="selectFiles">
+      <!--@slot 自定义上传区域-->
+      <slot>
+        <div class="upload-box" v-if="canUpload">
+          <!--@slot 自定义loading内容 -->
+          <slot name="spinner" v-if="uploading">
+            <div class="upload-loading">
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"/>
+              </svg>
+            </div>
+          </slot>
+          <!--@slot 自定义placeholder内容 -->
+          <slot name="placeholder" v-else>
+            <div class="upload-placeholder"></div>
+          </slot>
+        </div>
+      </slot>
     </div>
     <input type="file" ref="uploadInput" class="upload-input" :disabled="uploading" @change="upload" hidden :accept="accept"
            :multiple="multiple">
