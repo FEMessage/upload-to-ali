@@ -132,26 +132,9 @@ export default {
       default: 0
     },
     /**
-     * 上传文件类型
-     * 默认 img
-     * 可选 file
-     */
-    type: {
-      type: String,
-      default: 'img'
-    },
-    /**
      * 是否禁用。若为true，则不能上传
      */
     disabled: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * 是否显示删除图标。
-     * 默认为false，不展示
-     */
-    canDelete: {
       type: Boolean,
       default: false
     },
