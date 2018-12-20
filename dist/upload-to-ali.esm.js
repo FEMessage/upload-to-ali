@@ -20,15 +20,16 @@ var imageCompressor = new ImageCompressor();
 
 var doubleSlash = '//';
 var oneKB = 1024;
+var image = 'image';
 
 var Component = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss" }, [_vm._l(_vm.uploadList, function (imgUrl, index) {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss" }, [!_vm.$slots.default ? _vm._l(_vm.uploadList, function (imgUrl, index) {
       return _c('div', { key: index, staticClass: "upload-item", class: { 'is-preview': _vm.preview } }, [!_vm.disabled ? _c('i', { staticClass: "upload-del-icon", on: { "click": function click($event) {
             $event.stopPropagation();$event.preventDefault();_vm.onDelete(imgUrl, index);
           } } }) : _vm._e(), _vm._v(" "), _c('img', { staticClass: "upload-img", attrs: { "src": imgUrl }, on: { "click": function click($event) {
             _vm.onClick(imgUrl);
           } } })]);
-    }), _vm._v(" "), _vm.canUpload ? _c('div', { staticClass: "upload-area", class: { disabled: _vm.disabled }, on: { "click": _vm.selectFiles } }, [_c('div', { staticClass: "upload-box" }, [_vm.uploading ? _vm._t("spinner", [_c('div', { staticClass: "upload-loading" }, [_c('svg', { staticClass: "circular", attrs: { "viewBox": "25 25 50 50" } }, [_c('circle', { staticClass: "path", attrs: { "cx": "50", "cy": "50", "r": "20", "fill": "none" } })])])]) : _vm._t("placeholder", [_c('div', { staticClass: "upload-placeholder" })])], 2)]) : _vm._e(), _vm._v(" "), _c('input', { ref: "uploadInput", staticClass: "upload-input", attrs: { "type": "file", "disabled": _vm.uploading, "hidden": "", "accept": _vm.accept, "multiple": _vm.multiple }, on: { "change": _vm.upload } }), _vm._v(" "), _vm.preview ? _c('img-preview', { model: { value: _vm.previewUrl, callback: function callback($$v) {
+    }) : _vm._e(), _vm._v(" "), _vm.canUpload ? _c('div', { staticClass: "upload-area", class: { disabled: _vm.disabled }, on: { "click": _vm.selectFiles } }, [_vm._t("default", [_c('div', { staticClass: "upload-box" }, [_vm.uploading ? _vm._t("spinner", [_c('div', { staticClass: "upload-loading" }, [_c('svg', { staticClass: "circular", attrs: { "viewBox": "25 25 50 50" } }, [_c('circle', { staticClass: "path", attrs: { "cx": "50", "cy": "50", "r": "20", "fill": "none" } })])])]) : _vm._t("placeholder", [_c('div', { staticClass: "upload-placeholder" })])], 2)])], 2) : _vm._e(), _vm._v(" "), _c('input', { ref: "uploadInput", staticClass: "upload-input", attrs: { "type": "file", "disabled": _vm.uploading, "hidden": "", "accept": _vm.accept, "multiple": _vm.multiple }, on: { "change": _vm.upload } }), _vm._v(" "), _vm.preview ? _c('img-preview', { model: { value: _vm.previewUrl, callback: function callback($$v) {
           _vm.previewUrl = $$v;
         }, expression: "previewUrl" } }) : _vm._e()], 2);
   }, staticRenderFns: [],
@@ -118,26 +119,9 @@ var Component = { render: function render() {
       default: 0
     },
     /**
-     * 上传文件类型
-     * 默认 img
-     * 可选 file
-     */
-    type: {
-      type: String,
-      default: 'img'
-    },
-    /**
      * 是否禁用。若为true，则不能上传
      */
     disabled: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * 是否显示删除图标。
-     * 默认为false，不展示
-     */
-    canDelete: {
       type: Boolean,
       default: false
     },
@@ -241,6 +225,10 @@ var Component = { render: function render() {
       this.$emit('delete', url, index);
     },
     selectFiles: function selectFiles() {
+      if (!this.canUpload) {
+        alert('已达到上传的最大数量');
+        return;
+      }
       this.$refs.uploadInput.click();
     },
     upload: function () {
@@ -295,7 +283,7 @@ var Component = { render: function render() {
 
               case 13:
                 if (!(i < files.length)) {
-                  _context.next = 33;
+                  _context.next = 34;
                   break;
                 }
 
@@ -304,7 +292,7 @@ var Component = { render: function render() {
                   break;
                 }
 
-                return _context.abrupt('break', 33);
+                return _context.abrupt('break', 34);
 
               case 16:
                 file = files[i];
@@ -318,12 +306,18 @@ var Component = { render: function render() {
 
                 this.$emit('loading', name);
 
-                _context.next = 22;
+                if (!(file.type.indexOf(image) > -1)) {
+                  _context.next = 24;
+                  break;
+                }
+
+                _context.next = 23;
                 return imageCompressor.compress(file, this.compressOptions);
 
-              case 22:
+              case 23:
                 file = _context.sent;
 
+              case 24:
 
                 //文件名-时间戳 作为上传文件key
                 pos = name.lastIndexOf('.');
@@ -335,7 +329,7 @@ var Component = { render: function render() {
 
                 key = name.substring(0, pos) + '-' + new Date().getTime() + suffix;
 
-                _context.next = 29;
+                _context.next = 30;
                 return this.client.multipartUpload(this.dir + key, file, this.uploadOptions).then(function (res) {
                   // 协议无关
                   var filename = doubleSlash;
@@ -373,16 +367,16 @@ var Component = { render: function render() {
                   }
                 });
 
-              case 29:
+              case 30:
 
                 this.newClient();
 
-              case 30:
+              case 31:
                 i++;
                 _context.next = 13;
                 break;
 
-              case 33:
+              case 34:
 
                 reset();
                 this.uploading = false;
@@ -390,13 +384,13 @@ var Component = { render: function render() {
                 // 没有一张上传成功的，不触发load事件
 
                 if (!(currentUploads.length < 1)) {
-                  _context.next = 37;
+                  _context.next = 38;
                   break;
                 }
 
                 return _context.abrupt('return');
 
-              case 37:
+              case 38:
 
                 /**
                  * 上传完成后触发的事件,返回url
@@ -410,7 +404,7 @@ var Component = { render: function render() {
                   this.$emit('loaded', currentUploads[0]);
                 }
 
-              case 38:
+              case 39:
               case 'end':
                 return _context.stop();
             }

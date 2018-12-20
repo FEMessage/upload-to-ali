@@ -1,27 +1,32 @@
 <template>
   <div class="upload-to-oss">
     <!--图片的展示区域-->
-    <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
-      <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
-      <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
-    </div>
+    <template v-if="!$slots.default">
+      <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
+        <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
+        <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
+      </div>
+    </template>
 
     <!--上传区域-->
     <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles">
-      <div class="upload-box">
-        <!--@slot 自定义loading内容 -->
-        <slot name="spinner" v-if="uploading">
-          <div class="upload-loading">
-            <svg class="circular" viewBox="25 25 50 50">
-              <circle class="path" cx="50" cy="50" r="20" fill="none"/>
-            </svg>
-          </div>
-        </slot>
-        <!--@slot 自定义placeholder内容 -->
-        <slot name="placeholder" v-else>
-          <div class="upload-placeholder"></div>
-        </slot>
-      </div>
+      <!--@slot 自定义上传区域-->
+      <slot>
+        <div class="upload-box">
+          <!--@slot 自定义loading内容 -->
+          <slot name="spinner" v-if="uploading">
+            <div class="upload-loading">
+              <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"/>
+              </svg>
+            </div>
+          </slot>
+          <!--@slot 自定义placeholder内容 -->
+          <slot name="placeholder" v-else>
+            <div class="upload-placeholder"></div>
+          </slot>
+        </div>
+      </slot>
     </div>
     <input type="file" ref="uploadInput" class="upload-input" :disabled="uploading" @change="upload" hidden :accept="accept"
            :multiple="multiple">
@@ -38,6 +43,7 @@ const imageCompressor = new ImageCompressor()
 
 let doubleSlash = '//'
 let oneKB = 1024
+const image = 'image'
 
 export default {
   name: 'UploadToAli',
@@ -126,26 +132,9 @@ export default {
       default: 0
     },
     /**
-     * 上传文件类型
-     * 默认 img
-     * 可选 file
-     */
-    type: {
-      type: String,
-      default: 'img'
-    },
-    /**
      * 是否禁用。若为true，则不能上传
      */
     disabled: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * 是否显示删除图标。
-     * 默认为false，不展示
-     */
-    canDelete: {
       type: Boolean,
       default: false
     },
@@ -246,6 +235,10 @@ export default {
       this.$emit('delete', url, index)
     },
     selectFiles() {
+      if (!this.canUpload) {
+        alert('已达到上传的最大数量')
+        return
+      }
       this.$refs.uploadInput.click()
     },
     async upload(e) {
@@ -280,7 +273,8 @@ export default {
          */
         this.$emit('loading', name)
 
-        file = await imageCompressor.compress(file, this.compressOptions)
+        if (file.type.indexOf(image) > -1)
+          file = await imageCompressor.compress(file, this.compressOptions)
 
         //文件名-时间戳 作为上传文件key
         let pos = name.lastIndexOf('.')

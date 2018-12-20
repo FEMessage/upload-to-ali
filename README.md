@@ -2,6 +2,19 @@
 
 对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除功能 ，让上传功能更加简单
 
+![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
+
+## Table of Contents
+
+1.  **[feature](#feature)**
+2.  **[documentation](#documentation)**
+3.  **[install](#install)**
+4.  **[config](#config)**
+5.  **[dotenv](#dotenv)**
+6.  **[example](#example)**
+7.  **[api](#api)**
+8.  **[event](#event)**
+
 ## feature
 
 * 纯前端实现，不需要后台配合
@@ -10,10 +23,14 @@
 * 可拓展自定义 loading 和默认上传样式
 * 可限制上传文件大小和上传文件数量
 
+**[⬆ Back to Top](#table-of-contents)**
+
 ## documentation
 
 * [full api doc](https://femessage.github.io/upload-to-ali/)
 * [online demo](https://femessage.github.io/upload-to-ali/storybook/)
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## install
 
@@ -21,6 +38,8 @@
 # 需要同时安装预览组件
 yarn add @femessage/img-preview @femessage/upload-to-ali
 ```
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## config
 
@@ -35,6 +54,8 @@ yarn add @femessage/img-preview @femessage/upload-to-ali
 `region` - `根据 存储空间 所在的存储区域, 相应的上传域名`
 
 [使用前请务必设置跨域 及 ACL](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## dotenv
 
@@ -63,6 +84,8 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 
 `dotenv` 文档参考 https://www.npmjs.com/package/dotenv
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## example
 
@@ -236,20 +259,46 @@ export default {
 </script>
 ```
 
+### 自定义上传内容
+
+```vue
+<template>
+  <div class="slot-default">
+    <h2>自定义上传</h2>
+    <upload-to-ali v-model="fileUrl" accept="application/pdf">
+      <button>选择文件</button>
+    </upload-to-ali>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'slot-default',
+  data() {
+    return {
+      fileUrl: ''
+    }
+  }
+}
+</script>
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+
 ## api
 
-| 参数            | 说明                               | 类型            | 默认值                  |
-| --------------- | ---------------------------------- | --------------- | ----------------------- |
-| value           | 绑定值(支持 v-model)               | String / Number | -                       |
-| multiple        | 是否多选                           | Boolean         | false                   |
-| max             | 上传最大数量                       | Number          | 9                       |
-| size            | 上传大小限制(单位:KB)              | Number          | 1024                    |
-| disabled        | 是否禁用                           | Boolean         | false                   |
-| canDelete       | 是否显示删除图标                   | Boolean         | false                   |
-| compressOptions | 压缩参数                           | Object          | {maxWidth: 750}         |
-| uploadOptions   | 上传参数                           | Object          | {partSize: 100 \* 1024} |
-| preview         | 是否开启预览功能                   | Boolean         | true                    |
-| onClick         | 点击事件, 返回参数为当前点击的 url | Function        | -                       |
+| 参数            | 说明                                                                                                                                                                                             | 类型            | 默认值                                      |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ------------------------------------------- |
+| value           | 绑定值(支持 v-model)                                                                                                                                                                             | String / Number | -                                           |
+| multiple        | 是否多选                                                                                                                                                                                         | Boolean         | false                                       |
+| max             | 上传最大数量                                                                                                                                                                                     | Number          | 9                                           |
+| size            | 上传大小限制(单位:KB)                                                                                                                                                                            | Number          | 1024                                        |
+| disabled        | 是否禁用                                                                                                                                                                                         | Boolean         | fals                                        |
+| compressOptions | 压缩参数                                                                                                                                                                                         | Object          | {maxWidth: 750}                             |
+| uploadOptions   | 上传参数                                                                                                                                                                                         | Object          | {partSize: 100 \* 1024}                     |
+| preview         | 是否开启预览功能                                                                                                                                                                                 | Boolean         | true                                        |
+| onClick         | 点击事件, 返回参数为当前点击的 url                                                                                                                                                               | Function        | -                                           |
+| accept          | 接受上传的文件类型, 多个值逗号分隔, 默认只接受图片，其他文件类型可以参考[MIME 类型列表](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types) | String          | image/png, image/jpeg, image/gif, image/jpg |
 
 ### 压缩参数 compressOptions
 
@@ -262,6 +311,8 @@ export default {
 ### 实例方法
 
 * selectFiles 手动触发选择文件事件
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ## event
 
@@ -283,3 +334,5 @@ multiple模式返回（全部的文件列表[Array]，上传文件列表[Array]�
 `@fail` - 上传失败事件
 
 `@cancel` - 上传操作被取消事件
+
+**[⬆ Back to Top](#table-of-contents)**
