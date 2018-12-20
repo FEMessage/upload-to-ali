@@ -263,7 +263,7 @@ export default {
 
 ```vue
 <template>
-  <div class="slot-file">
+  <div class="slot-default">
     <h2>自定义上传</h2>
     <upload-to-ali v-model="fileUrl" accept="application/pdf">
       <button>选择文件</button>
@@ -273,7 +273,7 @@ export default {
 
 <script>
 export default {
-  name: 'slot-file',
+  name: 'slot-default',
   data() {
     return {
       fileUrl: ''
@@ -293,8 +293,7 @@ export default {
 | multiple        | 是否多选                                                                                                                                                                                         | Boolean         | false                                       |
 | max             | 上传最大数量                                                                                                                                                                                     | Number          | 9                                           |
 | size            | 上传大小限制(单位:KB)                                                                                                                                                                            | Number          | 1024                                        |
-| disabled        | 是否禁用                                                                                                                                                                                         | Boolean         | false                                       |
-| canDelete       | 是否显示删除图标                                                                                                                                                                                 | Boolean         | false                                       |
+| disabled        | 是否禁用                                                                                                                                                                                         | Boolean         | fals                                        |
 | compressOptions | 压缩参数                                                                                                                                                                                         | Object          | {maxWidth: 750}                             |
 | uploadOptions   | 上传参数                                                                                                                                                                                         | Object          | {partSize: 100 \* 1024}                     |
 | preview         | 是否开启预览功能                                                                                                                                                                                 | Boolean         | true                                        |
