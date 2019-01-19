@@ -35,8 +35,7 @@
 ## install
 
 ```sh
-# 需要同时安装预览组件
-yarn add @femessage/img-preview @femessage/upload-to-ali
+yarn add @femessage/upload-to-ali
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
