@@ -18,7 +18,8 @@
 
 "@femessage/img-preview@^1.1.1":
   version "1.1.1"
-  resolved "https://registry.npmjs.org/@femessage/img-preview/-/img-preview-1.1.1.tgz#5a0a670ee52c6d55aefa8ad26787d13dee881997"
+  resolved "http://registry.npm.taobao.org/@femessage/img-preview/download/@femessage/img-preview-1.1.1.tgz#5a0a670ee52c6d55aefa8ad26787d13dee881997"
+  integrity sha1-WgpnDuUsbVWu+orSZ4fRPe6IGZc=
 
 "@storybook/addons@3.4.10":
   version "3.4.10"

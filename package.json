@@ -32,11 +32,9 @@
     "precommit": "pretty-quick --staged"
   },
   "dependencies": {
+    "@femessage/img-preview": "^1.1.1",
     "ali-oss": "^6.0.1",
     "image-compressor.js": "^1.1.4"
-  },
-  "peerDependencies": {
-    "@femessage/img-preview": "^1.1.1"
   },
   "devDependencies": {
     "@storybook/vue": "^3.4.10",
