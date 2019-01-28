@@ -213,6 +213,12 @@ export default {
     }
 
     this.newClient()
+    const uploadEl = document.querySelector('.upload-to-oss')
+    uploadEl.addEventListener('paste', this.paste)
+  },
+  destroyed() {
+    const uploadEl = document.querySelector('.upload-to-oss')
+    uploadEl.removeEventListener('paste', this.paste)
   },
   methods: {
     newClient() {
@@ -242,7 +248,7 @@ export default {
       this.$refs.uploadInput.click()
     },
     async upload(e) {
-      let files = Array.from(e.target.files)
+      let files = e.target ? Array.from(e.target.files) : Array.from(e)
       let currentUploads = []
 
       if (!files.length) return
@@ -257,7 +263,9 @@ export default {
         return
       }
 
-      const reset = () => (e.target.value = '')
+      const reset = () => {
+        if (e.target) e.target.value = ''
+      }
       this.uploading = true
 
       for (let i = 0; i < files.length; i++) {
@@ -353,6 +361,13 @@ export default {
       } else {
         this.$emit('loaded', currentUploads[0])
       }
+    },
+    paste(e) {
+      // 防止loading过程重复粘贴
+      if (this.uploading) return
+
+      let files = e.clipboardData && e.clipboardData.files
+      if (files && files.length) this.upload(files)
     }
   }
 }
