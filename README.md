@@ -1,6 +1,6 @@
 # upload-to-ali
 
-对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除功能 ，让上传功能更加简单
+对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能 ，让上传功能更加简单
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
 
@@ -22,6 +22,7 @@
 * 上传前自动压缩图片，上传过程中有 loading 提示，支持图片显示及删除
 * 可拓展自定义 loading 和默认上传样式
 * 可限制上传文件大小和上传文件数量
+* 可截图粘贴上传
 
 **[⬆ Back to Top](#table-of-contents)**
 
