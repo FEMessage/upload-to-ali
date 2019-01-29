@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-to-oss">
+  <div class="upload-to-oss" title="粘贴即可上传图片">
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
@@ -44,6 +44,8 @@ const imageCompressor = new ImageCompressor()
 let doubleSlash = '//'
 let oneKB = 1024
 const image = 'image'
+const clipboardData = 'clipboardData'
+const target = 'target'
 
 export default {
   name: 'UploadToAli',
@@ -213,6 +215,12 @@ export default {
     }
 
     this.newClient()
+    const uploadEl = document.querySelector('.upload-to-oss')
+    uploadEl.addEventListener('paste', this.paste)
+  },
+  destroyed() {
+    const uploadEl = document.querySelector('.upload-to-oss')
+    uploadEl.removeEventListener('paste', this.paste)
   },
   methods: {
     newClient() {
@@ -241,8 +249,8 @@ export default {
       }
       this.$refs.uploadInput.click()
     },
-    async upload(e) {
-      let files = Array.from(e.target.files)
+    async upload(e, type = target) {
+      let files = Array.from(e[type].files)
       let currentUploads = []
 
       if (!files.length) return
@@ -353,6 +361,13 @@ export default {
       } else {
         this.$emit('loaded', currentUploads[0])
       }
+    },
+    paste(e) {
+      // 防止loading过程重复粘贴
+      if (this.uploading) return
+
+      let files = e.clipboardData && e.clipboardData.files
+      if (files && files.length) this.upload(e, clipboardData)
     }
   }
 }

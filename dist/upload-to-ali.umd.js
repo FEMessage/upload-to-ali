@@ -27,9 +27,11 @@
   var doubleSlash = '//';
   var oneKB = 1024;
   var image = 'image';
+  var clipboardData = 'clipboardData';
+  var target = 'target';
 
   var Component = { render: function render() {
-      var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss" }, [!_vm.$slots.default ? _vm._l(_vm.uploadList, function (imgUrl, index) {
+      var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss", attrs: { "title": "粘贴即可上传图片" } }, [!_vm.$slots.default ? _vm._l(_vm.uploadList, function (imgUrl, index) {
         return _c('div', { key: index, staticClass: "upload-item", class: { 'is-preview': _vm.preview } }, [!_vm.disabled ? _c('i', { staticClass: "upload-del-icon", on: { "click": function click($event) {
               $event.stopPropagation();$event.preventDefault();_vm.onDelete(imgUrl, index);
             } } }) : _vm._e(), _vm._v(" "), _c('img', { staticClass: "upload-img", attrs: { "src": imgUrl }, on: { "click": function click($event) {
@@ -206,6 +208,12 @@
       }
 
       this.newClient();
+      var uploadEl = document.querySelector('.upload-to-oss');
+      uploadEl.addEventListener('paste', this.paste);
+    },
+    destroyed: function destroyed() {
+      var uploadEl = document.querySelector('.upload-to-oss');
+      uploadEl.removeEventListener('paste', this.paste);
     },
 
     methods: {
@@ -241,12 +249,13 @@
         var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(e) {
           var _this = this;
 
+          var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : target;
           var files, currentUploads, reset, i, file, name, key, pos, suffix;
           return _regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  files = Array.from(e.target.files);
+                  files = Array.from(e[type].files);
                   currentUploads = [];
 
                   if (files.length) {
@@ -418,12 +427,19 @@
           }, _callee, this);
         }));
 
-        function upload(_x) {
+        function upload(_x2) {
           return _ref.apply(this, arguments);
         }
 
         return upload;
-      }()
+      }(),
+      paste: function paste(e) {
+        // 防止loading过程重复粘贴
+        if (this.uploading) return;
+
+        var files = e.clipboardData && e.clipboardData.files;
+        if (files && files.length) this.upload(e, clipboardData);
+      }
     }
   };
 
