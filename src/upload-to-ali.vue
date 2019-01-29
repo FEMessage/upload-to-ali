@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-to-oss">
+  <div class="upload-to-oss" title="粘贴即可上传图片">
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
@@ -44,6 +44,8 @@ const imageCompressor = new ImageCompressor()
 let doubleSlash = '//'
 let oneKB = 1024
 const image = 'image'
+const clipboardData = 'clipboardData'
+const target = 'target'
 
 export default {
   name: 'UploadToAli',
@@ -247,8 +249,8 @@ export default {
       }
       this.$refs.uploadInput.click()
     },
-    async upload(e) {
-      let files = e.target ? Array.from(e.target.files) : Array.from(e)
+    async upload(e, type = target) {
+      let files = Array.from(e[type].files)
       let currentUploads = []
 
       if (!files.length) return
@@ -263,9 +265,7 @@ export default {
         return
       }
 
-      const reset = () => {
-        if (e.target) e.target.value = ''
-      }
+      const reset = () => (e.target.value = '')
       this.uploading = true
 
       for (let i = 0; i < files.length; i++) {
@@ -367,7 +367,7 @@ export default {
       if (this.uploading) return
 
       let files = e.clipboardData && e.clipboardData.files
-      if (files && files.length) this.upload(files)
+      if (files && files.length) this.upload(e, clipboardData)
     }
   }
 }
