@@ -45,6 +45,7 @@ let doubleSlash = '//'
 let oneKB = 1024
 const image = 'image'
 const clipboardData = 'clipboardData'
+const dataTransfer = 'dataTransfer'
 const target = 'target'
 
 export default {
@@ -217,10 +218,14 @@ export default {
     this.newClient()
     const uploadEl = this.$el
     uploadEl.addEventListener('paste', this.paste)
+    uploadEl.addEventListener('dragover', this.onDragover)
+    uploadEl.addEventListener('drop', this.onDrop)
   },
   destroyed() {
     const uploadEl = this.$el
     uploadEl.removeEventListener('paste', this.paste)
+    uploadEl.removeEventListener('dragover', this.onDragover)
+    uploadEl.removeEventListener('drop', this.onDrop)
   },
   methods: {
     newClient() {
@@ -368,6 +373,20 @@ export default {
 
       let files = e.clipboardData && e.clipboardData.files
       if (files && files.length) this.upload(e, clipboardData)
+    },
+
+    /**
+     * 拖拽事件
+     */
+    onDragover(e) {
+      e.preventDefault()
+    },
+    onDrop(e) {
+      e.preventDefault()
+      if (this.uploading) return
+
+      const files = e.dataTransfer && e.dataTransfer.files
+      if (files && files.length) this.upload(e, dataTransfer)
     }
   }
 }
