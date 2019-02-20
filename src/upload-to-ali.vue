@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-to-oss" title="粘贴即可上传图片">
+  <div class="upload-to-oss" title="粘贴,或拖拽即可上传图片">
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
@@ -534,6 +534,7 @@ export default {
   .upload-area {
     cursor: pointer;
     display: inline-block;
+    z-index: 1000;
   }
 }
 </style>
