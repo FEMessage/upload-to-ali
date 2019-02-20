@@ -285,7 +285,7 @@ export default {
       this.uploading = true
 
       for (let i = 0; i < files.length; i++) {
-        if (this.uploadList.length == this.max) break
+        if (this.uploadList.length === this.max) break
         let file = files[i]
 
         let name = file.name
