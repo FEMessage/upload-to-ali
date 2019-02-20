@@ -284,7 +284,7 @@ export default {
       const reset = () => (e.target.value = '')
       this.uploading = true
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < (this.multiple ? files.length : 1); i++) {
         if (this.uploadList.length === this.max) break
         let file = files[i]
 
