@@ -215,11 +215,11 @@ export default {
     }
 
     this.newClient()
-    const uploadEl = document.querySelector('.upload-to-oss')
+    const uploadEl = this.$el
     uploadEl.addEventListener('paste', this.paste)
   },
   destroyed() {
-    const uploadEl = document.querySelector('.upload-to-oss')
+    const uploadEl = this.$el
     uploadEl.removeEventListener('paste', this.paste)
   },
   methods: {
