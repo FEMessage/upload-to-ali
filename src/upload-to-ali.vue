@@ -28,8 +28,16 @@
         </div>
       </slot>
     </div>
-    <input type="file" ref="uploadInput" class="upload-input" :disabled="uploading" @change="upload" hidden :accept="accept"
-           :multiple="multiple">
+    <input
+      class="upload-input"
+      type="file"
+      ref="uploadInput"
+      hidden
+      :disabled="uploading"
+      :accept="accept"
+      :multiple="multiple"
+      @change="upload"
+    >
     <img-preview v-if="preview" v-model="previewUrl"></img-preview>
   </div>
 </template>
