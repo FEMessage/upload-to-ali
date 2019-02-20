@@ -263,6 +263,9 @@ export default {
       this.$refs.uploadInput.click()
     },
     async upload(e, type = target) {
+      // 防止loading过程重复上传
+      if (this.loading) return
+
       let files = Array.from(e[type].files)
       let currentUploads = []
 
@@ -376,9 +379,6 @@ export default {
       }
     },
     paste(e) {
-      // 防止loading过程重复粘贴
-      if (this.uploading) return
-
       let files = e.clipboardData && e.clipboardData.files
       if (files && files.length) this.upload(e, clipboardData)
     },
@@ -391,7 +391,6 @@ export default {
     },
     onDrop(e) {
       e.preventDefault()
-      if (this.uploading) return
 
       const files = e.dataTransfer && e.dataTransfer.files
       if (files && files.length) this.upload(e, dataTransfer)
