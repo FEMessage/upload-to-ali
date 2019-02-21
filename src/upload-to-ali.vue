@@ -226,14 +226,25 @@ export default {
     }
 
     this.newClient()
-    const uploadEl = this.$el.querySelector('.upload-area')
-    addEvent(uploadEl, 'paste', this.paste)
-    addEvent(uploadEl, 'dragover', this.onDragover)
-    addEvent(uploadEl, 'drop', this.onDrop)
-    addEvent(uploadEl, 'dragleave', this.removeActive)
   },
   destroyed() {
     clearEvent(this.$el.querySelector('.upload-area'))
+  },
+  watch: {
+    canUpload: {
+      handler(val) {
+        if (val) {
+          this.$nextTick(() => {
+            const uploadEl = this.$el.querySelector('.upload-area')
+            addEvent(uploadEl, 'paste', this.paste)
+            addEvent(uploadEl, 'dragover', this.onDragover)
+            addEvent(uploadEl, 'drop', this.onDrop)
+            addEvent(uploadEl, 'dragleave', this.removeActive)
+          })
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     newClient() {
@@ -284,7 +295,7 @@ export default {
       const reset = () => (e.target.value = '')
       this.uploading = true
 
-      for (let i = 0; i < (this.multiple ? files.length : 1); i++) {
+      for (let i = 0; i < files.length; i++) {
         if (this.uploadList.length === this.max) break
         let file = files[i]
 
@@ -358,6 +369,10 @@ export default {
           })
 
         this.newClient()
+
+        if (!this.multiple) {
+          break
+        }
       }
 
       reset()
