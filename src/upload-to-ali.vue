@@ -55,6 +55,7 @@ const image = 'image'
 const clipboardData = 'clipboardData'
 const dataTransfer = 'dataTransfer'
 const target = 'target'
+const ACTIVE_CLASSNAME = 'upload-to-oss--active'
 
 export default {
   name: 'UploadToAli',
@@ -224,16 +225,18 @@ export default {
     }
 
     this.newClient()
-    const uploadEl = this.$el
+    const uploadEl = this.$el.querySelector('.upload-area')
     uploadEl.addEventListener('paste', this.paste)
     uploadEl.addEventListener('dragover', this.onDragover)
     uploadEl.addEventListener('drop', this.onDrop)
+    uploadEl.addEventListener('dragleave', this.removeActive)
   },
   destroyed() {
-    const uploadEl = this.$el
+    const uploadEl = this.$el.querySelector('.upload-area')
     uploadEl.removeEventListener('paste', this.paste)
     uploadEl.removeEventListener('dragover', this.onDragover)
     uploadEl.removeEventListener('drop', this.onDrop)
+    uploadEl.removeEventListener('dragleave', this.removeActive)
   },
   methods: {
     newClient() {
@@ -388,19 +391,30 @@ export default {
      */
     onDragover(e) {
       e.preventDefault()
+      this.addActive()
     },
     onDrop(e) {
       e.preventDefault()
+      this.removeActive()
 
       const files = e.dataTransfer && e.dataTransfer.files
       if (files && files.length) this.upload(e, dataTransfer)
+    },
+    addActive() {
+      if (!this.$el.classList.contains(ACTIVE_CLASSNAME)) {
+        this.$el.classList.add(ACTIVE_CLASSNAME)
+      }
+    },
+    removeActive() {
+      this.$el.classList.remove(ACTIVE_CLASSNAME)
     }
   }
 }
 </script>
 <style lang="stylus">
+$border-color = #cad1e8
+$active-color = #5d81f9
 .upload-to-oss {
-  $border-color = #cad1e8
   display: inline-block;
   .disabled {
     pointer-events: none;
@@ -414,6 +428,9 @@ export default {
     height: 80px;
     border-radius: 3px;
     border: 1px solid $border-color;
+    &:hover {
+      border-color: $active-color;
+    }
   }
   .is-preview {
     &:hover {
@@ -534,6 +551,11 @@ export default {
   .upload-area {
     cursor: pointer;
     display: inline-block;
+  }
+}
+.upload-to-oss--active {
+  .upload-box {
+    box-shadow: 0 0 0 1px $active-color;
   }
 }
 </style>
