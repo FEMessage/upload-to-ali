@@ -8,6 +8,8 @@ import ImgPreview from './img-preview.vue'
 import OnClick from './on-click.vue'
 import NoModel from './no-model.vue'
 import SlotDefault from './slot-default.vue'
+import Drag from './drag.vue'
+import DragMultiple from './drag-multiple.vue'
 
 storiesOf('upload-to-ali', module)
   .add('basic usage', () => ({
@@ -45,4 +47,12 @@ storiesOf('upload-to-ali', module)
   .add('slot-default', () => ({
     components: {SlotDefault},
     template: `<slot-default/>`
+  }))
+  .add('drag', () => ({
+    components: {Drag},
+    template: `<Drag/>`
+  }))
+  .add('drag-multiple', () => ({
+    components: {DragMultiple},
+    template: `<DragMultiple/>`
   }))
