@@ -94,7 +94,7 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 上传后的文件 url 在`@loaded`事件会返回
 
-```sh
+```html
 <template>
   <upload-to-ali @loaded="loaded" v-model="url"></upload-to-ali>
 </template>
@@ -117,7 +117,7 @@ export default {
 
 ### 上传多张操作
 
-```sh
+```html
 <template>
   <upload-to-ali v-model="url" multiple></upload-to-ali>
 </template>
@@ -136,7 +136,7 @@ export default {
 
 ### 限制文件大小
 
-```sh
+```html
 <template>
   <div>
     <h2>限制上传大小256KB</h2>
@@ -159,7 +159,7 @@ export default {
 
 ### 限制文件数量
 
-```sh
+```html
 <template>
   <div>
     <h2>限制上传数量3张</h2>
@@ -181,7 +181,7 @@ export default {
 
 ### 自定义上传占位符和 loading 图标
 
-```javascript
+```html
 <template>
   <div>
     <h2>自定义slot展示</h2>
@@ -208,7 +208,7 @@ export default {
 
 ### 结合`img-preview` 组件进行图片预览
 
-```javascript
+```html
 <template>
   <div class="img-preview">
     <h2>图片预览</h2>
@@ -233,7 +233,7 @@ export default {
 
 ### 自定义事件
 
-```javascript
+```html
 <template>
   <div class="on-click">
     <h2>自定义点击事件</h2>
@@ -262,7 +262,7 @@ export default {
 
 ### 自定义上传内容
 
-```vue
+```html
 <template>
   <div class="slot-default">
     <h2>自定义上传</h2>
