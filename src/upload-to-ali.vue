@@ -534,7 +534,6 @@ export default {
   .upload-area {
     cursor: pointer;
     display: inline-block;
-    z-index: 1000;
   }
 }
 </style>
