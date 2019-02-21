@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/FEMessage/upload-to-ali.git"
   },
+  "types": "types/index.d.ts",
   "keywords": ["vue", "sfc", "component"],
   "main": "dist/upload-to-ali.umd.js",
   "module": "dist/upload-to-ali.esm.js",
