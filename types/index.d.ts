@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import CompressorjsOptions from './compressorjs'
+import {CompressorjsOptions} from './compressorjs'
 
 declare class Component extends Vue {
   static install(vue: typeof Vue): void

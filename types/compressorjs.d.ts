@@ -2,7 +2,7 @@
  * Modified from
  * https://github.com/fengyuanchen/compressorjs/blob/master/types/index.d.ts
  */
-export default interface Options {
+export interface CompressorjsOptions {
   strict?: boolean
   checkOrientation?: boolean
   maxWidth?: number
