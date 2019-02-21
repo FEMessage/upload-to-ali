@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片">
+  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--active': isActive}">
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
@@ -9,7 +9,7 @@
     </template>
 
     <!--上传区域-->
-    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles">
+    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeActive" @drop="onDrop">
       <!--@slot 自定义上传区域-->
       <slot>
         <div class="upload-box">
@@ -55,7 +55,6 @@ const image = 'image'
 const clipboardData = 'clipboardData'
 const dataTransfer = 'dataTransfer'
 const target = 'target'
-const ACTIVE_CLASSNAME = 'upload-to-oss--active'
 
 export default {
   name: 'UploadToAli',
@@ -199,7 +198,8 @@ export default {
     return {
       client: {},
       previewUrl: '',
-      uploading: false
+      uploading: false,
+      isActive: false
     }
   },
   computed: {
@@ -225,29 +225,6 @@ export default {
     }
 
     this.newClient()
-  },
-  destroyed() {
-    const uploadEl = this.$el.querySelector('.upload-area')
-    uploadEl.removeEventListener('paste', this.paste)
-    uploadEl.removeEventListener('dragover', this.onDragover)
-    uploadEl.removeEventListener('drop', this.onDrop)
-    uploadEl.removeEventListener('dragleave', this.removeActive)
-  },
-  watch: {
-    canUpload: {
-      handler(val) {
-        if (val) {
-          this.$nextTick(() => {
-            const uploadEl = this.$el.querySelector('.upload-area')
-            uploadEl.addEventListener('paste', this.paste)
-            uploadEl.addEventListener('dragover', this.onDragover)
-            uploadEl.addEventListener('drop', this.onDrop)
-            uploadEl.addEventListener('dragleave', this.removeActive)
-          })
-        }
-      },
-      immediate: true
-    }
   },
   methods: {
     newClient() {
@@ -416,12 +393,10 @@ export default {
       if (files && files.length) this.upload(e, dataTransfer)
     },
     addActive() {
-      if (!this.$el.classList.contains(ACTIVE_CLASSNAME)) {
-        this.$el.classList.add(ACTIVE_CLASSNAME)
-      }
+      this.isActive = true
     },
     removeActive() {
-      this.$el.classList.remove(ACTIVE_CLASSNAME)
+      this.isActive = false
     }
   }
 }
