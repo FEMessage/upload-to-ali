@@ -225,11 +225,6 @@ export default {
     }
 
     this.newClient()
-    const uploadEl = this.$el.querySelector('.upload-area')
-    uploadEl.addEventListener('paste', this.paste)
-    uploadEl.addEventListener('dragover', this.onDragover)
-    uploadEl.addEventListener('drop', this.onDrop)
-    uploadEl.addEventListener('dragleave', this.removeActive)
   },
   destroyed() {
     const uploadEl = this.$el.querySelector('.upload-area')
@@ -237,6 +232,22 @@ export default {
     uploadEl.removeEventListener('dragover', this.onDragover)
     uploadEl.removeEventListener('drop', this.onDrop)
     uploadEl.removeEventListener('dragleave', this.removeActive)
+  },
+  watch: {
+    canUpload: {
+      handler(val) {
+        if (val) {
+          this.$nextTick(() => {
+            const uploadEl = this.$el.querySelector('.upload-area')
+            uploadEl.addEventListener('paste', this.paste)
+            uploadEl.addEventListener('dragover', this.onDragover)
+            uploadEl.addEventListener('drop', this.onDrop)
+            uploadEl.addEventListener('dragleave', this.removeActive)
+          })
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     newClient() {
