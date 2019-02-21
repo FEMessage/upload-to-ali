@@ -46,7 +46,6 @@
 import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
-import {addEvent, clearEvent} from './utils'
 
 const imageCompressor = new ImageCompressor()
 
