@@ -46,6 +46,7 @@
 import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
+import {addEvent, clearEvent} from './utils'
 
 const imageCompressor = new ImageCompressor()
 
@@ -226,17 +227,13 @@ export default {
 
     this.newClient()
     const uploadEl = this.$el.querySelector('.upload-area')
-    uploadEl.addEventListener('paste', this.paste)
-    uploadEl.addEventListener('dragover', this.onDragover)
-    uploadEl.addEventListener('drop', this.onDrop)
-    uploadEl.addEventListener('dragleave', this.removeActive)
+    addEvent(uploadEl, 'paste', this.paste)
+    addEvent(uploadEl, 'dragover', this.onDragover)
+    addEvent(uploadEl, 'drop', this.onDrop)
+    addEvent(uploadEl, 'dragleave', this.removeActive)
   },
   destroyed() {
-    const uploadEl = this.$el.querySelector('.upload-area')
-    uploadEl.removeEventListener('paste', this.paste)
-    uploadEl.removeEventListener('dragover', this.onDragover)
-    uploadEl.removeEventListener('drop', this.onDrop)
-    uploadEl.removeEventListener('dragleave', this.removeActive)
+    clearEvent(this.$el.querySelector('.upload-area'))
   },
   methods: {
     newClient() {
