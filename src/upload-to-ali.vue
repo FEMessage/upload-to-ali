@@ -3,7 +3,7 @@
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
-        <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
+        <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
         <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
       </div>
     </template>
