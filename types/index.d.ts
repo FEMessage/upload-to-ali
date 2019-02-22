@@ -62,5 +62,5 @@ export default class UploadToAli extends Component {
   /** 预览功能 需要组件:img-preview */
   preview: boolean
   /** 点击事件 */
-  onClick: (url: any) => void
+  onClick: (url: string | any) => void
 }
