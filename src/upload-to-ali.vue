@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--active': isActive}">
+  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
@@ -9,7 +9,7 @@
     </template>
 
     <!--上传区域-->
-    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeActive" @drop="onDrop">
+    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeHighlight" @drop="onDrop">
       <!--@slot 自定义上传区域-->
       <slot>
         <div class="upload-box">
@@ -199,7 +199,7 @@ export default {
       client: {},
       previewUrl: '',
       uploading: false,
-      isActive: false
+      isHighlight: false
     }
   },
   computed: {
@@ -383,20 +383,20 @@ export default {
      */
     onDragover(e) {
       e.preventDefault()
-      this.addActive()
+      this.addHighlight()
     },
     onDrop(e) {
       e.preventDefault()
-      this.removeActive()
+      this.removeHighlight()
 
       const files = e.dataTransfer && e.dataTransfer.files
       if (files && files.length) this.upload(e, dataTransfer)
     },
-    addActive() {
-      this.isActive = true
+    addHighlight() {
+      this.isHighlight = true
     },
-    removeActive() {
-      this.isActive = false
+    removeHighlight() {
+      this.isHighlight = false
     }
   }
 }
@@ -543,7 +543,7 @@ $active-color = #5d81f9
     display: inline-block;
   }
 }
-.upload-to-oss--active {
+.upload-to-oss--highlight {
   .upload-box {
     box-shadow: 0 0 0 1px $active-color;
   }
