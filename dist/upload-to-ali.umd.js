@@ -14,7 +14,7 @@
     if (typeof document !== 'undefined') {
       var head = document.head || document.getElementsByTagName('head')[0],
           style = document.createElement('style'),
-          css = ".upload-to-oss { display: inline-block; } .upload-to-oss .disabled { pointer-events: none; } .upload-to-oss .upload-item, .upload-to-oss .upload-box { display: inline-flex; justify-content: center; align-items: center; width: 80px; height: 80px; border-radius: 3px; border: 1px solid #cad1e8; } .upload-to-oss .upload-item:hover, .upload-to-oss .upload-box:hover { border-color: #5d81f9; } .upload-to-oss .is-preview:hover { cursor: zoom-in; } .upload-to-oss .upload-item { position: relative; margin: 0 8px 8px 0; } .upload-to-oss .upload-placeholder, .upload-to-oss .upload-loading { position: relative; width: 100%; height: 100%; text-align: center; } .upload-to-oss .upload-placeholder:before { width: 2px; height: 20px; background-color: #cad1e8; } .upload-to-oss .upload-placeholder:after { width: 20px; height: 2px; background-color: #cad1e8; } .upload-to-oss .upload-placeholder:before, .upload-to-oss .upload-placeholder:after, .upload-to-oss .upload-del-icon:before, .upload-to-oss .upload-del-icon:after, .upload-to-oss .upload-loading:before { content: ''; display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); } .upload-to-oss .upload-loading { background-color: rgba(255,255,255,0.9); border-radius: 3px; transition: opacity 0.3s; } .upload-to-oss .upload-loading .circular { position: absolute; left: 28%; top: 28%; height: 35px; width: 35px; -webkit-animation: is-loading 2s linear infinite; animation: is-loading 2s linear infinite; } .upload-to-oss .upload-loading .path { -webkit-animation: loading-dash 1.5s ease-in-out infinite; animation: loading-dash 1.5s ease-in-out infinite; stroke-dasharray: 90, 150; stroke-dashoffset: 0; stroke-width: 2; stroke: #5d81f9; stroke-linecap: round; } @-moz-keyframes is-loading { 100% { transform: rotate(360deg); } } @-webkit-keyframes is-loading { 100% { transform: rotate(360deg); } } @-o-keyframes is-loading { 100% { transform: rotate(360deg); } } @keyframes is-loading { 100% { transform: rotate(360deg); } } @-moz-keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } @-webkit-keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } @-o-keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } @keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } .upload-to-oss .upload-del-icon { position: absolute; right: -8px; top: -8px; width: 16px; height: 16px; background-color: #cad1e8; border-radius: 50%; line-height: 16px; transform: rotate(45deg); z-index: 1; cursor: pointer; } .upload-to-oss .upload-del-icon:before { width: 1px; height: 8px; background: #fff; } .upload-to-oss .upload-del-icon:after { width: 8px; height: 1px; background: #fff; } .upload-to-oss .upload-img { position: absolute; width: 100%; max-height: 100%; display: block; top: 50%; transform: translate(0, -50%); } .upload-to-oss .upload-input { display: none; } .upload-to-oss .upload-area { cursor: pointer; display: inline-block; } .upload-to-oss--active .upload-box { box-shadow: 0 0 0 1px #5d81f9; } ";style.type = 'text/css';if (style.styleSheet) {
+          css = ".upload-to-oss { display: inline-block; } .upload-to-oss .disabled { pointer-events: none; } .upload-to-oss .upload-item, .upload-to-oss .upload-box { display: inline-flex; justify-content: center; align-items: center; width: 80px; height: 80px; border-radius: 3px; border: 1px solid #cad1e8; } .upload-to-oss .upload-item:hover, .upload-to-oss .upload-box:hover { border-color: #5d81f9; } .upload-to-oss .is-preview:hover { cursor: zoom-in; } .upload-to-oss .upload-item { position: relative; margin: 0 8px 8px 0; } .upload-to-oss .upload-placeholder, .upload-to-oss .upload-loading { position: relative; width: 100%; height: 100%; text-align: center; } .upload-to-oss .upload-placeholder:before { width: 2px; height: 20px; background-color: #cad1e8; } .upload-to-oss .upload-placeholder:after { width: 20px; height: 2px; background-color: #cad1e8; } .upload-to-oss .upload-placeholder:before, .upload-to-oss .upload-placeholder:after, .upload-to-oss .upload-del-icon:before, .upload-to-oss .upload-del-icon:after, .upload-to-oss .upload-loading:before { content: ''; display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); } .upload-to-oss .upload-loading { background-color: rgba(255,255,255,0.9); border-radius: 3px; transition: opacity 0.3s; } .upload-to-oss .upload-loading .circular { position: absolute; left: 28%; top: 28%; height: 35px; width: 35px; -webkit-animation: is-loading 2s linear infinite; animation: is-loading 2s linear infinite; } .upload-to-oss .upload-loading .path { -webkit-animation: loading-dash 1.5s ease-in-out infinite; animation: loading-dash 1.5s ease-in-out infinite; stroke-dasharray: 90, 150; stroke-dashoffset: 0; stroke-width: 2; stroke: #5d81f9; stroke-linecap: round; } @-moz-keyframes is-loading { 100% { transform: rotate(360deg); } } @-webkit-keyframes is-loading { 100% { transform: rotate(360deg); } } @-o-keyframes is-loading { 100% { transform: rotate(360deg); } } @keyframes is-loading { 100% { transform: rotate(360deg); } } @-moz-keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } @-webkit-keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } @-o-keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } @keyframes loading-dash { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -40px; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -120px; } } .upload-to-oss .upload-del-icon { position: absolute; right: -8px; top: -8px; width: 16px; height: 16px; background-color: #cad1e8; border-radius: 50%; line-height: 16px; transform: rotate(45deg); z-index: 1; cursor: pointer; } .upload-to-oss .upload-del-icon:before { width: 1px; height: 8px; background: #fff; } .upload-to-oss .upload-del-icon:after { width: 8px; height: 1px; background: #fff; } .upload-to-oss .upload-img { position: absolute; width: 100%; max-height: 100%; display: block; top: 50%; transform: translate(0, -50%); } .upload-to-oss .upload-input { display: none; } .upload-to-oss .upload-area { cursor: pointer; display: inline-block; } .upload-to-oss--highlight .upload-box { box-shadow: 0 0 0 1px #5d81f9; } ";style.type = 'text/css';if (style.styleSheet) {
         style.styleSheet.cssText = css;
       } else {
         style.appendChild(document.createTextNode(css));
@@ -32,13 +32,13 @@
   var target = 'target';
 
   var Component = { render: function render() {
-      var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss", class: { 'upload-to-oss--active': _vm.isActive }, attrs: { "title": "粘贴或拖拽即可上传图片" } }, [!_vm.$slots.default ? _vm._l(_vm.uploadList, function (imgUrl, index) {
+      var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss", class: { 'upload-to-oss--highlight': _vm.isHighlight }, attrs: { "title": "粘贴或拖拽即可上传图片" } }, [!_vm.$slots.default ? _vm._l(_vm.uploadList, function (imgUrl, index) {
         return _c('div', { key: index, staticClass: "upload-item", class: { 'is-preview': _vm.preview } }, [!_vm.disabled ? _c('i', { staticClass: "upload-del-icon", attrs: { "title": "删除图片" }, on: { "click": function click($event) {
               $event.stopPropagation();$event.preventDefault();_vm.onDelete(imgUrl, index);
             } } }) : _vm._e(), _vm._v(" "), _c('img', { staticClass: "upload-img", attrs: { "src": imgUrl }, on: { "click": function click($event) {
               _vm.onClick(imgUrl);
             } } })]);
-      }) : _vm._e(), _vm._v(" "), _vm.canUpload ? _c('div', { staticClass: "upload-area", class: { disabled: _vm.disabled }, on: { "click": _vm.selectFiles, "paste": _vm.paste, "dragover": _vm.onDragover, "dragleave": _vm.removeActive, "drop": _vm.onDrop } }, [_vm._t("default", [_c('div', { staticClass: "upload-box" }, [_vm.uploading ? _vm._t("spinner", [_c('div', { staticClass: "upload-loading" }, [_c('svg', { staticClass: "circular", attrs: { "viewBox": "25 25 50 50" } }, [_c('circle', { staticClass: "path", attrs: { "cx": "50", "cy": "50", "r": "20", "fill": "none" } })])])]) : _vm._t("placeholder", [_c('div', { staticClass: "upload-placeholder" })])], 2)])], 2) : _vm._e(), _vm._v(" "), _c('input', { ref: "uploadInput", staticClass: "upload-input", attrs: { "type": "file", "hidden": "", "disabled": _vm.uploading, "accept": _vm.accept, "multiple": _vm.multiple }, on: { "change": _vm.upload } }), _vm._v(" "), _vm.preview ? _c('img-preview', { model: { value: _vm.previewUrl, callback: function callback($$v) {
+      }) : _vm._e(), _vm._v(" "), _vm.canUpload ? _c('div', { staticClass: "upload-area", class: { disabled: _vm.disabled }, on: { "click": _vm.selectFiles, "paste": _vm.paste, "dragover": _vm.onDragover, "dragleave": _vm.removeHighlight, "drop": _vm.onDrop } }, [_vm._t("default", [_c('div', { staticClass: "upload-box" }, [_vm.uploading ? _vm._t("spinner", [_c('div', { staticClass: "upload-loading" }, [_c('svg', { staticClass: "circular", attrs: { "viewBox": "25 25 50 50" } }, [_c('circle', { staticClass: "path", attrs: { "cx": "50", "cy": "50", "r": "20", "fill": "none" } })])])]) : _vm._t("placeholder", [_c('div', { staticClass: "upload-placeholder" })])], 2)])], 2) : _vm._e(), _vm._v(" "), _c('input', { ref: "uploadInput", staticClass: "upload-input", attrs: { "type": "file", "hidden": "", "disabled": _vm.uploading, "accept": _vm.accept, "multiple": _vm.multiple }, on: { "change": _vm.upload } }), _vm._v(" "), _vm.preview ? _c('img-preview', { model: { value: _vm.previewUrl, callback: function callback($$v) {
             _vm.previewUrl = $$v;
           }, expression: "previewUrl" } }) : _vm._e()], 2);
     }, staticRenderFns: [],
@@ -188,7 +188,7 @@
         client: {},
         previewUrl: '',
         uploading: false,
-        isActive: false
+        isHighlight: false
       };
     },
 
@@ -246,7 +246,7 @@
           var _this = this;
 
           var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : target;
-          var files, currentUploads, reset, i, file, name, key, pos, suffix;
+          var files, currentUploads, reset, max, i, file, name, key, pos, suffix;
           return _regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -298,22 +298,23 @@
 
                   this.uploading = true;
 
+                  max = this.multiple ? this.max : 1;
                   i = 0;
 
-                case 15:
+                case 16:
                   if (!(i < files.length)) {
-                    _context.next = 38;
+                    _context.next = 37;
                     break;
                   }
 
-                  if (!(this.uploadList.length === this.max)) {
-                    _context.next = 18;
+                  if (!(this.uploadList.length === max)) {
+                    _context.next = 19;
                     break;
                   }
 
-                  return _context.abrupt('break', 38);
+                  return _context.abrupt('break', 37);
 
-                case 18:
+                case 19:
                   file = files[i];
                   name = file.name;
                   key = '';
@@ -326,17 +327,17 @@
                   this.$emit('loading', name);
 
                   if (!(file.type.indexOf(image) > -1)) {
-                    _context.next = 26;
+                    _context.next = 27;
                     break;
                   }
 
-                  _context.next = 25;
+                  _context.next = 26;
                   return imageCompressor.compress(file, this.compressOptions);
 
-                case 25:
+                case 26:
                   file = _context.sent;
 
-                case 26:
+                case 27:
 
                   //文件名-时间戳 作为上传文件key
                   pos = name.lastIndexOf('.');
@@ -348,7 +349,7 @@
 
                   key = name.substring(0, pos) + '-' + new Date().getTime() + suffix;
 
-                  _context.next = 32;
+                  _context.next = 33;
                   return this.client.multipartUpload(this.dir + key, file, this.uploadOptions).then(function (res) {
                     // 协议无关
                     var filename = doubleSlash;
@@ -386,23 +387,16 @@
                     }
                   });
 
-                case 32:
+                case 33:
 
                   this.newClient();
 
-                  if (this.multiple) {
-                    _context.next = 35;
-                    break;
-                  }
-
-                  return _context.abrupt('break', 38);
-
-                case 35:
+                case 34:
                   i++;
-                  _context.next = 15;
+                  _context.next = 16;
                   break;
 
-                case 38:
+                case 37:
 
                   reset();
                   this.uploading = false;
@@ -410,13 +404,13 @@
                   // 没有一张上传成功的，不触发load事件
 
                   if (!(currentUploads.length < 1)) {
-                    _context.next = 42;
+                    _context.next = 41;
                     break;
                   }
 
                   return _context.abrupt('return');
 
-                case 42:
+                case 41:
 
                   /**
                    * 上传完成后触发的事件,返回url
@@ -430,7 +424,7 @@
                     this.$emit('loaded', currentUploads[0]);
                   }
 
-                case 43:
+                case 42:
                 case 'end':
                   return _context.stop();
               }
@@ -455,20 +449,20 @@
        */
       onDragover: function onDragover(e) {
         e.preventDefault();
-        this.addActive();
+        this.addHighlight();
       },
       onDrop: function onDrop(e) {
         e.preventDefault();
-        this.removeActive();
+        this.removeHighlight();
 
         var files = e.dataTransfer && e.dataTransfer.files;
         if (files && files.length) this.upload(e, dataTransfer);
       },
-      addActive: function addActive() {
-        this.isActive = true;
+      addHighlight: function addHighlight() {
+        this.isHighlight = true;
       },
-      removeActive: function removeActive() {
-        this.isActive = false;
+      removeHighlight: function removeHighlight() {
+        this.isHighlight = false;
       }
     }
   };
