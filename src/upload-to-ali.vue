@@ -275,8 +275,9 @@ export default {
       const reset = () => (e.target.value = '')
       this.uploading = true
 
+      const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length; i++) {
-        if (this.uploadList.length === this.max) break
+        if (this.uploadList.length === max) break
         let file = files[i]
 
         let name = file.name
@@ -349,10 +350,6 @@ export default {
           })
 
         this.newClient()
-
-        if (!this.multiple) {
-          break
-        }
       }
 
       reset()
