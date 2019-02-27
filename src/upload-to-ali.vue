@@ -417,6 +417,7 @@ $active-color = #5d81f9
     border: 1px solid $border-color;
     &:hover {
       border-color: $active-color;
+      background-color: #5d81f914;
     }
   }
   .is-preview {
@@ -542,7 +543,8 @@ $active-color = #5d81f9
 }
 .upload-to-oss--highlight {
   .upload-box {
-    box-shadow: 0 0 0 1px $active-color;
+    border-color: $active-color;
+    background-color: #5d81f914;
   }
 }
 </style>
