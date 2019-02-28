@@ -1,6 +1,6 @@
 # upload-to-ali
 
-对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能 ，让上传功能更加简单
+对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
 
@@ -23,6 +23,7 @@
 * 可拓展自定义 loading 和默认上传样式
 * 可限制上传文件大小和上传文件数量
 * 可截图粘贴上传
+* 可拖拽上传
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -93,7 +94,7 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 上传后的文件 url 在`@loaded`事件会返回
 
-```sh
+```html
 <template>
   <upload-to-ali @loaded="loaded" v-model="url"></upload-to-ali>
 </template>
@@ -116,7 +117,7 @@ export default {
 
 ### 上传多张操作
 
-```sh
+```html
 <template>
   <upload-to-ali v-model="url" multiple></upload-to-ali>
 </template>
@@ -135,7 +136,7 @@ export default {
 
 ### 限制文件大小
 
-```sh
+```html
 <template>
   <div>
     <h2>限制上传大小256KB</h2>
@@ -158,7 +159,7 @@ export default {
 
 ### 限制文件数量
 
-```sh
+```html
 <template>
   <div>
     <h2>限制上传数量3张</h2>
@@ -180,7 +181,7 @@ export default {
 
 ### 自定义上传占位符和 loading 图标
 
-```javascript
+```html
 <template>
   <div>
     <h2>自定义slot展示</h2>
@@ -207,7 +208,7 @@ export default {
 
 ### 结合`img-preview` 组件进行图片预览
 
-```javascript
+```html
 <template>
   <div class="img-preview">
     <h2>图片预览</h2>
@@ -232,7 +233,7 @@ export default {
 
 ### 自定义事件
 
-```javascript
+```html
 <template>
   <div class="on-click">
     <h2>自定义点击事件</h2>
@@ -261,7 +262,7 @@ export default {
 
 ### 自定义上传内容
 
-```vue
+```html
 <template>
   <div class="slot-default">
     <h2>自定义上传</h2>

@@ -1,15 +1,15 @@
 <template>
-  <div class="upload-to-oss" title="粘贴即可上传图片">
+  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <template v-if="!$slots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
-        <i v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
+        <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
         <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
       </div>
     </template>
 
     <!--上传区域-->
-    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles">
+    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeHighlight" @drop="onDrop">
       <!--@slot 自定义上传区域-->
       <slot>
         <div class="upload-box">
@@ -28,8 +28,16 @@
         </div>
       </slot>
     </div>
-    <input type="file" ref="uploadInput" class="upload-input" :disabled="uploading" @change="upload" hidden :accept="accept"
-           :multiple="multiple">
+    <input
+      class="upload-input"
+      type="file"
+      ref="uploadInput"
+      hidden
+      :disabled="uploading"
+      :accept="accept"
+      :multiple="multiple"
+      @change="upload"
+    >
     <img-preview v-if="preview" v-model="previewUrl"></img-preview>
   </div>
 </template>
@@ -45,6 +53,7 @@ let doubleSlash = '//'
 let oneKB = 1024
 const image = 'image'
 const clipboardData = 'clipboardData'
+const dataTransfer = 'dataTransfer'
 const target = 'target'
 
 export default {
@@ -189,7 +198,8 @@ export default {
     return {
       client: {},
       previewUrl: '',
-      uploading: false
+      uploading: false,
+      isHighlight: false
     }
   },
   computed: {
@@ -215,12 +225,6 @@ export default {
     }
 
     this.newClient()
-    const uploadEl = document.querySelector('.upload-to-oss')
-    uploadEl.addEventListener('paste', this.paste)
-  },
-  destroyed() {
-    const uploadEl = document.querySelector('.upload-to-oss')
-    uploadEl.removeEventListener('paste', this.paste)
   },
   methods: {
     newClient() {
@@ -250,6 +254,9 @@ export default {
       this.$refs.uploadInput.click()
     },
     async upload(e, type = target) {
+      // 防止loading过程重复上传
+      if (this.loading) return
+
       let files = Array.from(e[type].files)
       let currentUploads = []
 
@@ -268,8 +275,9 @@ export default {
       const reset = () => (e.target.value = '')
       this.uploading = true
 
+      const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length; i++) {
-        if (this.uploadList.length == this.max) break
+        if (this.uploadList.length === max) break
         let file = files[i]
 
         let name = file.name
@@ -363,18 +371,37 @@ export default {
       }
     },
     paste(e) {
-      // 防止loading过程重复粘贴
-      if (this.uploading) return
-
       let files = e.clipboardData && e.clipboardData.files
       if (files && files.length) this.upload(e, clipboardData)
+    },
+
+    /**
+     * 拖拽事件
+     */
+    onDragover(e) {
+      e.preventDefault()
+      this.addHighlight()
+    },
+    onDrop(e) {
+      e.preventDefault()
+      this.removeHighlight()
+
+      const files = e.dataTransfer && e.dataTransfer.files
+      if (files && files.length) this.upload(e, dataTransfer)
+    },
+    addHighlight() {
+      this.isHighlight = true
+    },
+    removeHighlight() {
+      this.isHighlight = false
     }
   }
 }
 </script>
 <style lang="stylus">
+$border-color = #cad1e8
+$active-color = #5d81f9
 .upload-to-oss {
-  $border-color = #cad1e8
   display: inline-block;
   .disabled {
     pointer-events: none;
@@ -388,6 +415,10 @@ export default {
     height: 80px;
     border-radius: 3px;
     border: 1px solid $border-color;
+    &:hover {
+      border-color: $active-color;
+      background-color: #5d81f914;
+    }
   }
   .is-preview {
     &:hover {
@@ -508,6 +539,12 @@ export default {
   .upload-area {
     cursor: pointer;
     display: inline-block;
+  }
+}
+.upload-to-oss--highlight {
+  .upload-box {
+    border-color: $active-color;
+    background-color: #5d81f914;
   }
 }
 </style>
