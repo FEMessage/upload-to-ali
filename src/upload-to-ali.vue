@@ -56,6 +56,9 @@ const clipboardData = 'clipboardData'
 const dataTransfer = 'dataTransfer'
 const target = 'target'
 
+const REMimeTypeCtor = /[\w]*\/[\*\w]/
+const REMimeType = /[\w]*/
+
 export default {
   name: 'UploadToAli',
   components: {
@@ -224,10 +227,10 @@ export default {
       return
     }
 
-    if (this.accept && !/[\w]*\/[\*\w]/.test(this.accept)) {
+    if (this.accept && !REMimeTypeCtor.test(this.accept)) {
       console.warn(
         '请设置正确的`accept`属性, 可参考:',
-        'https://www.sitepoint.com/mime-types-complete-list/'
+        'https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types'
       )
     }
 
@@ -277,7 +280,9 @@ export default {
       if (
         this.accept &&
         (this.accept.indexOf('/*') > -1
-          ? files.some(i => i.type.indexOf(this.accept.match(/[\w]*/)) === -1)
+          ? files.some(
+              i => i.type.indexOf(this.accept.match(REMimeType)) === -1
+            )
           : files.some(i => this.accept.indexOf(i.type) === -1))
       ) {
         alert('文件格式有误！')
