@@ -10,6 +10,7 @@ import NoModel from './no-model.vue'
 import SlotDefault from './slot-default.vue'
 import Drag from './drag.vue'
 import DragMultiple from './drag-multiple.vue'
+import Accept from './accept.vue'
 
 storiesOf('upload-to-ali', module)
   .add('basic usage', () => ({
@@ -55,4 +56,8 @@ storiesOf('upload-to-ali', module)
   .add('drag-multiple', () => ({
     components: {DragMultiple},
     template: `<DragMultiple/>`
+  }))
+  .add('accept', () => ({
+    components: {Accept},
+    template: `<Accept/>`
   }))
