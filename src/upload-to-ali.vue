@@ -268,7 +268,7 @@ export default {
       }
 
       if (
-        this.accept.indexOf('image/*')
+        this.accept.indexOf('image/*') !== -1
           ? files.some(i => i.type.indexOf(image) === -1)
           : files.some(i => this.accept.indexOf(i.type) === -1)
       ) {
