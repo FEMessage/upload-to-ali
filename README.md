@@ -290,7 +290,7 @@ export default {
 <template>
   <div class="slot-default">
     <h2>自定义上传文件类型</h2>
-    <upload-to-ali v-model="fileUrl" accept="text/*"></upload-to-ali>
+    <upload-to-ali v-model="fileUrl" accept="application/pdf"></upload-to-ali>
   </div>
 </template>
 
