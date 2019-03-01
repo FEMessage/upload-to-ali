@@ -133,7 +133,7 @@ export default {
      */
     accept: {
       type: String,
-      default: 'image/png, image/jpeg, image/gif, image/jpg'
+      default: 'image/*'
     },
     /**
      * 暂不支持此props。超时时间, 单位毫秒, 大于0才生效
@@ -267,7 +267,11 @@ export default {
         return
       }
 
-      if (files.some(i => this.accept.indexOf(i.type) === -1)) {
+      if (
+        this.accept.indexOf('image/*')
+          ? files.some(i => i.type.indexOf(image) === -1)
+          : files.some(i => this.accept.indexOf(i.type) === -1)
+      ) {
         alert('文件格式有误！')
         return
       }
