@@ -274,11 +274,10 @@ export default {
         return
       }
 
-      const acceptFileType = this.accept.match(/[\w]*/)
       if (
         this.accept &&
         (this.accept.indexOf('/*') > -1
-          ? files.some(i => i.type.indexOf(acceptFileType) === -1)
+          ? files.some(i => i.type.indexOf(this.accept.match(/[\w]*/)) === -1)
           : files.some(i => this.accept.indexOf(i.type) === -1))
       ) {
         alert('文件格式有误！')
