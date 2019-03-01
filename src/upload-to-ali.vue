@@ -56,8 +56,8 @@ const clipboardData = 'clipboardData'
 const dataTransfer = 'dataTransfer'
 const target = 'target'
 
-const REMimeTypeCtor = /[\w]*\/[\*\w]/
-const REMimeType = /[\w]*/
+const mimeTypeFullRegex = /[\w]*\/[\*\w]/
+const mimeTypeHalfRegex = /[\w]*/
 
 export default {
   name: 'UploadToAli',
@@ -227,7 +227,7 @@ export default {
       return
     }
 
-    if (this.accept && !REMimeTypeCtor.test(this.accept)) {
+    if (this.accept && !mimeTypeFullRegex.test(this.accept)) {
       console.warn(
         '请设置正确的`accept`属性, 可参考:',
         'https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types'
@@ -281,7 +281,7 @@ export default {
         this.accept &&
         (this.accept.indexOf('/*') > -1
           ? files.some(
-              i => i.type.indexOf(this.accept.match(REMimeType)) === -1
+              i => i.type.indexOf(this.accept.match(mimeTypeHalfRegex)) === -1
             )
           : files.some(i => this.accept.indexOf(i.type) === -1))
       ) {
