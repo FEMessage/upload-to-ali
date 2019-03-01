@@ -224,6 +224,13 @@ export default {
       return
     }
 
+    if (this.accept && !/[\w]*\/[\*\w]/.test(this.accept)) {
+      console.warn(
+        '请设置正确的`accept`属性, 可参考:',
+        'https://www.sitepoint.com/mime-types-complete-list/'
+      )
+    }
+
     this.newClient()
   },
   methods: {
@@ -267,10 +274,12 @@ export default {
         return
       }
 
+      const acceptFileType = this.accept.match(/[\w]*/)
       if (
-        this.accept.indexOf('image/*') > -1
-          ? files.some(i => i.type.indexOf(image) === -1)
-          : files.some(i => this.accept.indexOf(i.type) === -1)
+        this.accept &&
+        (this.accept.indexOf('/*') > -1
+          ? files.some(i => i.type.indexOf(acceptFileType) === -1)
+          : files.some(i => this.accept.indexOf(i.type) === -1))
       ) {
         alert('文件格式有误！')
         return
