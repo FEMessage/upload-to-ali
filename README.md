@@ -284,6 +284,28 @@ export default {
 </script>
 ```
 
+### 自定义上传文件类型
+
+```html
+<template>
+  <div class="slot-default">
+    <h2>自定义上传文件类型</h2>
+    <upload-to-ali v-model="fileUrl" accept="text/*"></upload-to-ali>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'accept',
+  data() {
+    return {
+      fileUrl: ''
+    }
+  }
+}
+</script>
+```
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ## api
