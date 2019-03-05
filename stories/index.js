@@ -11,6 +11,7 @@ import SlotDefault from './slot-default.vue'
 import Drag from './drag.vue'
 import DragMultiple from './drag-multiple.vue'
 import Accept from './accept.vue'
+import Tip from './tip.vue'
 
 storiesOf('upload-to-ali', module)
   .add('basic usage', () => ({
@@ -60,4 +61,8 @@ storiesOf('upload-to-ali', module)
   .add('accept', () => ({
     components: {Accept},
     template: `<Accept/>`
+  }))
+  .add('tip', () => ({
+    components: {Tip},
+    template: `<Tip/>`
   }))
