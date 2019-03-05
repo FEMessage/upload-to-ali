@@ -284,22 +284,44 @@ export default {
 </script>
 ```
 
+### 自定义上传文件类型
+
+```html
+<template>
+  <div class="slot-default">
+    <h2>自定义上传文件类型</h2>
+    <upload-to-ali v-model="fileUrl" accept="application/pdf"></upload-to-ali>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'accept',
+  data() {
+    return {
+      fileUrl: ''
+    }
+  }
+}
+</script>
+```
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ## api
 
-| 参数            | 说明                                                                                                                                                                                             | 类型            | 默认值                                      |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ------------------------------------------- |
-| value           | 绑定值(支持 v-model)                                                                                                                                                                             | String / Number | -                                           |
-| multiple        | 是否多选                                                                                                                                                                                         | Boolean         | false                                       |
-| max             | 上传最大数量                                                                                                                                                                                     | Number          | 9                                           |
-| size            | 上传大小限制(单位:KB)                                                                                                                                                                            | Number          | 1024                                        |
-| disabled        | 是否禁用                                                                                                                                                                                         | Boolean         | fals                                        |
-| compressOptions | 压缩参数                                                                                                                                                                                         | Object          | {maxWidth: 750}                             |
-| uploadOptions   | 上传参数                                                                                                                                                                                         | Object          | {partSize: 100 \* 1024}                     |
-| preview         | 是否开启预览功能                                                                                                                                                                                 | Boolean         | true                                        |
-| onClick         | 点击事件, 返回参数为当前点击的 url                                                                                                                                                               | Function        | -                                           |
-| accept          | 接受上传的文件类型, 多个值逗号分隔, 默认只接受图片，其他文件类型可以参考[MIME 类型列表](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types) | String          | image/png, image/jpeg, image/gif, image/jpg |
+| 参数            | 说明                                                                                                                                                                                             | 类型            | 默认值                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- | ----------------------- |
+| value           | 绑定值(支持 v-model)                                                                                                                                                                             | String / Number | -                       |
+| multiple        | 是否多选                                                                                                                                                                                         | Boolean         | false                   |
+| max             | 上传最大数量                                                                                                                                                                                     | Number          | 9                       |
+| size            | 上传大小限制(单位:KB)                                                                                                                                                                            | Number          | 1024                    |
+| disabled        | 是否禁用                                                                                                                                                                                         | Boolean         | fals                    |
+| compressOptions | 压缩参数                                                                                                                                                                                         | Object          | {maxWidth: 750}         |
+| uploadOptions   | 上传参数                                                                                                                                                                                         | Object          | {partSize: 100 \* 1024} |
+| preview         | 是否开启预览功能                                                                                                                                                                                 | Boolean         | true                    |
+| onClick         | 点击事件, 返回参数为当前点击的 url                                                                                                                                                               | Function        | -                       |
+| accept          | 接受上传的文件类型, 多个值逗号分隔, 默认只接受图片，其他文件类型可以参考[MIME 类型列表](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types) | String          | image/\*                |
 
 ### 压缩参数 compressOptions
 
