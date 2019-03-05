@@ -31,6 +31,9 @@
   var dataTransfer = 'dataTransfer';
   var target = 'target';
 
+  var mimeTypeFullRegex = /[\w]*\/[\*\w]/;
+  var mimeTypeHalfRegex = /[\w]*/;
+
   var Component = { render: function render() {
       var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "upload-to-oss", class: { 'upload-to-oss--highlight': _vm.isHighlight }, attrs: { "title": "粘贴或拖拽即可上传图片" } }, [!_vm.$slots.default ? _vm._l(_vm.uploadList, function (imgUrl, index) {
         return _c('div', { key: index, staticClass: "upload-item", class: { 'is-preview': _vm.preview } }, [!_vm.disabled ? _c('i', { staticClass: "upload-del-icon", attrs: { "title": "删除图片" }, on: { "click": function click($event) {
@@ -118,7 +121,7 @@
        */
       accept: {
         type: String,
-        default: 'image/png, image/jpeg, image/gif, image/jpg'
+        default: 'image/*'
       },
       /**
        * 暂不支持此props。超时时间, 单位毫秒, 大于0才生效
@@ -209,6 +212,10 @@
         return;
       }
 
+      if (this.accept && !mimeTypeFullRegex.test(this.accept)) {
+        console.warn('请设置正确的`accept`属性, 可参考:', 'https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types');
+      }
+
       this.newClient();
     },
 
@@ -281,9 +288,11 @@
                   return _context.abrupt('return');
 
                 case 9:
-                  if (!files.some(function (i) {
+                  if (!(this.accept && (this.accept.indexOf('/*') > -1 ? files.some(function (i) {
+                    return i.type.indexOf(_this.accept.match(mimeTypeHalfRegex)) === -1;
+                  }) : files.some(function (i) {
                     return _this.accept.indexOf(i.type) === -1;
-                  })) {
+                  })))) {
                     _context.next = 12;
                     break;
                   }
