@@ -3,10 +3,10 @@
     <h2>默认图片格式</h2>
     <upload-to-ali v-model="image"></upload-to-ali>
 
-    <h2>pdf格式</h2>
+    <h2>仅允许上传pdf格式</h2>
     <upload-to-ali accept="application/pdf" v-model="pdf"></upload-to-ali>
 
-    <h2>xlsx格式</h2>
+    <h2>仅允许上传xlsx格式</h2>
     <upload-to-ali accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" v-model="xlsx"></upload-to-ali>
   </div>
 </template>
