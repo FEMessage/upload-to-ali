@@ -28,6 +28,13 @@
         </div>
       </slot>
     </div>
+
+    <div class="upload-tip">
+      <slot name="tip">
+        <span>单个文件大小不超过{{ size }}KB</span>
+      </slot>
+    </div>
+
     <input
       class="upload-input"
       type="file"
@@ -556,6 +563,11 @@ $active-color = #5d81f9
   .upload-area {
     cursor: pointer;
     display: inline-block;
+  }
+  .upload-tip {
+    margin-top: 8px;
+    color: #606266;
+    font-size: 12px;
   }
 }
 .upload-to-oss--highlight {
