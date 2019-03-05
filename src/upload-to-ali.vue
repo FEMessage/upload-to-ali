@@ -194,7 +194,7 @@ export default {
       default: true
     },
     /**
-     * 上传提示内容
+     * 自定义上传提示内容
      */
     tip: {
       type: String
