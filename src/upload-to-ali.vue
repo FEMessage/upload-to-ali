@@ -29,6 +29,7 @@
       </slot>
     </div>
 
+    <!-- 自定义提示文字 -->
     <div class="upload-tip">
       <slot name="tip">
         <span>单个文件大小不超过{{ size }}KB</span>
