@@ -30,10 +30,8 @@
     </div>
 
     <!-- 自定义提示文字 -->
-    <div class="upload-tip">
-      <slot name="tip">
-        <span>单个文件大小不超过{{ size }}KB</span>
-      </slot>
+    <div v-if="tip" class="upload-tip">
+      {{ tip }}
     </div>
 
     <input
@@ -194,6 +192,12 @@ export default {
     preview: {
       type: Boolean,
       default: true
+    },
+    /**
+     * 上传提示内容
+     */
+    tip: {
+      type: String
     },
     /**
      * 点击事件, 返回参数为当前点击的url
