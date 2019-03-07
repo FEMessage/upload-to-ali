@@ -272,7 +272,7 @@ export default {
 
 ### 自定义上传内容
 
-需要注意`<button>`在`<form>`中的默认行为
+下面是一个真实遇到过的例子：上传组件被包在form元素里，上传组件自定义上传内容为button, 此时需要设置button的type="button"，否则点击按钮后会触发表单的提交。
 
 ```html
 <template>
