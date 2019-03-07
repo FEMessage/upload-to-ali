@@ -23,7 +23,8 @@
     * **[自定义上传提示内容](#自定义上传提示内容)**
     * **[自定义上传文件类型](#自定义上传文件类型)**
 7.  **[api](#api)**
-8.  **[event](#event)**
+8.  **[slots](#slots)** 
+9.  **[event](#event)**
 
 ## feature
 
@@ -374,6 +375,16 @@ export default {
 
 **[⬆ Back to Top](#table-of-contents)**
 
+## slots
+
+| name        | 说明                                    | 默认值 |
+| ----------- | --------------------------------------- | ---- |
+| -(非具名插槽)| 自定义上传区域,会覆盖slot=spinner、slot=placeholder |
+| spinner     | 自定义 loading 图标                     | 类似 element-ui 的 v-loading |
+| placeholder | 自定义 placeholder                 | + |
+
+**[⬆ Back to Top](#table-of-contents)**
+
 ## event
 
 `@loaded` - 上传完成后触发的事件
@@ -396,3 +407,4 @@ multiple模式返回（全部的文件列表[Array]，上传文件列表[Array]�
 `@cancel` - 上传操作被取消事件
 
 **[⬆ Back to Top](#table-of-contents)**
+
