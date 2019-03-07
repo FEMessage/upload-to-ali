@@ -12,6 +12,16 @@
 4.  **[config](#config)**
 5.  **[dotenv](#dotenv)**
 6.  **[example](#example)**
+    * **[基本上传操作](#基本上传操作)**
+    * **[上传多张操作](#上传多张操作)**
+    * **[限制文件大小](#限制文件大小)**
+    * **[限制文件数量](#限制文件数量)**
+    * **[自定义上传占位符和 loading 图标](#自定义上传占位符和-loading-图标)**
+    * **[结合 img-preview 组件进行图片预览](#结合img-preview组件进行图片预览)**
+    * **[自定义事件](#自定义事件)**
+    * **[自定义上传内容](#自定义上传内容)**
+    * **[自定义上传提示内容](#自定义上传提示内容)**
+    * **[自定义上传文件类型](#自定义上传文件类型)**
 7.  **[api](#api)**
 8.  **[event](#event)**
 
@@ -206,7 +216,7 @@ export default {
 </script>
 ```
 
-### 结合`img-preview` 组件进行图片预览
+### 结合`img-preview`组件进行图片预览
 
 ```html
 <template>
@@ -262,13 +272,17 @@ export default {
 
 ### 自定义上传内容
 
+下面是一个真实遇到过的例子：上传组件被包在form元素里，上传组件自定义上传内容为button, 此时需要设置button的type="button"，否则点击按钮后会触发表单的提交。
+
 ```html
 <template>
   <div class="slot-default">
     <h2>自定义上传</h2>
-    <upload-to-ali v-model="fileUrl" accept="application/pdf">
-      <button>选择文件</button>
-    </upload-to-ali>
+    <form>
+      <upload-to-ali v-model="fileUrl" accept="application/pdf">
+        <button type="button">选择文件</button>
+      </upload-to-ali>
+    </form>
   </div>
 </template>
 
@@ -284,11 +298,33 @@ export default {
 </script>
 ```
 
+### 自定义上传提示内容
+
+```html
+<template>
+  <div class="tip">
+    <h2>自定义上传提示内容</h2>
+    <upload-to-ali v-model="fileUrl" tip="单个文件大小不超过1024KB"></upload-to-ali>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'tip',
+  data() {
+    return {
+      fileUrl: ''
+    }
+  }
+}
+</script>
+```
+
 ### 自定义上传文件类型
 
 ```html
 <template>
-  <div class="slot-default">
+  <div class="accept">
     <h2>自定义上传文件类型</h2>
     <upload-to-ali v-model="fileUrl" accept="application/pdf"></upload-to-ali>
   </div>

@@ -28,6 +28,12 @@
         </div>
       </slot>
     </div>
+
+    <!-- 自定义提示文字 -->
+    <div v-if="tip" class="upload-tip">
+      {{ tip }}
+    </div>
+
     <input
       class="upload-input"
       type="file"
@@ -186,6 +192,12 @@ export default {
     preview: {
       type: Boolean,
       default: true
+    },
+    /**
+     * 自定义上传提示内容
+     */
+    tip: {
+      type: String
     },
     /**
      * 点击事件, 返回参数为当前点击的url
@@ -556,6 +568,11 @@ $active-color = #5d81f9
   .upload-area {
     cursor: pointer;
     display: inline-block;
+  }
+  .upload-tip {
+    margin-top: 8px;
+    color: #606266;
+    font-size: 12px;
   }
 }
 .upload-to-oss--highlight {
