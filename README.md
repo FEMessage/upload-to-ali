@@ -377,11 +377,11 @@ export default {
 
 ## slots
 
-| name        | 说明                                    |
-| ----------- | --------------------------------------- |
+| name        | 说明                                    | 默认值 |
+| ----------- | --------------------------------------- | ---- |
 | -(非具名插槽)| 自定义上传区域,会覆盖slot=spinner、slot=placeholder |
-| spinner     | 自定义 loading 图标                     |
-| placeholder | 自定义 placeholder                 |
+| spinner     | 自定义 loading 图标                     | 类似 element-ui 的 v-loading |
+| placeholder | 自定义 placeholder                 | + |
 
 **[⬆ Back to Top](#table-of-contents)**
 
