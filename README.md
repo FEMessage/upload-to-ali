@@ -272,7 +272,7 @@ export default {
 
 ### 自定义上传内容
 
-下面是一个真实遇到过的例子：上传组件被包在form元素里，上传组件自定义上传内容为button, 此时需要设置button的type="button"，否则点击按钮后会触发表单的提交。
+下面是一个真实遇到过的例子：上传组件被包在 form 元素里，上传组件自定义上传内容为 button, 此时需要设置 button 的 type="button"，否则点击按钮后会触发表单的提交。
 
 ```html
 <template>
@@ -358,6 +358,7 @@ export default {
 | preview         | 是否开启预览功能                                                                                                                                                                                 | Boolean         | true                    |
 | onClick         | 点击事件, 返回参数为当前点击的 url                                                                                                                                                               | Function        | -                       |
 | accept          | 接受上传的文件类型, 多个值逗号分隔, 默认只接受图片，其他文件类型可以参考[MIME 类型列表](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types) | String          | image/\*                |
+| tip             | 自定义上传提示内容                                                                                                                                                                               | String          | -                       |
 
 ### 压缩参数 compressOptions
 
