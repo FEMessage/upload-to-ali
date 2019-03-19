@@ -1,5 +1,10 @@
 # upload-to-ali
 
+[![NPM Download](https://img.shields.io/npm/dm/@femessage/upload-to-ali.svg)](https://www.npmjs.com/package/@femessage/upload-to-ali)
+[![NPM Version](https://img.shields.io/npm/v/@femessage/upload-to-ali.svg)](https://www.npmjs.com/package/@femessage/upload-to-ali)
+[![NPM License](https://img.shields.io/npm/l/@femessage/upload-to-ali.svg)](https://github.com/FEMessage/upload-to-ali/blob/master/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
+
 对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
@@ -23,7 +28,7 @@
     * **[自定义上传提示内容](#自定义上传提示内容)**
     * **[自定义上传文件类型](#自定义上传文件类型)**
 7.  **[api](#api)**
-8.  **[slots](#slots)** 
+8.  **[slots](#slots)**
 9.  **[event](#event)**
 
 ## feature
@@ -377,11 +382,11 @@ export default {
 
 ## slots
 
-| name        | 说明                                    | 默认值 |
-| ----------- | --------------------------------------- | ---- |
-| -(非具名插槽)| 自定义上传区域,会覆盖slot=spinner、slot=placeholder |
-| spinner     | 自定义 loading 图标                     | 类似 element-ui 的 v-loading |
-| placeholder | 自定义 placeholder                 | + |
+| name          | 说明                                                 | 默认值                       |
+| ------------- | ---------------------------------------------------- | ---------------------------- |
+| -(非具名插槽) | 自定义上传区域,会覆盖 slot=spinner、slot=placeholder |
+| spinner       | 自定义 loading 图标                                  | 类似 element-ui 的 v-loading |
+| placeholder   | 自定义 placeholder                                   | +                            |
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -407,4 +412,3 @@ multiple模式返回（全部的文件列表[Array]，上传文件列表[Array]�
 `@cancel` - 上传操作被取消事件
 
 **[⬆ Back to Top](#table-of-contents)**
-
