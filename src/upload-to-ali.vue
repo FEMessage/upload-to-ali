@@ -1,7 +1,7 @@
 <template>
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
-    <template v-if="!$slots.default">
+    <template v-if="!$slots.default || !$scopedSlots.default">
       <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
         <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
         <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
@@ -227,6 +227,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this)
     if (
       !this.region ||
       !this.bucket ||
