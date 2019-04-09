@@ -12,6 +12,7 @@ import Drag from './drag.vue'
 import DragMultiple from './drag-multiple.vue'
 import Accept from './accept.vue'
 import Tip from './tip.vue'
+import SlotScope from './slot-scope.vue'
 
 storiesOf('upload-to-ali', module)
   .add('basic usage', () => ({
@@ -65,4 +66,8 @@ storiesOf('upload-to-ali', module)
   .add('tip', () => ({
     components: {Tip},
     template: `<Tip/>`
+  }))
+  .add('slot-scope', () => ({
+    components: {SlotScope},
+    template: '<SlotScope/>'
   }))
