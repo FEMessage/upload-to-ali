@@ -11,7 +11,7 @@
     <!--上传区域-->
     <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeHighlight" @drop="onDrop">
       <!--@slot 自定义上传区域-->
-      <slot>
+      <slot :loading="uploading">
         <div class="upload-box">
           <!--@slot 自定义loading内容 -->
           <slot name="spinner" v-if="uploading">
