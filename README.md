@@ -45,8 +45,7 @@
 
 ## documentation
 
-* [full api doc](https://femessage.github.io/upload-to-ali/)
-* [online demo](https://femessage.github.io/upload-to-ali/storybook/)
+* [doc and online demo](https://femessage.github.io/upload-to-ali/)
 
 **[⬆ Back to Top](#table-of-contents)**
 
