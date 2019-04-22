@@ -1,6 +1,8 @@
+自定义上传占位符和 loading 图标
+
+```vue
 <template>
   <div>
-    <h2>自定义slot展示</h2>
     <upload-to-ali v-model="url">
       <!--@slot 自定义上传占位符 -->
       <p slot="placeholder">点击上传</p>
@@ -20,3 +22,4 @@ export default {
   }
 }
 </script>
+```
