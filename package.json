@@ -28,7 +28,6 @@
       "rollup --config build/rollup.config.js --format es --file dist/upload-to-ali.esm.js",
     "build:unpkg":
       "rollup --config build/rollup.config.js --format iife --file dist/upload-to-ali.min.js",
-    "prepublishOnly": "npm run build",
     "precommit": "pretty-quick --staged"
   },
   "dependencies": {
