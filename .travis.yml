@@ -4,7 +4,7 @@ node_js:
 git:
   depth: 3
 install:
-- yarn
+- yarn --frozen-lockfile
 script:
 - yarn build
 cache: yarn
