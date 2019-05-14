@@ -247,6 +247,18 @@ export default {
     }
 
     this.newClient()
+
+    const ENTER_KEY_CODE = 27
+    const resetPreviewUrl = event => {
+      if (event.keyCode === ENTER_KEY_CODE) {
+        this.previewUrl = ''
+      }
+    }
+
+    document.addEventListener('keyup', resetPreviewUrl)
+  },
+  destroyed() {
+    document.removeEventListener('keyup', resetPreviewUrl)
   },
   methods: {
     newClient() {
