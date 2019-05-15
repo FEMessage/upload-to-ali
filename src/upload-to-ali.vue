@@ -108,7 +108,7 @@ export default {
       type: String,
       default: process.env.OSS_DIR || '',
       validator(value) {
-        return value.endsWith('/')
+        return value.endsWith('/') || value.endsWith('')
       }
     },
     /**
