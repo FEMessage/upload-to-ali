@@ -1,12 +1,11 @@
 <template>
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
-    <template v-if="!$slots.default">
-      <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
-        <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
-        <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
-      </div>
-    </template>
+    <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
+      <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
+      <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)" v-if="isUploadImage" />
+      <span class="upload-info" v-else>上传成功</span>
+    </div>
 
     <!--上传区域-->
     <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeHighlight" @drop="onDrop">
@@ -44,7 +43,7 @@
       :multiple="multiple"
       @change="upload"
     >
-    <img-preview v-if="preview" v-model="previewUrl"></img-preview>
+    <img-preview v-if="preview && isUploadImage" v-model="previewUrl"></img-preview>
   </div>
 </template>
 
@@ -224,6 +223,9 @@ export default {
     canUpload() {
       const maxLen = this.multiple ? this.max : 1
       return this.uploadList.length < maxLen
+    },
+    isUploadImage() {
+      return this.accept.startsWith('image')
     }
   },
   mounted() {
@@ -554,13 +556,18 @@ $active-color = #5d81f9
       background: #fff;
     }
   }
-  .upload-img {
+  .upload-img,
+  .upload-info {
     position: absolute;
     width: 100%;
     max-height: 100%;
     display: block;
     top: 50%;
     transform: translate(0, -50%);
+  }
+  .upload-info {
+    color: #67C23A;
+    text-align: center;
   }
   .upload-input {
     display: none;
