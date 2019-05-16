@@ -44,7 +44,7 @@
       :multiple="multiple"
       @change="upload"
     >
-    <img-preview v-if="preview" v-model="previewUrl"></img-preview>
+    <img-preview v-if="preview" v-model="previewUrl" @close="handlePreviewClose"></img-preview>
   </div>
 </template>
 
@@ -423,6 +423,9 @@ export default {
     },
     removeHighlight() {
       this.isHighlight = false
+    },
+    handlePreviewClose() {
+      this.previewUrl = ''
     }
   }
 }
