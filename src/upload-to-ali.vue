@@ -3,7 +3,7 @@
     <!--图片的展示区域-->
     <div v-for="(imgUrl, index) in uploadList" :key="imgUrl" class="upload-item" :class="{'is-preview': preview}">
       <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
-      <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)" v-if="isUploadImage" />
+      <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)" v-if="imageSuffixs.some(s => s === imgUrl.slice(imgUrl.lastIndexOf('.')))" />
       <!--@slot 自定义上传非图片完成时展示区域-->
       <slot name="result" v-else>
         <span class="upload-info">上传完成</span>
@@ -46,8 +46,7 @@
       :multiple="multiple"
       @change="upload"
     >
-    <!-- 只有上传的是图片时才预览图片 -->
-    <img-preview v-if="preview && isUploadImage" v-model="previewUrl"></img-preview>
+    <img-preview v-if="preview" v-model="previewUrl"></img-preview>
   </div>
 </template>
 
@@ -217,7 +216,8 @@ export default {
       client: {},
       previewUrl: '',
       uploading: false,
-      isHighlight: false
+      isHighlight: false,
+      imageSuffixs: ['.gif', '.jpg', '.jpeg', '.png', '.webp', '.bmp']
     }
   },
   computed: {
@@ -227,9 +227,6 @@ export default {
     canUpload() {
       const maxLen = this.multiple ? this.max : 1
       return this.uploadList.length < maxLen
-    },
-    isUploadImage() {
-      return this.accept.startsWith('image')
     }
   },
   mounted() {
