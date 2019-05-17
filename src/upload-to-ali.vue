@@ -1,10 +1,13 @@
 <template>
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
-    <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
+    <div v-for="(imgUrl, index) in uploadList" :key="imgUrl" class="upload-item" :class="{'is-preview': preview}">
       <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
       <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)" v-if="isUploadImage" />
-      <span class="upload-info" v-else>上传成功</span>
+      <!--@slot 自定义上传非图片完成时展示区域-->
+      <slot name="result" v-else>
+        <span class="upload-info">上传完成</span>
+      </slot>
     </div>
 
     <!--上传区域-->
@@ -43,6 +46,7 @@
       :multiple="multiple"
       @change="upload"
     >
+    <!-- 只有上传的是图片时才预览图片 -->
     <img-preview v-if="preview && isUploadImage" v-model="previewUrl"></img-preview>
   </div>
 </template>

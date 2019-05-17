@@ -2,9 +2,10 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="videoUrl" :max="3" multiple accept="video/*" :size="1024 * 1024 * 10">
+  <upload-to-ali v-model="videoUrl" :max="3" multiple accept="video/*" :size="1024 * 1024">
+    <span slot="result">上传完成了</span>
     <div class="wrap">
-      <span>点击上传</span>
+      <span slot="placeholder">点击上传</span>
     </div>
   </upload-to-ali>
 </template>
