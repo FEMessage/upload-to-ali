@@ -2,7 +2,7 @@
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <div v-for="(imgUrl, index) in uploadList" :key="imgUrl" class="upload-item" :class="{'is-preview': preview}">
-      <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
+      <i title="删除" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
       <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)" v-if="imageSuffixs.some(s => s === imgUrl.slice(imgUrl.lastIndexOf('.')))" />
       <!--@slot 自定义上传非图片完成时展示区域-->
       <slot name="result" v-else>

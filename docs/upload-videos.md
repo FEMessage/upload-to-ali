@@ -2,7 +2,13 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="videoUrl" :max="3" multiple accept="video/*" :size="1024 * 1024" />
+  <upload-to-ali
+    v-model="videoUrl"
+    accept="video/*"
+    :size="1024 * 1024"
+  >
+    <video class="video" controls muted :src="videoUrl" slot="result"></video>
+  </upload-to-ali>
 </template>
 <script>
 export default {
@@ -15,3 +21,13 @@ export default {
 }
 </script>
 ```
+
+<style>
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 720px;
+}
+</style>
+
