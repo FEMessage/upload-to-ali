@@ -1,9 +1,11 @@
 # upload-to-ali
 
+[![Build Status](https://travis-ci.com/FEMessage/upload-to-ali.svg?branch=master)](https://travis-ci.com/FEMessage/upload-to-ali)
 [![NPM Download](https://img.shields.io/npm/dm/@femessage/upload-to-ali.svg)](https://www.npmjs.com/package/@femessage/upload-to-ali)
 [![NPM Version](https://img.shields.io/npm/v/@femessage/upload-to-ali.svg)](https://www.npmjs.com/package/@femessage/upload-to-ali)
 [![NPM License](https://img.shields.io/npm/l/@femessage/upload-to-ali.svg)](https://github.com/FEMessage/upload-to-ali/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
+[![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
 对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
 
@@ -45,7 +47,7 @@
 
 ## documentation
 
-* [doc and online demo](https://femessage.github.io/upload-to-ali/)
+* [doc and online demo](https://femessage.github.io/upload-to-ali/docs/)
 
 **[⬆ Back to Top](#table-of-contents)**
 
