@@ -1,3 +1,6 @@
+branches:
+  only:
+    - master
 language: node_js
 node_js:
 - lts/*
@@ -5,14 +8,24 @@ git:
   depth: 3
 install:
 - yarn --frozen-lockfile
+before_script:
+- echo OSS_KEY=$OSS_KEY >> .env
+- echo OSS_SECRET=$OSS_SECRET >> .env
+- echo OSS_BUCKET=$OSS_BUCKET >> .env
+- echo OSS_REGION=$OSS_REGION >> .env
 script:
-- yarn build
+- ./build.sh
+after_success:
+- GREN_GITHUB_TOKEN=$GITHUB_TOKEN yarn release
+- sleep 3 && ./notify.sh
 cache: yarn
 deploy:
-  on:
-    branch: master
-  provider: npm
-  email: levy9527@qq.com
+- provider: pages
+  local-dir: docs
+  github-token: $GITHUB_TOKEN
   skip-cleanup: true
-  api_key:
-    secure: kEds47JFsp5PEXrkCQIFlaigYUK6F3m7OMZCtFZkp5wBziSTdhZ036bKxc+hDYn+MV0kPj51gHLnnP2xjo6vgLASWSpVyfPl3SrrbmVHAVYjPdVwIj6F/hphlRhFwVJHNVmTQ6G0BwOD8c67ceKKD1XL7s+V4pdboCe7awHzhd/F5aWjDxr8nXv9kcKSZJlbndueT6TsCqCkvoXwXVcpVCedvlH72L/AN/cTzADaT67wjWCROuA9xKWW8xnPCBCIjh/X+p5PdzI/efTRTN1amVI082YukPub0s9mG+2euPnCY7YSYPMvTkyNhn2COvjsx37EZNUsN59MsTKhggzdv81CX+v4av9jdKbxN1Kc7cxy09BWcsf3dq4z32vRJn5SsfmVd0EyjqHoyQQYNe2mU+da9S614WwUb/Do4dMNJf+ex08/P7dL3RovOZdid5lMrulFKEvxoRjX0+XyXqL2f1rv6a5/Ok6x2jpts1mIqEd7894g08rWa0H1Y7CgYK+TdfbM2GWrjUlz+WpH8O7+nhpjI0gAyxpVnXiKaMwzqGDfuKs5qCHWVxvyc2W/HcQpm/VEARZJslPLy2Fb/nW7Sl5ltYJuD0oPfckyBqyEWRWpxLSb8KLuGlflNKRSOZ3DOfcSeV7QBkjI3phd1QNeH3fW/0MJs5eOyl1700OCSH8=
+  keep-history: true
+- provider: npm
+  email: levy9527@qq.com
+  api_key: $NPM_TOKEN
+  skip-cleanup: true
