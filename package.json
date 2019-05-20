@@ -32,7 +32,7 @@
     "release": "gren release --override"
   },
   "dependencies": {
-    "@femessage/img-preview": "^1.1.1",
+    "@femessage/img-preview": "^1.2.0",
     "ali-oss": "^6.0.1",
     "image-compressor.js": "^1.1.4"
   },
@@ -42,6 +42,7 @@
     "@babel/preset-env": "^7.4.3",
     "babel-loader": "^8.0.5",
     "dotenv": "^7.0.0",
+    "github-release-notes": "^0.17.0",
     "glob": "^7.1.3",
     "husky": "^0.14.3",
     "minimist": "^1.2.0",
@@ -52,15 +53,14 @@
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-vue": "^4.7.2",
+    "standard-version": "^6.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.16",
     "vue-loader": "^15.7.0",
     "vue-styleguidist": "3.11.4",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.29.6",
-    "github-release-notes": "^0.17.0",
-    "standard-version": "^6.0.1"
+    "webpack": "^4.29.6"
   },
   "publishConfig": {
     "access": "public"
