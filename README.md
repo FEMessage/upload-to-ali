@@ -47,7 +47,7 @@
 
 ## documentation
 
-* [doc and online demo](https://femessage.github.io/upload-to-ali/docs/)
+* [doc and online demo](https://femessage.github.io/upload-to-ali/)
 
 **[⬆ Back to Top](#table-of-contents)**
 
