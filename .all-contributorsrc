@@ -1,0 +1,59 @@
+{
+  "projectName": "upload-to-ali",
+  "projectOwner": "FEMessage",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "levy9527",
+      "name": "levy",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9384365?v=4",
+      "profile": "http://levy.work",
+      "contributions": [
+        "code",
+        "review",
+        "infra",
+				"blog",
+        "ideas"
+      ]
+    },
+    {
+      "login": "Alvin-Liu",
+      "name": "Alvin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11909145?v=4",
+      "profile": "https://github.com/Alvin-Liu",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "listars",
+      "name": "listars",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/20613509?v=4",
+      "profile": "https://github.com/listars",
+      "contributions": [
+        "code",
+        "review",
+        "doc"
+      ]
+    },
+    {
+      "login": "evillt",
+      "name": "EVILLT",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/19513289?v=4",
+      "profile": "https://evila.me",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
