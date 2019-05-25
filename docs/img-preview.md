@@ -3,7 +3,7 @@
 ```vue
 <template>
   <div class="img-preview">
-    <upload-to-ali preview v-model="url" multiple></upload-to-ali>
+    <upload-to-ali preview v-model="url" multiple />
   </div>
 </template>
 

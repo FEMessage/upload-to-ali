@@ -2,9 +2,7 @@
 
 ```vue
 <template>
-  <div class="tip">
-    <upload-to-ali v-model="fileUrl" tip="单个文件大小不超过1024KB"></upload-to-ali>
-  </div>
+  <upload-to-ali v-model="fileUrl" tip="单个文件大小不超过1024KB" />
 </template>
 
 <script>

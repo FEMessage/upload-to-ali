@@ -340,10 +340,16 @@ export default {
               if (this.customDomain.indexOf(doubleSlash) > -1)
                 filename = `${this.customDomain}/${res.name}`
               else filename += `${this.customDomain}/${res.name}`
-            } else
+            } else {
               filename += `${this.bucket}.${this.region}.aliyuncs.com/${
                 res.name
               }`
+            }
+            /**
+             * upload或delete操作后触发。
+             * 如果multiple，返回更新后的url数组；else，返回url
+             * @event input
+             */
             this.$emit(
               'input',
               this.multiple ? this.uploadList.concat(filename) : filename
@@ -387,15 +393,15 @@ export default {
       // 没有一张上传成功的，不触发load事件
       if (currentUploads.length < 1) return
 
-      /**
-       * 上传完成后触发的事件,返回url
-       * 上传单张 返回 String,
-       * 上传多张 返回 此次成功上传的文件url数组
-       * @event loaded
-       */
       if (this.multiple) {
         this.$emit('loaded', currentUploads)
       } else {
+        /**
+         * 上传完成后触发的事件，返回url。
+         * 上传单张，返回单个url；
+         * 上传多张，返回此次成功上传的文件url数组
+         * @event loaded
+         */
         this.$emit('loaded', currentUploads[0])
       }
     },

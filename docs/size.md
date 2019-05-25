@@ -2,10 +2,8 @@
 
 ```vue
 <template>
-  <div>
-    <!--size单位为kb-->
-    <upload-to-ali v-model="url" :size="256"></upload-to-ali>
-  </div>
+  <!--size单位为kb-->
+  <upload-to-ali v-model="url" :size="256" />
 </template>
 
 <script>

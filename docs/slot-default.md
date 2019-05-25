@@ -4,13 +4,11 @@
 
 ```vue
 <template>
-  <div class="slot-default">
-    <form>
-      <upload-to-ali v-model="fileUrl" accept="application/pdf">
-        <button type="button">选择文件</button>
-      </upload-to-ali>
-    </form>
-  </div>
+  <form>
+    <upload-to-ali v-model="fileUrl" accept="application/pdf">
+      <button type="button">选择文件</button>
+    </upload-to-ali>
+  </form>
 </template>
 
 <script>
