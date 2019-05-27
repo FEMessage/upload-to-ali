@@ -268,6 +268,10 @@ export default {
        */
       this.$emit('delete', url, index)
     },
+    /**
+     * 手动触发选择文件事件
+     * @public
+     */
     selectFiles() {
       if (!this.canUpload) {
         alert('已达到上传的最大数量')
