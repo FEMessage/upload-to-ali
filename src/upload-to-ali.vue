@@ -22,7 +22,8 @@
             </div>
           </slot>
           <!--@slot 自定义placeholder内容 -->
-          <slot name="placeholder" v-else>
+          <slot name="placeholder" v-if="!uploading">
+            <!-- HACK: 在有v-else属性的block及子孙中，@slot无法提取slot，已向vue-styleguist提issue#430 -->
             <div class="upload-placeholder"></div>
           </slot>
         </div>
