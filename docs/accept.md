@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="fileUrl" accept="application/pdf" />
+  <upload-to-ali v-model="fileUrl" accept="application/pdf"></upload-to-ali>
 </template>
 
 <script>

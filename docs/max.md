@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="url" :max="3" multiple />
+  <upload-to-ali v-model="url" :max="3" multiple></upload-to-ali>
 </template>
 
 <script>

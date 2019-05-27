@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="url" />
+  <upload-to-ali v-model="url"></upload-to-ali>
 </template>
 <script>
 export default {

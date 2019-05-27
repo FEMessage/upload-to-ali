@@ -4,7 +4,7 @@
 
 ```vue
 <template>
-  <upload-to-ali @loaded="loaded" v-model="url" />
+  <upload-to-ali @loaded="loaded" v-model="url"></upload-to-ali>
 </template>
 <script>
 export default {

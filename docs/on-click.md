@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-  <upload-to-ali :onClick="onClick" v-model="url" />
+  <upload-to-ali :onClick="onClick" v-model="url"></upload-to-ali>
 </template>
 
 <script>
