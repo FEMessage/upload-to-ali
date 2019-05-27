@@ -11,16 +11,14 @@
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
 
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
 
-* [upload-to-ali](#upload-to-ali)
-  * [Table of Contents](#table-of-contents)
-  * [feature](#feature)
-  * [documentation](#documentation)
-  * [install](#install)
-  * [config](#config)
-  * [dotenv](#dotenv)
-  * [Contributors](#contributors)
+* [feature](#feature)
+* [documentation](#documentation)
+* [install](#install)
+* [config](#config)
+* [dotenv](#dotenv)
+* [Contributors](#contributors)
 
 ## feature
 
