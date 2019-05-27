@@ -8,8 +8,6 @@ const env = Object.assign({}, require('dotenv').config().parsed, {
   OSS_REGION: process.env.OSS_REGION
 })
 
-console.log(env)
-
 const demos = glob.sync('docs/!(basic).md')
 const demoSections = demos.map(filePath => ({
   name: path.basename(filePath, '.md'),
