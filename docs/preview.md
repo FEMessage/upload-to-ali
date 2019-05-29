@@ -2,14 +2,10 @@
 
 ```vue
 <template>
-  <div class="img-preview">
-    <upload-to-ali preview v-model="url" multiple></upload-to-ali>
-  </div>
+  <upload-to-ali preview v-model="url" multiple />
 </template>
-
 <script>
 export default {
-  name: 'img-preview',
   data() {
     return {
       url: [

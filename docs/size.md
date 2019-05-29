@@ -1,16 +1,11 @@
-限制文件大小
+限制文件大小，size单位为kb
 
 ```vue
 <template>
-  <div>
-    <!--size单位为kb-->
-    <upload-to-ali v-model="url" :size="256"></upload-to-ali>
-  </div>
+  <upload-to-ali v-model="url" :size="256" />
 </template>
-
 <script>
 export default {
-  name: 'size',
   data() {
     return {
       url: ''
