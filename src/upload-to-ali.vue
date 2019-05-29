@@ -318,7 +318,7 @@ export default {
 
         /**
          * 上传过程中
-         * @property {string} name - 正上传的图片名称
+         * @property {string} name - 当前上传的图片名称
          */
         this.$emit('loading', name)
 
