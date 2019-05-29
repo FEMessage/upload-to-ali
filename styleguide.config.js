@@ -8,7 +8,7 @@ const env = Object.assign({}, require('dotenv').config().parsed, {
   OSS_REGION: process.env.OSS_REGION
 })
 
-const demos = glob.sync('docs/!(basic).md')
+const demos = ['docs/basic.md', ...glob.sync('docs/!(basic).md')]
 const demoSections = demos.map(filePath => ({
   name: path.basename(filePath, '.md'),
   content: filePath
@@ -28,7 +28,6 @@ module.exports = {
     },
     {
       name: 'Demo',
-      content: 'docs/basic.md',
       sections: demoSections
     }
   ],

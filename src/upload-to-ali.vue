@@ -10,10 +10,10 @@
 
     <!--上传区域-->
     <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeHighlight" @drop="onDrop">
-      <!--@slot 自定义上传区域-->
+      <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
       <slot>
         <div class="upload-box">
-          <!--@slot 自定义loading内容 -->
+          <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
           <slot name="spinner" v-if="uploading">
             <div class="upload-loading">
               <svg class="circular" viewBox="25 25 50 50">
@@ -138,7 +138,7 @@ export default {
     },
     /**
      * 接受上传的文件类型, 多个值逗号分隔, 默认只接受图片
-     * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept
+     * 其他文件类型可以参考[MIME 类型列表](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types)
      */
     accept: {
       type: String,
@@ -263,11 +263,15 @@ export default {
       this.$emit('input', result)
       /**
        * 删除图片事件
-       * 返回参数(被删除的文件, 下标)
-       * @event delete
+       * @property {string} url - 被删除图片的url；
+       * @property {number} index - 被删除图片的下标
        */
       this.$emit('delete', url, index)
     },
+    /**
+     * 手动触发选择文件事件
+     * @public
+     */
     selectFiles() {
       if (!this.canUpload) {
         alert('已达到上传的最大数量')
@@ -313,8 +317,8 @@ export default {
         let key = ''
 
         /**
-         * loading过程事件
-         * @event loading
+         * 上传过程中
+         * @property {string} name - 当前上传的图片名称
          */
         this.$emit('loading', name)
 
@@ -359,20 +363,17 @@ export default {
             if (e.code === 'ConnectionTimeoutError') {
               /**
                * 上传超时事件
-               * @event timeout
                */
               this.$emit('timeout')
             }
             if (this.client.isCancel()) {
               /**
                * 上传操作被取消事件
-               * @event cancel
                */
               this.$emit('cancel')
             } else {
               /**
                * 上传失败事件
-               * @event fail
                */
               this.$emit('fail')
             }
@@ -387,15 +388,13 @@ export default {
       // 没有一张上传成功的，不触发load事件
       if (currentUploads.length < 1) return
 
-      /**
-       * 上传完成后触发的事件,返回url
-       * 上传单张 返回 String,
-       * 上传多张 返回 此次成功上传的文件url数组
-       * @event loaded
-       */
       if (this.multiple) {
         this.$emit('loaded', currentUploads)
       } else {
+        /**
+         * 上传完成后触发的事件。
+         * @property {string[]|string} urls - multiple模式返回此次成功上传的文件url数组； 单张模式返回上传的url
+         */
         this.$emit('loaded', currentUploads[0])
       }
     },

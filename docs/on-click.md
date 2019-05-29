@@ -2,19 +2,13 @@
 
 ```vue
 <template>
-  <div class="on-click">
-    <upload-to-ali :onClick="onClick" v-model="url"></upload-to-ali>
-  </div>
+  <upload-to-ali :onClick="onClick" v-model="url" />
 </template>
-
 <script>
 export default {
-  name: 'on-click',
-  components: {},
   data() {
     return {
-      url:
-        '\/\/deepexi-moby.oss-cn-shenzhen.aliyuncs.com/undefined头像-1544260671963.jpg'
+      url: 'https://deepexi.oss-cn-shenzhen.aliyuncs.com/deepexi-services/logo_Deepexi_640x640.jpg'
     }
   },
   methods: {
