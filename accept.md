@@ -2,14 +2,10 @@
 
 ```vue
 <template>
-  <div class="accept">
-    <upload-to-ali v-model="fileUrl" accept="application/pdf"></upload-to-ali>
-  </div>
+  <upload-to-ali v-model="fileUrl" accept="application/pdf" />
 </template>
-
 <script>
 export default {
-  name: 'accept',
   data() {
     return {
       fileUrl: ''
