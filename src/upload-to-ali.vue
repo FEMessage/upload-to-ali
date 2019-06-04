@@ -1,15 +1,37 @@
 <template>
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
-    <template v-if="!$slots.default">
-      <div v-for="(imgUrl, index) in uploadList" :key="index" class="upload-item" :class="{'is-preview': preview}">
-        <i title="删除图片" v-if="!disabled" class="upload-del-icon" @click.stop.prevent="onDelete(imgUrl, index)"></i>
-        <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)"/>
+    <vue-draggable
+      v-if="!$slots.default"
+      v-model="uploadList"
+      ghost-class="ghost"
+      style="display: inline-block"
+    >
+      <div
+        v-for="imgUrl in uploadList"
+        :key="imgUrl"
+        :class="['upload-item', {'is-preview': preview}]"
+      >
+        <i
+          title="删除图片"
+          v-if="!disabled"
+          class="upload-del-icon"
+          @click.stop.prevent="onDelete(imgUrl, index)"
+        ></i>
+        <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)">
       </div>
-    </template>
+    </vue-draggable>
 
     <!--上传区域-->
-    <div class="upload-area" :class="{disabled: disabled}" v-if="canUpload" @click="selectFiles" @paste="paste" @dragover="onDragover" @dragleave="removeHighlight" @drop="onDrop">
+    <div
+      :class="['upload-area', {disabled}]"
+      v-if="canUpload"
+      @click="selectFiles"
+      @paste="paste"
+      @dragover="onDragover"
+      @dragleave="removeHighlight"
+      @drop="onDrop"
+    >
       <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
       <slot>
         <div class="upload-box">
@@ -17,7 +39,7 @@
           <slot name="spinner" v-if="uploading">
             <div class="upload-loading">
               <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"/>
+                <circle class="path" cx="50" cy="50" r="20" fill="none"></circle>
               </svg>
             </div>
           </slot>
@@ -30,9 +52,7 @@
     </div>
 
     <!-- 自定义提示文字 -->
-    <div v-if="tip" class="upload-tip">
-      {{ tip }}
-    </div>
+    <div v-if="tip" class="upload-tip">{{ tip }}</div>
 
     <input
       class="upload-input"
@@ -52,6 +72,7 @@
 import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
+import VueDraggable from 'vuedraggable'
 
 const imageCompressor = new ImageCompressor()
 
@@ -68,7 +89,8 @@ const mimeTypeHalfRegex = /[\w]*/
 export default {
   name: 'UploadToAli',
   components: {
-    ImgPreview
+    ImgPreview,
+    VueDraggable
   },
   props: {
     /**
@@ -119,6 +141,7 @@ export default {
     },
     /**
      * 图片地址, 支持v-model
+     * @model
      */
     value: [String, Array],
     /**
@@ -218,8 +241,13 @@ export default {
     }
   },
   computed: {
-    uploadList() {
-      return [].concat(this.value).filter(v => !!v)
+    uploadList: {
+      get() {
+        return [].concat(this.value).filter(v => !!v)
+      },
+      set(list) {
+        this.$emit('input', list)
+      }
     },
     canUpload() {
       const maxLen = this.multiple ? this.max : 1
@@ -456,6 +484,9 @@ $active-color = #5d81f9
   .upload-item {
     position: relative;
     margin: 0 8px 8px 0;
+    &.ghost {
+      opacity: 0.5;
+    }
   }
   .upload-placeholder,
   .upload-loading {

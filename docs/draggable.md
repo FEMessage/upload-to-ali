@@ -1,4 +1,4 @@
-结合`img-preview`组件进行图片预览
+可以拖拽排序
 
 ```vue
 <template>
@@ -9,7 +9,8 @@ export default {
   data() {
     return {
       url: [
-        'https://deepexi.oss-cn-shenzhen.aliyuncs.com/deepexi-services/logo_Deepexi_640x640.jpg'
+        'https://deepexi.oss-cn-shenzhen.aliyuncs.com/deepexi-services/logo_Deepexi_640x640.jpg',
+        'https://picsum.photos/200/300'
       ]
     }
   }
