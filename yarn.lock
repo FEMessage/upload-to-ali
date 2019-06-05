@@ -7632,11 +7632,6 @@ socks@~2.3.2:
     ip "^1.1.5"
     smart-buffer "4.0.2"
 
-sortablejs@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.npm.taobao.org/sortablejs/download/sortablejs-1.9.0.tgz#2d1e74ae6bac2cb4ad0622908f340848969eb88d"
-  integrity sha1-LR50rmusLLStBiKQjzQISJaeuI0=
-
 sorted-object@~2.0.1:
   version "2.0.1"
   resolved "https://registry.npm.taobao.org/sorted-object/download/sorted-object-2.0.1.tgz#7d631f4bd3a798a24af1dffcfbfe83337a5df5fc"
@@ -8774,13 +8769,6 @@ vue-template-es2015-compiler@^1.9.0:
 vue@^2.5.16, vue@^2.6.9:
   version "2.6.10"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
-
-vuedraggable@^2.21.0:
-  version "2.21.0"
-  resolved "https://registry.npm.taobao.org/vuedraggable/download/vuedraggable-2.21.0.tgz#30c485ed737a9a6a73ea8f21cc8e1ed59aaddc92"
-  integrity sha1-MMSF7XN6mmpz6o8hzI4e1Zqt3JI=
-  dependencies:
-    sortablejs "^1.9.0"
 
 walkes@^0.2.1:
   version "0.2.1"

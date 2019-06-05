@@ -34,8 +34,7 @@
   "dependencies": {
     "@femessage/img-preview": "^1.2.0",
     "ali-oss": "^6.0.1",
-    "image-compressor.js": "^1.1.4",
-    "vuedraggable": "^2.21.0"
+    "image-compressor.js": "^1.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

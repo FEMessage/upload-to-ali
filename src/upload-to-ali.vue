@@ -1,12 +1,7 @@
 <template>
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
-    <vue-draggable
-      v-if="!$slots.default"
-      v-model="uploadList"
-      ghost-class="ghost"
-      style="display: inline-block"
-    >
+    <draggable-list v-if="!$slots.default" v-model="uploadList">
       <div
         v-for="imgUrl in uploadList"
         :key="imgUrl"
@@ -20,7 +15,7 @@
         ></i>
         <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)">
       </div>
-    </vue-draggable>
+    </draggable-list>
 
     <!--上传区域-->
     <div
@@ -72,7 +67,7 @@
 import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
-import VueDraggable from 'vuedraggable'
+import DraggableList from './components/draggable-list.vue'
 
 const imageCompressor = new ImageCompressor()
 
@@ -90,7 +85,7 @@ export default {
   name: 'UploadToAli',
   components: {
     ImgPreview,
-    VueDraggable
+    DraggableList
   },
   props: {
     /**
@@ -476,17 +471,16 @@ $active-color = #5d81f9
       background-color: #5d81f914;
     }
   }
-  .is-preview {
-    &:hover {
-      cursor: zoom-in
+  .upload-item:hover {
+    // FYI: https://developer.mozilla.org/zh-CN/docs/Web/CSS/cursor#Values
+    cursor: move;
+    &.is-preview {
+      cursor: zoom-in;
     }
   }
   .upload-item {
     position: relative;
     margin: 0 8px 8px 0;
-    &.ghost {
-      opacity: 0.5;
-    }
   }
   .upload-placeholder,
   .upload-loading {
