@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
+  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片;支持拖拽排序" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <draggable-list v-if="!$slots.default" v-model="uploadList">
       <div v-for="url in uploadList" :key="url" :class="['upload-item', {'is-preview': preview}]">
