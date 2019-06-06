@@ -38,6 +38,7 @@ export default {
 
         img.ondragstart = e => {
           this.dragging = elm
+          // 用上transition-group组件后，拖拽中途ghost类有时会消失
           elm.classList.add('ghost')
         }
         img.ondragend = e => {

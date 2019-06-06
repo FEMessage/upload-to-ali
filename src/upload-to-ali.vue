@@ -1,19 +1,15 @@
 <template>
-  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片" :class="{'upload-to-oss--highlight': isHighlight}">
+  <div class="upload-to-oss" title="粘贴或拖拽即可上传" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <draggable-list v-if="!$slots.default" v-model="uploadList">
-      <div
-        v-for="imgUrl in uploadList"
-        :key="imgUrl"
-        :class="['upload-item', {'is-preview': preview}]"
-      >
+      <div v-for="url in uploadList" :key="url" :class="['upload-item', {'is-preview': preview}]">
         <i
-          title="删除图片"
+          title="删除"
           v-if="!disabled"
           class="upload-del-icon"
-          @click.stop.prevent="onDelete(imgUrl, index)"
+          @click.stop.prevent="onDelete(url, index)"
         ></i>
-        <img :src="imgUrl" class="upload-img" @click="onClick(imgUrl)">
+        <img title="拖拽可排序" :src="url" class="upload-img" @click="onClick(url)">
       </div>
     </draggable-list>
 
