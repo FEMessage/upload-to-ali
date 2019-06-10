@@ -1,4 +1,4 @@
-基本用法
+基本用法。内部使用`img-preview`组件进行图片预览
 
 ```vue
 <template>
