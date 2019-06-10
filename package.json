@@ -17,9 +17,6 @@
     "./sfc": "src/upload-to-ali.vue"
   },
   "scripts": {
-    "precommit": "pretty-quick --staged",
-    "stdver": "standard-version -m '[skip ci] chore(release): v%s'",
-    "release": "gren release --override",
     "dev": "vue-styleguidist server",
     "doc": "vue-styleguidist build",
     "build":
@@ -29,7 +26,10 @@
     "build:es":
       "rollup --config build/rollup.config.js --format es --file dist/upload-to-ali.esm.js",
     "build:unpkg":
-      "rollup --config build/rollup.config.js --format iife --file dist/upload-to-ali.min.js"
+      "rollup --config build/rollup.config.js --format iife --file dist/upload-to-ali.min.js",
+    "precommit": "pretty-quick --staged",
+    "stdver": "standard-version -m '[skip ci] chore(release): v%s'",
+    "release": "gren release --override"
   },
   "dependencies": {
     "@femessage/img-preview": "^1.2.0",
@@ -63,6 +63,7 @@
     "webpack": "^4.29.6",
     "file-loader": "^3.0.1"
   },
+  "vue-sfc-cli": "1.10.0",
   "publishConfig": {
     "access": "public"
   },
