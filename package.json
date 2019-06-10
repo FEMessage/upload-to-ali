@@ -63,10 +63,10 @@
     "webpack": "^4.29.6",
     "file-loader": "^3.0.1"
   },
-  "vue-sfc-cli": "1.10.0",
   "publishConfig": {
     "access": "public"
   },
+  "vue-sfc-cli": "1.10.0",
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
