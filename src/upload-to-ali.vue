@@ -207,6 +207,17 @@ export default {
       default(url) {
         this.previewUrl = url
       }
+    },
+    /**
+     * upload前的钩子函数，传入选择的文件，FileList类型。
+     * 要求返回一个promise，resolved则继续upload，rejected则停止上传。
+     * 调用时机在size和accept检验之前。
+     */
+    beforeUpload: {
+      type: Function,
+      default() {
+        return Promise.resolve()
+      }
     }
   },
   data() {
@@ -287,6 +298,12 @@ export default {
       let currentUploads = []
 
       if (!files.length) return
+
+      try {
+        await this.beforeUpload(files)
+      } catch (e) {
+        return
+      }
 
       if (files.some(i => i.size > this.size * oneKB)) {
         alert(`请选择${this.size}KB内的文件！`)
