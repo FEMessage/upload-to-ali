@@ -294,8 +294,6 @@ export default {
     /**
      * 手动触发选择文件事件
      * @public
-     * @param {boolean} shouldStore 介绍
-     * @param {string} filename 文件名
      */
     selectFiles() {
       if (!this.canUpload) {
