@@ -26,18 +26,22 @@
       <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
       <slot>
         <div class="upload-box">
-          <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
-          <slot name="spinner" v-if="uploading">
-            <div class="upload-loading">
-              <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"></circle>
-              </svg>
-            </div>
-          </slot>
-          <!--@slot 自定义placeholder内容 -->
-          <slot name="placeholder" v-else>
-            <div class="upload-placeholder"></div>
-          </slot>
+          <template v-if="uploading">
+            <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
+            <slot name="spinner">
+              <div class="upload-loading">
+                <svg class="circular" viewBox="25 25 50 50">
+                  <circle class="path" cx="50" cy="50" r="20" fill="none"></circle>
+                </svg>
+              </div>
+            </slot>
+          </template>
+          <template v-else>
+            <!--@slot 自定义placeholder内容 -->
+            <slot name="placeholder">
+              <div class="upload-placeholder"></div>
+            </slot>
+          </template>
         </div>
       </slot>
     </div>
@@ -221,6 +225,17 @@ export default {
       default(url) {
         this.previewUrl = url
       }
+    },
+    /**
+     * upload前的钩子函数，传入选择的文件，FileList类型。
+     * 要求返回一个promise，resolved则继续upload，rejected则停止上传。
+     * 调用时机在size和accept检验之前。
+     */
+    beforeUpload: {
+      type: Function,
+      default() {
+        return Promise.resolve()
+      }
     }
   },
   data() {
@@ -306,6 +321,12 @@ export default {
       let currentUploads = []
 
       if (!files.length) return
+
+      try {
+        await this.beforeUpload(files)
+      } catch (e) {
+        return
+      }
 
       if (files.some(i => i.size > this.size * oneKB)) {
         alert(`请选择${this.size}KB内的文件！`)
@@ -588,6 +609,7 @@ $active-color = #5d81f9
   .upload-area {
     cursor: pointer;
     display: inline-block;
+    vertical-align: top;
   }
   .upload-tip {
     margin-top: 8px;

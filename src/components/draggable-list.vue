@@ -1,5 +1,5 @@
 <template>
-  <transition-group name="draggable-list">
+  <transition-group name="draggable-list" tag="div" class="draggable-list">
     <slot/>
   </transition-group>
 </template>
@@ -64,4 +64,7 @@ export default {
 
 .ghost
   opacity 0.5
+
+.draggable-list
+  display inline-block
 </style>
