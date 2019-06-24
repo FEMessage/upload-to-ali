@@ -1,4 +1,5 @@
-使用 beforeUpload 自定义上传前检查。比如检查图片的尺寸
+使用 beforeUpload 自定义上传前检查。比如检查图片的尺寸。
+Promise.reject()阻止上传，返回Promise.resolve()则可以上传
 
 ```vue
 <template>
