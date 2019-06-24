@@ -26,18 +26,22 @@
       <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
       <slot>
         <div class="upload-box">
-          <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
-          <slot name="spinner" v-if="uploading">
-            <div class="upload-loading">
-              <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"></circle>
-              </svg>
-            </div>
-          </slot>
-          <!--@slot 自定义placeholder内容 -->
-          <slot name="placeholder" v-else>
-            <div class="upload-placeholder"></div>
-          </slot>
+          <template v-if="uploading">
+            <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
+            <slot name="spinner">
+              <div class="upload-loading">
+                <svg class="circular" viewBox="25 25 50 50">
+                  <circle class="path" cx="50" cy="50" r="20" fill="none"></circle>
+                </svg>
+              </div>
+            </slot>
+          </template>
+          <template v-else>
+            <!--@slot 自定义placeholder内容 -->
+            <slot name="placeholder">
+              <div class="upload-placeholder"></div>
+            </slot>
+          </template>
         </div>
       </slot>
     </div>
