@@ -10,12 +10,12 @@ Docking Aliyun-OSS, you can configure OSS information through environmental vari
 
 ## Table of Contents
 
-* [Feature](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#feature)
-* [Documentation](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#documentation)
-* [Install](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#install)
-* [Config](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#config)
-* [Dotenv](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#dotenv)
-* [Contributors](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#contributors)
+* [Feature](#feature)
+* [Documentation](#documentation)
+* [Install](#install)
+* [Config](#config)
+* [Dotenv](#dotenv)
+* [Contributors](#contributors)
 
 <a name="01HQ5"></a>
 
@@ -27,13 +27,13 @@ Docking Aliyun-OSS, you can configure OSS information through environmental vari
 * Expand custom loading and default Upload styles
 * Can limit the size of uploaded files and the number of uploaded files
 * Screenshot paste Upload
-* Can drag and Upload<br />**[⬆Back to Top](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#table-of-contents)**
+* Can drag and Upload<br />**[⬆Back to Top](#table-of-contents)**
 
 <a name="2IcK5"></a>
 
 ## Documentation
 
-* [Doc And Online Demo](https://femessage.github.io/upload-to-ali/)<br />**[⬆Back to Top](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#table-of-contents)**
+* [Doc And Online Demo](https://femessage.github.io/upload-to-ali/)<br />**[⬆Back to Top](#table-of-contents)**
 
 <a name="z3Dyj"></a>
 
@@ -43,13 +43,13 @@ Docking Aliyun-OSS, you can configure OSS information through environmental vari
 yarn add @femessage/upload-to-ali
 ```
 
-**[⬆Back to Top](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#table-of-contents)**
+**[⬆Back to Top](#table-of-contents)**
 
 <a name="nP8fz"></a>
 
 ## Config
 
-When using, the following four parameters of the component must be passed:<br />`accessKeyId` - Created by Ali Cloud Console `access key`<br />`accessKeySecret` - Created by Alibaba Cloud Console `access secret`<br />`bucket` - Storage space name<br />`region` - Ali Cloud area name<br />[Be sure to set cross-domain and ACLs before use](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)<br />**[⬆Back to Top](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#table-of-contents)**
+When using, the following four parameters of the component must be passed:<br />`accessKeyId` - Created by Ali Cloud Console `access key`<br />`accessKeySecret` - Created by Alibaba Cloud Console `access secret`<br />`bucket` - Storage space name<br />`region` - Ali Cloud area name<br />[Be sure to set cross-domain and ACLs before use](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)<br />**[⬆Back to Top](#table-of-contents)**
 
 <a name="d2JkP"></a>
 
@@ -74,7 +74,7 @@ OSS_DIR=oss-dir
 OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 
-`dotenv` Document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)<br />**[⬆Back to Top](https://www.yuque.com/deepexi-serverless/onx52o/tl8dxe?translate=en#table-of-contents)**
+`dotenv` Document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)<br />**[⬆Back to Top](#table-of-contents)**
 <a name="pED4Q"></a>
 
 ## Contributors
