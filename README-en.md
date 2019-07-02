@@ -33,7 +33,9 @@ You can configure OSS information through environmental variables, customize dom
 
 ## Documentation
 
-* [Doc And Online Demo](https://femessage.github.io/upload-to-ali/)<br />**[⬆Back to Top](#table-of-contents)**
+* [Doc And Online Demo](https://femessage.github.io/upload-to-ali/)
+
+**[⬆Back to Top](#table-of-contents)**
 
 
 ## Install
@@ -72,7 +74,9 @@ OSS_DIR=oss-dir
 OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 
-`dotenv` document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)<br />**[⬆Back to Top](#table-of-contents)**
+`dotenv` document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)
+
+**[⬆Back to Top](#table-of-contents)**
 
 ## Contributors
 
