@@ -2,7 +2,7 @@
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片;支持拖拽排序" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <draggable-list v-if="!$slots.default" v-model="uploadList">
-      <div v-for="url in uploadList" :key="url" :class="['upload-item', {'is-preview': preview}]">
+      <div v-for="(url, index) in uploadList" :key="url" :class="['upload-item', {'is-preview': preview}]">
         <i
           title="删除"
           v-if="!disabled"
@@ -322,14 +322,18 @@ export default {
 
       if (!files.length) return
 
+      const reset = () => (e.target.value = '')
+
       try {
         await this.beforeUpload(files)
       } catch (e) {
+        reset()
         return
       }
 
       if (files.some(i => i.size > this.size * oneKB)) {
         alert(`请选择${this.size}KB内的文件！`)
+        reset()
         return
       }
 
@@ -342,10 +346,10 @@ export default {
           : files.some(i => this.accept.indexOf(i.type) === -1))
       ) {
         alert('文件格式有误！')
+        reset()
         return
       }
 
-      const reset = () => (e.target.value = '')
       this.uploading = true
 
       const max = this.multiple ? this.max : 1

@@ -11,6 +11,8 @@
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
 
+[English](./README-en.md)
+
 ## Table of Contents <!-- omit in toc -->
 
 * [Feature](#feature)
@@ -18,6 +20,7 @@
 * [Install](#install)
 * [Config](#config)
 * [Dotenv](#dotenv)
+* [Reference](#reference)
 * [Contributors](#contributors)
 
 ## Feature
@@ -29,6 +32,7 @@
 * 可限制上传文件大小和上传文件数量
 * 可截图粘贴上传
 * 可拖拽上传
+* 可预览图片
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -91,6 +95,10 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 `dotenv` 文档参考 https://www.npmjs.com/package/dotenv
 
 **[⬆ Back to Top](#table-of-contents)**
+
+## Reference
+
+* [ali oss guide](docs/ali-oss-guide.md)
 
 ## Contributors
 
