@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/FEMessage/upload-to-ali/compare/v1.7.0...v1.7.1) (2019-07-02)
+
+
+### Bug Fixes
+
+* 删除图片时报错  ([f74f984](https://github.com/FEMessage/upload-to-ali/commit/f74f984)), closes [#46](https://github.com/FEMessage/upload-to-ali/issues/46)
+* 多次上传同一张不符合的文件，只有第一次有提示  ([eeb8245](https://github.com/FEMessage/upload-to-ali/commit/eeb8245)), closes [#42](https://github.com/FEMessage/upload-to-ali/issues/42)
+
+
+
 ## [1.7.0](https://github.com/FEMessage/upload-to-ali/compare/v1.6.0...v1.7.0) (2019-06-24)
 
 
