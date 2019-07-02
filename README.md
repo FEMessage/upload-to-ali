@@ -11,6 +11,8 @@
 
 ![upload](https://ws1.sinaimg.cn/large/85ed9210gy1fyc3jk0g9qg20dc0ctkjl.jpg)
 
+[English](./README-en.md)
+
 ## Table of Contents <!-- omit in toc -->
 
 * [Feature](#feature)
@@ -30,6 +32,7 @@
 * 可限制上传文件大小和上传文件数量
 * 可截图粘贴上传
 * 可拖拽上传
+* 可预览图片
 
 **[⬆ Back to Top](#table-of-contents)**
 
