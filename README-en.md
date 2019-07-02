@@ -26,6 +26,7 @@ You can configure OSS information through environmental variables, customize dom
 * Can limit the size or the number of files to upload
 * Support paste screenshot to upload
 * Can drag and drop to upload 
+* Can preivew img
 
 **[⬆Back to Top](#table-of-contents)**
 
