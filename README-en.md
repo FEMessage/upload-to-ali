@@ -49,7 +49,9 @@ yarn add @femessage/upload-to-ali
 
 ## Config
 
-The following props are required:`accessKeyId` - Created by Alibaba Cloud Console `accessKeyId`<br />`accessKeySecret` - Created by Alibaba Cloud Console `accessKeySecret`<br />`bucket` - Storage space name<br />`region` - Alibaba Cloud area name<br />[Be sure to set cross-domain and ACLs before use](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
+The following props are required:`accessKeyId` - Created by Alibaba Cloud Console `accessKeyId`<br />`accessKeySecret` - Created by Alibaba Cloud Console `accessKeySecret`<br />`bucket` - Storage space name<br />`region` - Alibaba Cloud area name
+
+[Be sure to set cross-domain and ACL before using](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
 
 **[⬆Back to Top](#table-of-contents)**
 
