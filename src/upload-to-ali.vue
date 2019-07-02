@@ -322,14 +322,18 @@ export default {
 
       if (!files.length) return
 
+      const reset = () => (e.target.value = '')
+
       try {
         await this.beforeUpload(files)
       } catch (e) {
+        reset()
         return
       }
 
       if (files.some(i => i.size > this.size * oneKB)) {
         alert(`请选择${this.size}KB内的文件！`)
+        reset()
         return
       }
 
@@ -342,10 +346,10 @@ export default {
           : files.some(i => this.accept.indexOf(i.type) === -1))
       ) {
         alert('文件格式有误！')
+        reset()
         return
       }
 
-      const reset = () => (e.target.value = '')
       this.uploading = true
 
       const max = this.multiple ? this.max : 1
