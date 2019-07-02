@@ -18,6 +18,7 @@
 * [Install](#install)
 * [Config](#config)
 * [Dotenv](#dotenv)
+* [Reference](#reference)
 * [Contributors](#contributors)
 
 ## Feature
@@ -91,6 +92,10 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 `dotenv` 文档参考 https://www.npmjs.com/package/dotenv
 
 **[⬆ Back to Top](#table-of-contents)**
+
+## Reference
+
+* [ali oss guide](docs/ali-oss-guide.md)
 
 ## Contributors
 
