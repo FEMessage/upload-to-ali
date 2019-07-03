@@ -10,7 +10,6 @@
 则使用自定义域名访问，可以解决html变成下载的问题
 
 
-
 ### CNAME设置
 如果绑定的是同一个阿里云账号下的域名，则可以自动添加CNAME记录。否则需要手动添加。
 
@@ -21,12 +20,22 @@
 static.deepexi.top   -> CNAME -> deepexi-serverless.oss-cn-shenzhen.aliyuncs.com
 
 
+### 证书托管
+
+上传HTTPS证书，开启HTTPS
+
+![](https://cdn.nlark.com/yuque/0/2019/png/160590/1562120215793-b8274561-3941-40ee-a163-ca9ed2a9595f.png?x-oss-process=image/resize,w_1492)
+
+![](https://cdn.nlark.com/yuque/0/2019/png/160590/1562120344835-7b8f8f7e-4bb0-4ec3-b0d6-88047080806e.png?x-oss-process=image/resize,w_1492/watermark,type_d3F5LW1pY3JvaGVp,size_14,text_5ru05pmu56eR5oqA,color_FFFFFF,shadow_50,t_80,g_se,x_10,y_10)
+
+如果没有证书，查看教程获取：[🔒免费开启HTTPS](https://github.com/levy9527/blog/issues/5)
+
 
 ### 公共读
+
 点击基础设置，设置读写权限为公共读<br />![image.png](https://cdn.nlark.com/yuque/0/2019/png/160590/1562047562541-751e73b6-1b02-446e-b929-2faab48cdda2.png#align=left&display=inline&height=283&name=image.png&originHeight=566&originWidth=2468&size=365147&status=done&width=1234)
 
 这样可以解决访问链接超时的问题
-
 
 
 ### 跨域设置
@@ -40,7 +49,5 @@ static.deepexi.top   -> CNAME -> deepexi-serverless.oss-cn-shenzhen.aliyuncs.
 - 将expose headers设置成 
   - `etag`
   - `x-oss-request-id`
-  
-  
 
 这样可以解决字体无法显示的问题
