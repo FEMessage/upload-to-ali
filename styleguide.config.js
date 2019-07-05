@@ -8,19 +8,23 @@ const env = Object.assign({}, require('dotenv').config().parsed, {
   OSS_REGION: process.env.OSS_REGION
 })
 
-const demos = ['docs/basic.md', ...glob.sync('docs/!(basic).md')]
-const demoSections = demos.map(filePath => ({
-  name: path.basename(filePath, '.md'),
-  content: filePath
-}))
-
-module.exports = {
-  styleguideDir: 'docs',
-  pagePerSection: true,
-  ribbon: {
-    url: 'https://github.com/FEMessage/upload-to-ali'
-  },
-  sections: [
+const sections = (() => {
+  const docs = glob
+    .sync('docs/*.md')
+    .map(p => ({name: path.basename(p, '.md'), content: p}))
+  const demos = []
+  let faq = '' // 约定至多只有一个faq.md
+  const guides = []
+  docs.forEach(d => {
+    if (/^faq$/.test(d.name)) {
+      faq = d
+    } else if (/^guide-/.test(d.name)) {
+      guides.push(d)
+    } else {
+      demos.push(d)
+    }
+  })
+  return [
     {
       name: 'Components',
       components: 'src/*.vue',
@@ -28,9 +32,26 @@ module.exports = {
     },
     {
       name: 'Demo',
-      sections: demoSections
+      sections: demos
+    },
+    ...(faq ? [faq] : []),
+    {
+      name: 'Guide',
+      sections: guides
     }
-  ],
+  ]
+})()
+
+module.exports = {
+  styleguideDir: 'docs',
+  pagePerSection: true,
+  ribbon: {
+    url: 'https://github.com/FEMessage/upload-to-ali'
+  },
+  sections,
+  editorConfig: {
+    readOnly: process.env.NODE_ENV === 'development' ? false : 'nocursor'
+  },
   webpackConfig: {
     module: {
       rules: [
