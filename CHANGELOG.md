@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.3](https://github.com/FEMessage/upload-to-ali/compare/v1.7.2...v1.7.3) (2019-07-09)
+
+
+### Bug Fixes
+
+* 处理文件名中的非法字符 ([7c9c3c4](https://github.com/FEMessage/upload-to-ali/commit/7c9c3c4))
+
+
+
 ### [1.7.2](https://github.com/FEMessage/upload-to-ali/compare/v1.7.1...v1.7.2) (2019-07-05)
 
 
