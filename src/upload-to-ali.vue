@@ -384,14 +384,20 @@ export default {
             // 协议无关
             let filename = doubleSlash
 
+            // Fix: 处理文件名中的非法字符, eg: +, %, &, #...
+            const validName = res.name
+              .split('/')
+              .map(i => encodeURIComponent(i))
+              .join('/')
+
             if (this.customDomain) {
               if (this.customDomain.indexOf(doubleSlash) > -1)
-                filename = `${this.customDomain}/${res.name}`
-              else filename += `${this.customDomain}/${res.name}`
+                filename = `${this.customDomain}/${validName}`
+              else filename += `${this.customDomain}/${validName}`
             } else
-              filename += `${this.bucket}.${this.region}.aliyuncs.com/${
-                res.name
-              }`
+              filename += `${this.bucket}.${
+                this.region
+              }.aliyuncs.com/${validName}`
             this.$emit(
               'input',
               this.multiple ? this.uploadList.concat(filename) : filename
