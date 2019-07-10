@@ -20,7 +20,6 @@ const config = {
       compileTemplate: true
     }),
     babel({
-      runtimeHelpers: true,
       exclude: 'node_modules/**'
     })
   ]
