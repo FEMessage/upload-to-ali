@@ -9,7 +9,7 @@
           class="upload-del-icon"
           @click.stop.prevent="onDelete(url, index)"
         ></i>
-        <preview :url="url" @click="onClick(url, $event)" />
+        <pre-upload :url="url" @click="onClick(url, $event)" />
       </div>
     </draggable-list>
 
@@ -68,7 +68,7 @@ import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
 import DraggableList from './components/draggable-list.vue'
-import Preview from './components/preview.vue'
+import PreUpload from './components/pre-upload.vue'
 
 const imageCompressor = new ImageCompressor()
 
@@ -87,7 +87,7 @@ export default {
   components: {
     ImgPreview,
     DraggableList,
-    Preview
+    PreUpload
   },
   props: {
     /**
