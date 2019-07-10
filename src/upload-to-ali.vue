@@ -9,7 +9,7 @@
           class="upload-del-icon"
           @click.stop.prevent="onDelete(url, index)"
         ></i>
-        <img title="拖拽可排序" :src="url" class="upload-img" @click="onClick(url)">
+        <preview :url="url" @click="onClick(url, $event)" />
       </div>
     </draggable-list>
 
@@ -68,6 +68,7 @@ import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
 import DraggableList from './components/draggable-list.vue'
+import Preview from './components/preview.vue'
 
 const imageCompressor = new ImageCompressor()
 
@@ -85,7 +86,8 @@ export default {
   name: 'UploadToAli',
   components: {
     ImgPreview,
-    DraggableList
+    DraggableList,
+    Preview
   },
   props: {
     /**
@@ -222,8 +224,12 @@ export default {
      */
     onClick: {
       type: Function,
-      default(url) {
-        this.previewUrl = url
+      default(url, isFile) {
+        if (isFile) {
+          window.open(url)
+        } else {
+          this.previewUrl = url
+        }
       }
     },
     /**
@@ -598,14 +604,6 @@ $active-color = #5d81f9
       height: 1px;
       background: #fff;
     }
-  }
-  .upload-img {
-    position: absolute;
-    width: 100%;
-    max-height: 100%;
-    display: block;
-    top: 50%;
-    transform: translate(0, -50%);
   }
   .upload-input {
     display: none;
