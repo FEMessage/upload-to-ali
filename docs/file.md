@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="url" accept=".md" />
+  <upload-to-ali v-model="url" accept="text/markdown" />
 </template>
 <script>
 export default {
