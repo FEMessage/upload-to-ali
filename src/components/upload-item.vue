@@ -1,7 +1,7 @@
 <template>
-  <div class="pre-upload" @click="onClick">
-    <span v-if="isFile" class="pre-upload-filename">{{ fileName }}</span>
-    <img v-else class="pre-upload-img" title="拖拽可排序" :src="url" @error="onLoadError" />
+  <div class="upload-item" @click="onClick">
+    <span v-if="isFile" class="upload-item-filename">{{ fileName }}</span>
+    <img v-else class="upload-item-img" title="拖拽可排序" :src="url" @error="onLoadError" />
   </div>
 </template>
 
@@ -36,18 +36,18 @@ export default {
 </script>
 
 <style>
-.pre-upload {
+.upload-item {
   position: absolute;
   width: 100%;
   max-height: 100%;
   top: 50%;
   transform: translate(0, -50%);
 }
-.pre-upload-img {
+.upload-item-img {
   width: 100%;
   max-height: 100%;
 }
-.pre-upload-filename {
+.upload-item-filename {
   display: block;
   padding: 0 4px;
   font-size: 12px;
