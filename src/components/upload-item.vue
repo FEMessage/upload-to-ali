@@ -1,7 +1,7 @@
 <template>
-  <div class="upload-item" @click="onClick">
+  <div class="upload-item" title="拖拽可排序" @click="onClick">
     <span v-if="isFile" class="upload-item-filename">{{ fileName }}</span>
-    <img v-else class="upload-item-img" title="拖拽可排序" :src="url" @error="onLoadError" />
+    <img v-else class="upload-item-img" :src="url" @error="onLoadError" />
   </div>
 </template>
 
@@ -53,5 +53,6 @@ export default {
   font-size: 12px;
   word-break: break-all;
   color: #5e6781;
+  cursor: pointer;
 }
 </style>
