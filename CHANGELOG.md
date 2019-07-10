@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.4](https://github.com/FEMessage/upload-to-ali/compare/v1.7.3...v1.7.4) (2019-07-10)
+
+
+
 ### [1.7.3](https://github.com/FEMessage/upload-to-ali/compare/v1.7.2...v1.7.3) (2019-07-09)
 
 
