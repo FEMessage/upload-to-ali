@@ -1,6 +1,6 @@
 <template>
   <div class="upload-item" title="拖拽可排序" @click="onClick">
-    <span v-if="isFile" class="upload-item-filename" draggable>{{ fileName }}</span>
+    <span v-if="isFile" class="upload-item-filename">{{ fileName }}</span>
     <img v-else class="upload-item-img" :src="url" @error="onLoadError" />
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
 .upload-item {
   position: absolute;
   width: 100%;
-  max-height: 100%;
+  height: 100%;
   top: 50%;
   transform: translate(0, -50%);
 }
@@ -48,7 +48,9 @@ export default {
   max-height: 100%;
 }
 .upload-item-filename {
-  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
   padding: 0 4px;
   font-size: 12px;
   word-break: break-all;
