@@ -2,14 +2,14 @@
   <div class="upload-to-oss" title="粘贴或拖拽即可上传图片;支持拖拽排序" :class="{'upload-to-oss--highlight': isHighlight}">
     <!--图片的展示区域-->
     <draggable-list v-if="!$slots.default" v-model="uploadList">
-      <div v-for="(url, index) in uploadList" :key="url" :class="['upload-item', {'is-preview': preview}]">
+      <div v-for="(url, index) in uploadList" :key="url" :class="['upload-item-wrapper', {'is-preview': preview}]">
         <i
           title="删除"
           v-if="!disabled"
           class="upload-del-icon"
           @click.stop.prevent="onDelete(url, index)"
         ></i>
-        <img title="拖拽可排序" :src="url" class="upload-img" @click="onClick(url)">
+        <upload-item :url="url" @click="onClick(url, $event)" />
       </div>
     </draggable-list>
 
@@ -68,6 +68,7 @@ import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
 import DraggableList from './components/draggable-list.vue'
+import UploadItem from './components/upload-item.vue'
 
 const imageCompressor = new ImageCompressor()
 
@@ -85,7 +86,8 @@ export default {
   name: 'UploadToAli',
   components: {
     ImgPreview,
-    DraggableList
+    DraggableList,
+    UploadItem
   },
   props: {
     /**
@@ -222,8 +224,12 @@ export default {
      */
     onClick: {
       type: Function,
-      default(url) {
-        this.previewUrl = url
+      default(url, isFile) {
+        if (isFile) {
+          window.open(url)
+        } else {
+          this.previewUrl = url
+        }
       }
     },
     /**
@@ -484,7 +490,7 @@ $active-color = #5d81f9
   .disabled {
     pointer-events: none;
   }
-  .upload-item,
+  .upload-item-wrapper,
   .upload-box {
     display: inline-flex;
     justify-content: center;
@@ -498,14 +504,14 @@ $active-color = #5d81f9
       background-color: #5d81f914;
     }
   }
-  .upload-item:hover {
+  .upload-item-wrapper:hover {
     // FYI: https://developer.mozilla.org/zh-CN/docs/Web/CSS/cursor#Values
     cursor: move;
     &.is-preview {
       cursor: zoom-in;
     }
   }
-  .upload-item {
+  .upload-item-wrapper {
     position: relative;
     margin: 0 8px 8px 0;
   }
@@ -604,14 +610,6 @@ $active-color = #5d81f9
       height: 1px;
       background: #fff;
     }
-  }
-  .upload-img {
-    position: absolute;
-    width: 100%;
-    max-height: 100%;
-    display: block;
-    top: 50%;
-    transform: translate(0, -50%);
   }
   .upload-input {
     display: none;
