@@ -1,0 +1,61 @@
+<template>
+  <div class="upload-item" title="拖拽可排序" @click="onClick">
+    <span v-if="isFile" class="upload-item-filename">{{ fileName }}</span>
+    <img v-else class="upload-item-img" :src="url" @error="onLoadError" />
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    url: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      isFile: false
+    }
+  },
+  computed: {
+    fileName() {
+      const filename = this.url ? this.url.split('/').pop() : ''
+      return filename.length > 40 ? `${filename.slice(0, 40)}...` : filename
+    }
+  },
+  methods: {
+    onClick() {
+      this.$emit('click', this.isFile)
+    },
+    onLoadError() {
+      this.isFile = true
+    }
+  }
+}
+</script>
+
+<style>
+.upload-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.upload-item-img {
+  width: 100%;
+  max-height: 100%;
+}
+.upload-item-filename {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 4px;
+  font-size: 12px;
+  word-break: break-all;
+  color: #5e6781;
+  cursor: pointer;
+  user-select: none;
+}
+</style>
