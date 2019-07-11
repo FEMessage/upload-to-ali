@@ -1,6 +1,6 @@
 <template>
   <div class="upload-item" title="拖拽可排序" @click="onClick">
-    <span v-if="isFile" class="upload-item-filename">{{ fileName }}</span>
+    <span v-if="isFile" class="upload-item-filename" draggable>{{ fileName }}</span>
     <img v-else class="upload-item-img" :src="url" @error="onLoadError" />
   </div>
 </template>
@@ -54,5 +54,6 @@ export default {
   word-break: break-all;
   color: #5e6781;
   cursor: pointer;
+  user-select: none;
 }
 </style>
