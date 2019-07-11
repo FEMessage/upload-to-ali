@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/FEMessage/upload-to-ali/compare/v1.7.4...v1.8.0) (2019-07-11)
+
+
+### Build System
+
+* **deps:** [security] bump lodash from 4.17.11 to 4.17.14   ([778e13b](https://github.com/FEMessage/upload-to-ali/commit/778e13b))
+
+
+### Features
+
+* 上传非图片文件不需要写slot ([66a1e39](https://github.com/FEMessage/upload-to-ali/commit/66a1e39))
+
+
+
 ### [1.7.4](https://github.com/FEMessage/upload-to-ali/compare/v1.7.3...v1.7.4) (2019-07-10)
 
 
