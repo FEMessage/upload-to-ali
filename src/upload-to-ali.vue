@@ -498,7 +498,7 @@ $active-color = #5d81f9
       background-color: #5d81f914;
     }
   }
-  .upload-ite-wrapperm:hover {
+  .upload-item-wrapper:hover {
     // FYI: https://developer.mozilla.org/zh-CN/docs/Web/CSS/cursor#Values
     cursor: move;
     &.is-preview {
