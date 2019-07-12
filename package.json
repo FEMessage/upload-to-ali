@@ -55,7 +55,6 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.16",
-    "vue-jest": "^3.0.4",
     "vue-loader": "^15.7.0",
     "vue-styleguidist": "3.11.4",
     "vue-template-compiler": "^2.5.16",
@@ -68,16 +67,5 @@
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
-  },
-  "jest": {
-    "moduleFileExtensions": ["js", "vue"],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    },
-    "transformIgnorePatterns": ["/node_modules/"],
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.vue$": "vue-jest"
-    }
   }
 }
