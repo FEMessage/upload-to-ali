@@ -486,7 +486,7 @@ export default {
 $border-color = #cad1e8
 $active-color = #5d81f9
 .upload-to-oss {
-  display: inline-block;
+  display: inline-flex;
   .disabled {
     pointer-events: none;
   }

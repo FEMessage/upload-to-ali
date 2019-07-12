@@ -57,5 +57,6 @@ export default {
   color: #5e6781;
   cursor: pointer;
   user-select: none;
+  line-height: 1.2;
 }
 </style>
