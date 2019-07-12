@@ -616,8 +616,8 @@ $active-color = #5d81f9
   }
   .upload-area {
     cursor: pointer;
-    display: inline-block;
-    vertical-align: top;
+    display: inline-flex;
+    margin-bottom: 4px;
   }
   .upload-tip {
     margin-top: 8px;
