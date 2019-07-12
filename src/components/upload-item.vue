@@ -20,7 +20,8 @@ export default {
   },
   computed: {
     fileName() {
-      const filename = this.url ? this.url.split('/').pop() : ''
+      const url = this.url
+      const filename = url ? decodeURIComponent(url.split('/').pop()) : ''
       return filename.length > 40 ? `${filename.slice(0, 40)}...` : filename
     }
   },
