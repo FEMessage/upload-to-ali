@@ -44,8 +44,8 @@ export default {
   transform: translate(0, -50%);
 }
 .upload-item-img {
+  height: 100%;
   width: 100%;
-  max-height: 100%;
 }
 .upload-item-filename {
   display: flex;
