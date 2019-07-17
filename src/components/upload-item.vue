@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import cutdownFileName from './cutdownFileName'
+import getBasename from '../utils/get-basename'
 
 export default {
   props: {
