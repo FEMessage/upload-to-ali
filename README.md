@@ -15,13 +15,13 @@
 
 ## Table of Contents <!-- omit in toc -->
 
-* [Feature](#Feature)
-* [Documentation](#Documentation)
-* [Install](#Install)
-* [Config](#Config)
-* [Dotenv](#Dotenv)
-* [Reference](#Reference)
-* [Contributors](#Contributors)
+* [Feature](#feature)
+* [Documentation](#documentation)
+* [Install](#install)
+* [Config](#config)
+* [Dotenv](#dotenv)
+* [Reference](#reference)
+* [Contributors](#contributors)
 
 ## Feature
 
