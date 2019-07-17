@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import getBasename from '../utils/get-basename'
+import {getBasename} from '../utils'
 
 export default {
   props: {
@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     fileName() {
-      return cutdownFileName(this.url)
+      return getBasename(this.url)
     }
   },
   methods: {

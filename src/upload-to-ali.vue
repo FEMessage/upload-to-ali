@@ -69,7 +69,7 @@ import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
-import encodeValidName from './utils/encode-valid-name'
+import {encodeBasename} from './utils'
 
 const imageCompressor = new ImageCompressor()
 
@@ -392,7 +392,7 @@ export default {
             let filename = doubleSlash
 
             // Fix: 处理文件名中的非法字符, eg: +, %, &, #...
-            const validName = encodeValidName(res.name)
+            const validName = encodeBasename(res.name)
 
             if (this.customDomain) {
               if (this.customDomain.indexOf(doubleSlash) > -1)

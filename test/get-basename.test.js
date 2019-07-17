@@ -1,4 +1,4 @@
-import getBasename from '../src/utils/get-basename'
+import {getBasename} from '../src/utils'
 
 test('字符串处理测试', () => {
   const str = 'README.md'
