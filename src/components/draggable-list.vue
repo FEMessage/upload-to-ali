@@ -66,5 +66,5 @@ export default {
   opacity 0.5
 
 .draggable-list
-  display inline-block
+  display inline-flex
 </style>

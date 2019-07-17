@@ -20,7 +20,8 @@ export default {
   },
   computed: {
     fileName() {
-      const filename = this.url ? this.url.split('/').pop() : ''
+      const url = this.url
+      const filename = url ? decodeURIComponent(url.split('/').pop()) : ''
       return filename.length > 40 ? `${filename.slice(0, 40)}...` : filename
     }
   },
@@ -44,8 +45,8 @@ export default {
   transform: translate(0, -50%);
 }
 .upload-item-img {
+  height: 100%;
   width: 100%;
-  max-height: 100%;
 }
 .upload-item-filename {
   display: flex;
@@ -57,5 +58,6 @@ export default {
   color: #5e6781;
   cursor: pointer;
   user-select: none;
+  line-height: 1.2;
 }
 </style>
