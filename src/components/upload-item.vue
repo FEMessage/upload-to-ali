@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import {getBasename} from '../utils'
+
 export default {
   props: {
     url: {
@@ -20,9 +22,7 @@ export default {
   },
   computed: {
     fileName() {
-      const url = this.url
-      const filename = url ? decodeURIComponent(url.split('/').pop()) : ''
-      return filename.length > 40 ? `${filename.slice(0, 40)}...` : filename
+      return getBasename(this.url)
     }
   },
   methods: {
