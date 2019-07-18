@@ -1,4 +1,4 @@
-import {getBasename, encodeBasename} from '../src/utils'
+import {getBasename, encodeUrl, decodeUrl} from '../src/utils'
 
 describe('getBasename', () => {
   test('字符串处理测试', () => {
@@ -22,24 +22,28 @@ describe('getBasename', () => {
     const str = `//localhost/${fileName}`
     expect(getBasename(str)).toBe(`${fileName.slice(0, 40)}...`)
   })
+})
 
-  test('特殊字符', () => {
+describe('decodeUrl', () => {
+  test('正常字符转义', () => {
     const str1 = '//localhost/example+1.png'
-    const str2 = '//localhost/example%2B1.png'
+    expect(decodeUrl(str1)).toBe('example+1.png')
+  })
 
-    expect(getBasename(str1)).toBe('example+1.png')
-    expect(getBasename(str2)).toBe('example+1.png')
+  test('被 encode 字符转义', () => {
+    const str2 = '//localhost/example%2B1.png'
+    expect(decodeUrl(str2)).toBe('example+1.png')
   })
 })
 
-describe('encodeBasename', () => {
+describe('encodeUrl', () => {
   test('文件名内存在特殊字符', () => {
     const filename = 'example+1.png'
-    expect(encodeBasename(filename)).toBe('example%2B1.png')
+    expect(encodeUrl(filename)).toBe('example%2B1.png')
   })
 
   test('带路径、特殊字符的文件名', () => {
     const filename = 'apple/banana/water-melon/example+1.jpg'
-    expect(encodeBasename(filename)).toBe('apple/banana/water-melon/example%2B1.jpg')
+    expect(encodeUrl(filename)).toBe('apple/banana/water-melon/example%2B1.jpg')
   })
 })
