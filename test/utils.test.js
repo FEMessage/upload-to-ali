@@ -24,7 +24,7 @@ describe('getBasename', () => {
 })
 
 describe('encodePath', () => {
-  test('OSS文件地址匹配', () => {
+  test('文件名带有特殊字符的文件地址', () => {
     const url = '//example+1-1563433997757.jpg'
     expect(encodePath(url)).toBe('//example%2B1-1563433997757.jpg')
   })
