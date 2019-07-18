@@ -28,9 +28,4 @@ describe('encodePath', () => {
     const url = '//example+1-1563433997757.jpg'
     expect(encodePath(url)).toBe('//example%2B1-1563433997757.jpg')
   })
-
-  test('带路径、特殊字符的文件名', () => {
-    const filename = 'apple/banana/water-melon/example+1.jpg'
-    expect(encodePath(filename)).toBe('apple/banana/water-melon/example%2B1.jpg')
-  })
 })
