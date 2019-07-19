@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.1](https://github.com/FEMessage/upload-to-ali/compare/v1.8.0...v1.8.1) (2019-07-19)
+
+
+### Tests
+
+* 抽离切分文件名方法，完善测试 ([62f208b](https://github.com/FEMessage/upload-to-ali/commit/62f208b))
+
+
+
 ## [1.8.0](https://github.com/FEMessage/upload-to-ali/compare/v1.7.4...v1.8.0) (2019-07-11)
 
 
