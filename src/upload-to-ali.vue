@@ -69,6 +69,7 @@ import ImgPreview from '@femessage/img-preview'
 import ImageCompressor from 'image-compressor.js'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
+import {encodePath} from './utils'
 
 const imageCompressor = new ImageCompressor()
 
@@ -388,27 +389,28 @@ export default {
           .multipartUpload(this.dir + key, file, this.uploadOptions)
           .then(res => {
             // 协议无关
-            let filename = doubleSlash
+            let url = doubleSlash
 
-            // Fix: 处理文件名中的非法字符, eg: +, %, &, #...
-            const validName = res.name
-              .split('/')
-              .map(i => encodeURIComponent(i))
-              .join('/')
+            // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
+            // 因此要 encode res.name，否则会因为文件名不同，导致 404
+            const filename = encodePath(res.name)
 
             if (this.customDomain) {
               if (this.customDomain.indexOf(doubleSlash) > -1)
-                filename = `${this.customDomain}/${validName}`
-              else filename += `${this.customDomain}/${validName}`
-            } else
-              filename += `${this.bucket}.${
+                url = `${this.customDomain}/${filename}`
+              else {
+                url += `${this.customDomain}/${filename}`
+              }
+            } else {
+              url += `${this.bucket}.${
                 this.region
-              }.aliyuncs.com/${validName}`
+              }.aliyuncs.com/${filename}`
+            }
             this.$emit(
               'input',
-              this.multiple ? this.uploadList.concat(filename) : filename
+              this.multiple ? this.uploadList.concat(url) : url
             )
-            currentUploads.push(filename)
+            currentUploads.push(url)
           })
           .catch(err => {
             // TODO 似乎可以干掉？🤔
@@ -486,7 +488,7 @@ export default {
 $border-color = #cad1e8
 $active-color = #5d81f9
 .upload-to-oss {
-  display: inline-block;
+  display: inline-flex;
   .disabled {
     pointer-events: none;
   }
@@ -616,8 +618,8 @@ $active-color = #5d81f9
   }
   .upload-area {
     cursor: pointer;
-    display: inline-block;
-    vertical-align: top;
+    display: inline-flex;
+    margin-bottom: 4px;
   }
   .upload-tip {
     margin-top: 8px;
