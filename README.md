@@ -1,9 +1,9 @@
 # upload-to-ali
 
-[![Build Status](https://travis-ci.com/FEMessage/upload-to-ali.svg?branch=master)](https://travis-ci.com/FEMessage/upload-to-ali)
-[![NPM Download](https://img.shields.io/npm/dm/@femessage/upload-to-ali.svg)](https://www.npmjs.com/package/@femessage/upload-to-ali)
-[![NPM Version](https://img.shields.io/npm/v/@femessage/upload-to-ali.svg)](https://www.npmjs.com/package/@femessage/upload-to-ali)
-[![NPM License](https://img.shields.io/npm/l/@femessage/upload-to-ali.svg)](https://github.com/FEMessage/upload-to-ali/blob/master/LICENSE)
+[![Build Status](https://badgen.net/travis/FEMessage/upload-to-ali/master)](https://travis-ci.com/FEMessage/upload-to-ali)
+[![NPM Download](https://badgen.net/npm/dm/@femessage/upload-to-ali)](https://www.npmjs.com/package/@femessage/upload-to-ali)
+[![NPM Version](https://badgen.net/npm/v/@femessage/upload-to-ali)](https://www.npmjs.com/package/@femessage/upload-to-ali)
+[![NPM License](https://badgen.net/npm/license/@femessage/upload-to-ali)](https://github.com/FEMessage/upload-to-ali/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
@@ -13,15 +13,16 @@
 
 [English](./README-en.md)
 
-## Table of Contents <!-- omit in toc -->
+## Table of Contents
 
 * [Feature](#feature)
-* [Documentation](#documentation)
+* [Links](#links)
 * [Install](#install)
 * [Config](#config)
 * [Dotenv](#dotenv)
-* [Reference](#reference)
+* [Contributing](#contributing)
 * [Contributors](#contributors)
+* [License](#license)
 
 ## Feature
 
@@ -34,13 +35,14 @@
 * 可拖拽上传
 * 可预览图片
 
-**[⬆ Back to Top](#table-of-contents)**
+[⬆ Back to Top](#table-of-contents)
 
-## Documentation
+## Links
 
-* [Doc And Online Demo](https://femessage.github.io/upload-to-ali/)
+* [docs](https://FEMessage.github.io/upload-to-ali/)
+* [ali oss guide](docs/ali-oss-guide.md)
 
-**[⬆ Back to Top](#table-of-contents)**
+[⬆ Back to Top](#table-of-contents)
 
 ## Install
 
@@ -48,7 +50,7 @@
 yarn add @femessage/upload-to-ali
 ```
 
-**[⬆ Back to Top](#table-of-contents)**
+[⬆ Back to Top](#table-of-contents)
 
 ## Config
 
@@ -64,7 +66,7 @@ yarn add @femessage/upload-to-ali
 
 [使用前请务必设置跨域 及 ACL](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
 
-**[⬆ Back to Top](#table-of-contents)**
+[⬆ Back to Top](#table-of-contents)
 
 ## Dotenv
 
@@ -94,11 +96,20 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 `dotenv` 文档参考 https://www.npmjs.com/package/dotenv
 
-**[⬆ Back to Top](#table-of-contents)**
+[⬆ Back to Top](#table-of-contents)
 
-## Reference
+## Contributing
 
-* [ali oss guide](docs/ali-oss-guide.md)
+For those who are interested in contributing to this project, such as:
+
+* report a bug
+* request new feature
+* fix a bug
+* implement a new feature
+
+Please refer to our [contributing guide](https://github.com/FEMessage/.github/blob/master/CONTRIBUTING.md).
+
+[⬆ Back to Top](#table-of-contents)
 
 ## Contributors
 
@@ -112,3 +123,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## License
+
+[MIT](./LICENSE)
+
+[⬆ Back to Top](#table-of-contents)
