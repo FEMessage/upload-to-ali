@@ -8,6 +8,7 @@ git:
   depth: 3
 install:
 - yarn --frozen-lockfile
+- yarn test
 before_script:
 - echo OSS_KEY=$OSS_KEY >> .env
 - echo OSS_SECRET=$OSS_SECRET >> .env
