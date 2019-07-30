@@ -9,7 +9,7 @@
     "url": "https://github.com/FEMessage/upload-to-ali.git"
   },
   "keywords": ["vue", "sfc", "component"],
-  "files": ["src", "dist", "yarn.lock"],
+  "files": ["src", "dist"],
   "main": "dist/upload-to-ali.umd.js",
   "module": "dist/upload-to-ali.esm.js",
   "unpkg": "dist/upload-to-ali.min.js",
@@ -67,7 +67,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "vue-sfc-cli": "1.10.1",
+  "vue-sfc-cli": "1.10.6",
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
