@@ -1,6 +1,6 @@
 {
   "name": "@femessage/upload-to-ali",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "",
   "author": "https://github.com/FEMessage",
   "license": "MIT",
@@ -8,8 +8,15 @@
     "type": "git",
     "url": "https://github.com/FEMessage/upload-to-ali.git"
   },
-  "keywords": ["vue", "upload", "component"],
-  "files": ["src", "dist"],
+  "keywords": [
+    "vue",
+    "upload",
+    "component"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
   "main": "dist/upload-to-ali.umd.js",
   "module": "dist/upload-to-ali.esm.js",
   "unpkg": "dist/upload-to-ali.min.js",

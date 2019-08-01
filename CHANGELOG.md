@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.2](https://github.com/FEMessage/upload-to-ali/compare/v1.8.1...v1.8.2) (2019-08-01)
+
+
+### Bug Fixes
+
+* **tip:** tip should under upload area ([5261448](https://github.com/FEMessage/upload-to-ali/commit/5261448)), closes [#78](https://github.com/FEMessage/upload-to-ali/issues/78)
+
+
+### Build System
+
+* **deps:** bump @femessage/img-preview from 1.2.3 to 1.2.4 ([#80](https://github.com/FEMessage/upload-to-ali/issues/80)) ([2bea365](https://github.com/FEMessage/upload-to-ali/commit/2bea365))
+
+
+
 ### [1.8.1](https://github.com/FEMessage/upload-to-ali/compare/v1.8.0...v1.8.1) (2019-07-19)
 
 
