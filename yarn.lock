@@ -720,9 +720,9 @@
     minimist "^1.2.0"
 
 "@femessage/img-preview@^1.2.0":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@femessage/img-preview/-/img-preview-1.2.3.tgz#f37f4a84799a6339f865ffee0ccc0dcd73506f15"
-  integrity sha512-TlK5GVH2Usc7ELvuQ+CZoShgnT56UP4boT6cQiDBKr2IjEKJoSXcACmIT3Iq3AO4WQoCfLXEMLSUKCY/wAalGg==
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@femessage/img-preview/-/img-preview-1.2.4.tgz#8efcaccf0bcd8bed58e926d7382a80dffe2bb2e2"
+  integrity sha512-v0cGyA6/4/DYhoLEPlwU7jPvh3C0+M5Db0JHWRhivBeqGs7vdpaqK4rejp+wZRrfYKfvh9yHqpfRmWFrBYvanw==
 
 "@jest/console@^24.7.1":
   version "24.7.1"
