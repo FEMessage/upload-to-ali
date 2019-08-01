@@ -1,66 +1,82 @@
 <template>
-  <div class="upload-to-oss" title="粘贴或拖拽即可上传图片;支持拖拽排序" :class="{'upload-to-oss--highlight': isHighlight}">
-    <!--图片的展示区域-->
-    <draggable-list v-if="!$slots.default" v-model="uploadList">
-      <div v-for="(url, index) in uploadList" :key="url" :class="['upload-item-wrapper', {'is-preview': preview}]">
-        <i
-          title="删除"
-          v-if="!disabled"
-          class="upload-del-icon"
-          @click.stop.prevent="onDelete(url, index)"
-        ></i>
-        <upload-item :url="url" @click="onClick(url, $event)" />
-      </div>
-    </draggable-list>
-
-    <!--上传区域-->
+  <section>
     <div
-      :class="['upload-area', {disabled}]"
-      v-if="canUpload"
-      @click="selectFiles"
-      @paste="paste"
-      @dragover="onDragover"
-      @dragleave="removeHighlight"
-      @drop="onDrop"
+      class="upload-to-oss"
+      title="粘贴或拖拽即可上传图片;支持拖拽排序"
+      :class="{'upload-to-oss--highlight': isHighlight}"
     >
-      <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
-      <slot>
-        <div class="upload-box">
-          <template v-if="uploading">
-            <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
-            <slot name="spinner">
-              <div class="upload-loading">
-                <svg class="circular" viewBox="25 25 50 50">
-                  <circle class="path" cx="50" cy="50" r="20" fill="none"></circle>
-                </svg>
-              </div>
-            </slot>
-          </template>
-          <template v-else>
-            <!--@slot 自定义placeholder内容 -->
-            <slot name="placeholder">
-              <div class="upload-placeholder"></div>
-            </slot>
-          </template>
+      <!--图片的展示区域-->
+      <draggable-list v-if="!$slots.default" v-model="uploadList">
+        <div
+          v-for="(url, index) in uploadList"
+          :key="url"
+          :class="['upload-item-wrapper', {'is-preview': preview}]"
+        >
+          <i
+            title="删除"
+            v-if="!disabled"
+            class="upload-del-icon"
+            @click.stop.prevent="onDelete(url, index)"
+          ></i>
+          <upload-item :url="url" @click="onClick(url, $event)" />
         </div>
-      </slot>
+      </draggable-list>
+
+      <!--上传区域-->
+      <div
+        :class="['upload-area', {disabled}]"
+        v-if="canUpload"
+        @click="selectFiles"
+        @paste="paste"
+        @dragover="onDragover"
+        @dragleave="removeHighlight"
+        @drop="onDrop"
+      >
+        <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
+        <slot>
+          <div class="upload-box">
+            <template v-if="uploading">
+              <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
+              <slot name="spinner">
+                <div class="upload-loading">
+                  <svg class="circular" viewBox="25 25 50 50">
+                    <circle
+                      class="path"
+                      cx="50"
+                      cy="50"
+                      r="20"
+                      fill="none"
+                    ></circle>
+                  </svg>
+                </div>
+              </slot>
+            </template>
+            <template v-else>
+              <!--@slot 自定义placeholder内容 -->
+              <slot name="placeholder">
+                <div class="upload-placeholder"></div>
+              </slot>
+            </template>
+          </div>
+        </slot>
+      </div>
+
+      <input
+        class="upload-input"
+        type="file"
+        ref="uploadInput"
+        hidden
+        :disabled="uploading"
+        :accept="accept"
+        :multiple="multiple"
+        @change="upload"
+      />
+      <img-preview v-if="preview" v-model="previewUrl"></img-preview>
     </div>
 
     <!-- 自定义提示文字 -->
     <div v-if="tip" class="upload-tip">{{ tip }}</div>
-
-    <input
-      class="upload-input"
-      type="file"
-      ref="uploadInput"
-      hidden
-      :disabled="uploading"
-      :accept="accept"
-      :multiple="multiple"
-      @change="upload"
-    >
-    <img-preview v-if="preview" v-model="previewUrl"></img-preview>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -402,9 +418,7 @@ export default {
                 url += `${this.customDomain}/${filename}`
               }
             } else {
-              url += `${this.bucket}.${
-                this.region
-              }.aliyuncs.com/${filename}`
+              url += `${this.bucket}.${this.region}.aliyuncs.com/${filename}`
             }
             this.$emit(
               'input',
@@ -621,12 +635,13 @@ $active-color = #5d81f9
     display: inline-flex;
     margin-bottom: 4px;
   }
-  .upload-tip {
-    margin-top: 8px;
-    color: #606266;
-    font-size: 12px;
-  }
 }
+
+.upload-tip {
+  color: #606266;
+  font-size: 12px;
+}
+
 .upload-to-oss--highlight {
   .upload-box {
     border-color: $active-color;

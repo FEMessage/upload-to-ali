@@ -16,7 +16,8 @@ const sections = (() => {
   let faq = '' // 约定至多只有一个faq.md
   const guides = []
   docs.forEach(d => {
-    if (/^faq$/.test(d.name)) {
+    if (/^faq$/i.test(d.name)) {
+      d.name = d.name.toUpperCase()
       faq = d
     } else if (/^guide-/.test(d.name)) {
       guides.push(d)
@@ -32,13 +33,11 @@ const sections = (() => {
     },
     {
       name: 'Demo',
-      sections: demos
+      sections: demos,
+      sectionDepth: 2
     },
     ...(faq ? [faq] : []),
-    {
-      name: 'Guide',
-      sections: guides
-    }
+    ...(guides.length ? [{name: 'Guide', sections: guides}] : [])
   ]
 })()
 
@@ -71,6 +70,10 @@ module.exports = {
         {
           test: /\.styl(us)?$/,
           loaders: ['vue-style-loader', 'css-loader', 'stylus-loader']
+        },
+        {
+          test: /\.(woff2?|eot|[ot]tf)(\?.*)?$/,
+          loader: 'file-loader'
         }
       ]
     },
