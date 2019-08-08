@@ -15,32 +15,32 @@ You can configure OSS information through environmental variables, customize dom
 
 ## Table of Contents
 
-* [Feature](#feature)
-* [Links](#links)
-* [Install](#install)
-* [Config](#config)
-* [Dotenv](#dotenv)
-* [Contributing](#contributing)
-* [Contributors](#contributors)
-* [License](#license)
+- [Feature](#feature)
+- [Links](#links)
+- [Install](#install)
+- [Config](#config)
+- [Dotenv](#dotenv)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+- [License](#license)
 
 ## Feature
 
-* Pure front-end implementation, no need for backend cooperation
-* The upload function can be done with little oss configuration
-* Automatically compress pictures before uploading, and loading prompts during uploading, support picture display and deletion
-* With default styles and support customize
-* Can limit the size or the number of files to upload
-* Support paste screenshot to upload
-* Can drag and drop to upload
-* Can preivew img
+- Pure front-end implementation, no need for backend cooperation
+- The upload function can be done with little oss configuration
+- Automatically compress pictures before uploading, and loading prompts during uploading, support picture display and deletion
+- With default styles and support customize
+- Can limit the size or the number of files to upload
+- Support paste screenshot to upload
+- Can drag and drop to upload
+- Can preivew img
 
 [⬆Back to Top](#table-of-contents)
 
 ## Links
 
-* [docs](https://FEMessage.github.io/upload-to-ali/)
-* [ali oss guide](docs/ali-oss-guide.md)
+- [docs](https://FEMessage.github.io/upload-to-ali/)
+- [ali oss guide](docs/ali-oss-guide.md)
 
 [⬆ Back to Top](#table-of-contents)
 
@@ -89,10 +89,10 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 For those who are interested in contributing to this project, such as:
 
-* report a bug
-* request new feature
-* fix a bug
-* implement a new feature
+- report a bug
+- request new feature
+- fix a bug
+- implement a new feature
 
 Please refer to our [contributing guide](https://github.com/FEMessage/.github/blob/master/CONTRIBUTING.md).
 
