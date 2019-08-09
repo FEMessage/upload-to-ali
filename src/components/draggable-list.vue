@@ -1,6 +1,6 @@
 <template>
   <transition-group name="draggable-list" tag="div" class="draggable-list">
-    <slot/>
+    <slot />
   </transition-group>
 </template>
 <script>
@@ -58,13 +58,16 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
-.draggable-list-move
-  transition transform 0.3s
+<style lang="less">
+.draggable-list-move {
+  transition: transform 0.3s;
+}
 
-.ghost
-  opacity 0.5
+.ghost {
+  opacity: 0.5;
+}
 
-.draggable-list
-  display inline-flex
+.draggable-list {
+  display: inline-flex;
+}
 </style>

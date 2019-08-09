@@ -498,15 +498,24 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
-$border-color = #cad1e8
-$active-color = #5d81f9
+<style lang="less">
+@border-color: #cad1e8;
+@active-color: #5d81f9;
+
+.upload-to-oss--highlight {
+  .upload-box {
+    border-color: @active-color;
+    background-color: #5d81f914;
+  }
+}
+
 .upload-to-oss {
   display: inline-flex;
+
   .disabled {
     pointer-events: none;
   }
-  .upload-item-wrapper,
+
   .upload-box {
     display: inline-flex;
     justify-content: center;
@@ -514,23 +523,30 @@ $active-color = #5d81f9
     width: 80px;
     height: 80px;
     border-radius: 3px;
-    border: 1px solid $border-color;
+    border: 1px solid @border-color;
+
     &:hover {
-      border-color: $active-color;
+      border-color: @active-color;
       background-color: #5d81f914;
     }
   }
-  .upload-item-wrapper:hover {
-    // FYI: https://developer.mozilla.org/zh-CN/docs/Web/CSS/cursor#Values
-    cursor: move;
-    &.is-preview {
-      cursor: zoom-in;
-    }
-  }
+
   .upload-item-wrapper {
+    .upload-box();
+
     position: relative;
     margin: 0 8px 8px 0;
+
+    &:hover {
+      // FYI: https://developer.mozilla.org/zh-CN/docs/Web/CSS/cursor#Values
+      cursor: move;
+
+      &.is-preview {
+        cursor: zoom-in;
+      }
+    }
   }
+
   .upload-placeholder,
   .upload-loading {
     position: relative;
@@ -538,23 +554,26 @@ $active-color = #5d81f9
     height: 100%;
     text-align: center;
   }
+
   .upload-placeholder {
-    &:before {
+    &::before {
       width: 2px;
       height: 20px;
-      background-color: $border-color;
+      background-color: @border-color;
     }
-    &:after {
+
+    &::after {
       width: 20px;
       height: 2px;
-      background-color: $border-color;
+      background-color: @border-color;
     }
   }
-  .upload-placeholder:before,
-  .upload-placeholder:after,
-  .upload-del-icon:before,
-  .upload-del-icon:after,
-  .upload-loading:before {
+
+  .upload-placeholder::before,
+  .upload-placeholder::after,
+  .upload-del-icon::before,
+  .upload-del-icon::after,
+  .upload-loading::before {
     content: '';
     display: block;
     position: absolute;
@@ -562,29 +581,35 @@ $active-color = #5d81f9
     top: 50%;
     transform: translate(-50%, -50%);
   }
+
   .upload-loading {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 3px;
     transition: opacity 0.3s;
+
     @keyframes is-loading {
       100% {
         transform: rotate(360deg);
       }
     }
+
     @keyframes loading-dash {
       0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
       }
+
       50% {
         stroke-dasharray: 90, 150;
         stroke-dashoffset: -40px;
       }
+
       100% {
         stroke-dasharray: 90, 150;
         stroke-dashoffset: -120px;
       }
     }
+
     .circular {
       position: absolute;
       left: 28%;
@@ -594,6 +619,7 @@ $active-color = #5d81f9
       -webkit-animation: is-loading 2s linear infinite;
       animation: is-loading 2s linear infinite;
     }
+
     .path {
       -webkit-animation: loading-dash 1.5s ease-in-out infinite;
       animation: loading-dash 1.5s ease-in-out infinite;
@@ -604,32 +630,37 @@ $active-color = #5d81f9
       stroke-linecap: round;
     }
   }
+
   .upload-del-icon {
     position: absolute;
     right: -8px;
     top: -8px;
     width: 16px;
     height: 16px;
-    background-color: $border-color;
+    background-color: @border-color;
     border-radius: 50%;
     line-height: 16px;
     transform: rotate(45deg);
     z-index: 1;
     cursor: pointer;
-    &:before {
+
+    &::before {
       width: 1px;
       height: 8px;
       background: #fff;
     }
-    &:after {
+
+    &::after {
       width: 8px;
       height: 1px;
       background: #fff;
     }
   }
+
   .upload-input {
     display: none;
   }
+
   .upload-area {
     cursor: pointer;
     display: inline-flex;
@@ -640,12 +671,5 @@ $active-color = #5d81f9
 .upload-tip {
   color: #606266;
   font-size: 12px;
-}
-
-.upload-to-oss--highlight {
-  .upload-box {
-    border-color: $active-color;
-    background-color: #5d81f914;
-  }
 }
 </style>
