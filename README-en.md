@@ -83,6 +83,20 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 `dotenv` document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)
 
+### vue-cli3
+
+vue-cli3 offers an easy solution to replace [process.env](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F), but it requires a pattern(VUE*APP*\*) to inject in client side. So we need to use `dotenv-webpack`'s solution.
+
+```js
+// vue.config.js
+const Dotenv = require('dotenv-webpack')
+module.exports = {
+  configureWebpack: {
+    plugins: [new Dotenv()]
+  }
+}
+```
+
 [⬆Back to Top](#table-of-contents)
 
 ## Contributing
