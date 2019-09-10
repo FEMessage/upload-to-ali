@@ -98,7 +98,7 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 ### vue-cli3
 
-vue-cli3 提供了简便的方案替换[环境变量](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F)，但无法在客户端注入。这个场景需要结合[dotenv-webpack]插件。
+vue-cli3 提供了简便的方案替换[环境变量](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F)，但无法在客户端注入。这个场景需要结合`dotenv-webpack`插件。
 
 ```js
 // vue.config.js
