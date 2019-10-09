@@ -2,7 +2,7 @@
   <section>
     <div
       class="upload-to-oss"
-      title="粘贴或拖拽即可上传图片;支持拖拽排序"
+      :title="title"
       :class="{'upload-to-oss--highlight': isHighlight}"
     >
       <!--图片的展示区域-->
@@ -248,6 +248,13 @@ export default {
           this.previewUrl = url
         }
       }
+    },
+    /**
+     * 上传区域鼠标悬停提示内容
+     */
+    title: {
+      type: String,
+      default: '粘贴或拖拽即可上传图片;支持拖拽排序'
     },
     /**
      * upload前的钩子函数，传入选择的文件，FileList类型。
