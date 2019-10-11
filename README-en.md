@@ -15,32 +15,32 @@ You can configure OSS information through environmental variables, customize dom
 
 ## Table of Contents
 
-* [Feature](#feature)
-* [Links](#links)
-* [Install](#install)
-* [Config](#config)
-* [Dotenv](#dotenv)
-* [Contributing](#contributing)
-* [Contributors](#contributors)
-* [License](#license)
+- [Feature](#feature)
+- [Links](#links)
+- [Install](#install)
+- [Config](#config)
+- [Dotenv](#dotenv)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+- [License](#license)
 
 ## Feature
 
-* Pure front-end implementation, no need for backend cooperation
-* The upload function can be done with little oss configuration
-* Automatically compress pictures before uploading, and loading prompts during uploading, support picture display and deletion
-* With default styles and support customize
-* Can limit the size or the number of files to upload
-* Support paste screenshot to upload
-* Can drag and drop to upload
-* Can preivew img
+- Pure front-end implementation, no need for backend cooperation
+- The upload function can be done with little oss configuration
+- Automatically compress pictures before uploading, and loading prompts during uploading, support picture display and deletion
+- With default styles and support customize
+- Can limit the size or the number of files to upload
+- Support paste screenshot to upload
+- Can drag and drop to upload
+- Can preivew img
 
 [⬆Back to Top](#table-of-contents)
 
 ## Links
 
-* [docs](https://FEMessage.github.io/upload-to-ali/)
-* [ali oss guide](docs/ali-oss-guide.md)
+- [docs](https://FEMessage.github.io/upload-to-ali/)
+- [ali oss guide](docs/ali-oss-guide.md)
 
 [⬆ Back to Top](#table-of-contents)
 
@@ -83,16 +83,30 @@ OSS_CUSTOM_DOMAIN=cdn.xxx.com
 
 `dotenv` document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)
 
+### vue-cli3
+
+vue-cli3 offers an easy solution to replace [process.env](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F), but it requires a pattern(VUE*APP*\*) to inject in client side. So we need to use `dotenv-webpack`'s solution.
+
+```js
+// vue.config.js
+const Dotenv = require('dotenv-webpack')
+module.exports = {
+  configureWebpack: {
+    plugins: [new Dotenv()]
+  }
+}
+```
+
 [⬆Back to Top](#table-of-contents)
 
 ## Contributing
 
 For those who are interested in contributing to this project, such as:
 
-* report a bug
-* request new feature
-* fix a bug
-* implement a new feature
+- report a bug
+- request new feature
+- fix a bug
+- implement a new feature
 
 Please refer to our [contributing guide](https://github.com/FEMessage/.github/blob/master/CONTRIBUTING.md).
 
