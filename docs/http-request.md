@@ -18,16 +18,11 @@ export default {
 
       return new Promise(resolve => {
         setTimeout(() => {
-          resolve(url)
+          resolve('\/\/deepexi.oss-cn-shenzhen.aliyuncs.com/deepexi-services/logo_Deepexi_640x640.jpg')
         }, 2000)
       })
     }
   }
-}
-
-// 模拟 Ajax
-function ajax() {
-	return '\/\/deepexi.oss-cn-shenzhen.aliyuncs.com/deepexi-services/logo_Deepexi_640x640.jpg'
 }
 </script>
 ```
