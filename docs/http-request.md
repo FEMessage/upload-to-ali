@@ -14,8 +14,6 @@ export default {
   },
   methods: {
     myUpload(file) {
-      const url = ajax(file)
-
       return new Promise(resolve => {
         setTimeout(() => {
           resolve('\/\/deepexi.oss-cn-shenzhen.aliyuncs.com/deepexi-services/logo_Deepexi_640x640.jpg')
