@@ -290,18 +290,6 @@ export default {
     }
   },
   mounted() {
-    if (
-      !this.region ||
-      !this.bucket ||
-      !this.accessKeyId ||
-      !this.accessKeySecret
-    ) {
-      console.error(
-        '必要参数不能为空: region bucket accessKeyId accessKeySecret'
-      )
-      return
-    }
-
     if (this.accept && !mimeTypeFullRegex.test(this.accept)) {
       console.warn(
         '请设置正确的`accept`属性, 可参考:',
@@ -313,6 +301,20 @@ export default {
   },
   methods: {
     newClient() {
+      if (this.httpRequest) return
+
+      if (
+        !this.region ||
+        !this.bucket ||
+        !this.accessKeyId ||
+        !this.accessKeySecret
+      ) {
+        console.error(
+          '必要参数不能为空: region bucket accessKeyId accessKeySecret'
+        )
+        return
+      }
+
       // https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.801.LllSVA
       this.client = new AliOSS({
         region: this.region,
