@@ -411,7 +411,7 @@ export default {
 
         if (this.httpRequest) {
           try {
-            const url = await this.httpRequest(e, file)
+            const url = await this.httpRequest(file)
             if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
               this.$emit(
                 'input',
