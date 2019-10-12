@@ -426,13 +426,7 @@ export default {
           } catch (error) {
             this.uploading = false
 
-            if (error.code === 'ConnectionTimeoutError') {
-              // 上传超时事件
-              this.$emit('timeout')
-            } else {
-              // 上传失败
-              this.emit('fail')
-            }
+            this.catchError(error)
           }
         } else {
           await this.client
@@ -465,24 +459,14 @@ export default {
               reset()
               this.uploading = false
 
-              // 捕获超时异常
-              if (err.code === 'ConnectionTimeoutError') {
-                /**
-                 * 上传超时事件
-                 */
-                this.$emit('timeout')
-              }
               if (this.client.isCancel()) {
                 /**
                  * 上传操作被取消事件
                  */
                 this.$emit('cancel')
-              } else {
-                /**
-                 * 上传失败事件
-                 */
-                this.$emit('fail')
               }
+
+              this.catchError(err)
             })
         }
 
@@ -529,6 +513,15 @@ export default {
     },
     removeHighlight() {
       this.isHighlight = false
+    },
+    catchError(error) {
+      if (error.code === 'ConnectionTimeoutError') {
+        // 上传超时事件
+        this.$emit('timeout')
+      } else {
+        // 上传失败
+        this.emit('fail')
+      }
     }
   }
 }
