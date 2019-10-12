@@ -410,16 +410,13 @@ export default {
         key = `${name.substring(0, pos)}-${new Date().getTime()}${suffix}`
 
         if (this.httpRequest) {
-          const req = this.httpRequest(e, file)
-          if (req && req.then) {
-            req.then(url => {
-              this.$emit(
-                'input',
-                this.multiple ? this.uploadList.concat(url) : url
-              )
-              currentUploads.push(url)
-            })
-          }
+          await this.httpRequest(e, file).then(url => {
+            this.$emit(
+              'input',
+              this.multiple ? this.uploadList.concat(url) : url
+            )
+            currentUploads.push(url)
+          })
         } else {
           await this.client
             .multipartUpload(this.dir + key, file, this.uploadOptions)
