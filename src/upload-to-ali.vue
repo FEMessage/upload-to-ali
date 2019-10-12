@@ -424,9 +424,7 @@ export default {
               )
             }
           } catch (error) {
-            this.uploading = false
-
-            this.catchError(error)
+            this.handleCatchError(error)
           }
         } else {
           await this.client
@@ -457,7 +455,6 @@ export default {
             .catch(err => {
               // TODO 似乎可以干掉？🤔
               reset()
-              this.uploading = false
 
               if (this.client.isCancel()) {
                 /**
@@ -466,7 +463,7 @@ export default {
                 this.$emit('cancel')
               }
 
-              this.catchError(err)
+              this.handleCatchError(err)
             })
         }
 
@@ -514,7 +511,9 @@ export default {
     removeHighlight() {
       this.isHighlight = false
     },
-    catchError(error) {
+    handleCatchError(error) {
+      this.uploading = false
+
       if (error.code === 'ConnectionTimeoutError') {
         // 上传超时事件
         this.$emit('timeout')
