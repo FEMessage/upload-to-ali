@@ -259,7 +259,13 @@ export default {
       default() {
         return Promise.resolve()
       }
-    }
+    },
+
+    /**
+     * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为
+     * 返回 Promise, 接收 resolve 参数为 url
+     */
+    httpRequest: Function
   },
   data() {
     return {
@@ -284,18 +290,6 @@ export default {
     }
   },
   mounted() {
-    if (
-      !this.region ||
-      !this.bucket ||
-      !this.accessKeyId ||
-      !this.accessKeySecret
-    ) {
-      console.error(
-        '必要参数不能为空: region bucket accessKeyId accessKeySecret'
-      )
-      return
-    }
-
     if (this.accept && !mimeTypeFullRegex.test(this.accept)) {
       console.warn(
         '请设置正确的`accept`属性, 可参考:',
@@ -307,6 +301,20 @@ export default {
   },
   methods: {
     newClient() {
+      if (this.httpRequest) return
+
+      if (
+        !this.region ||
+        !this.bucket ||
+        !this.accessKeyId ||
+        !this.accessKeySecret
+      ) {
+        console.error(
+          '必要参数不能为空: region bucket accessKeyId accessKeySecret'
+        )
+        return
+      }
+
       // https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.801.LllSVA
       this.client = new AliOSS({
         region: this.region,
@@ -401,55 +409,63 @@ export default {
 
         key = `${name.substring(0, pos)}-${new Date().getTime()}${suffix}`
 
-        await this.client
-          .multipartUpload(this.dir + key, file, this.uploadOptions)
-          .then(res => {
-            // 协议无关
-            let url = doubleSlash
+        if (this.httpRequest) {
+          try {
+            const url = await this.httpRequest(file)
+            if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
+              this.$emit(
+                'input',
+                this.multiple ? this.uploadList.concat(url) : url
+              )
+              currentUploads.push(url)
+            } else {
+              console.error(
+                `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
+              )
+            }
+          } catch (error) {
+            this.handleCatchError(error)
+          }
+        } else {
+          await this.client
+            .multipartUpload(this.dir + key, file, this.uploadOptions)
+            .then(res => {
+              // 协议无关
+              let url = doubleSlash
 
-            // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
-            // 因此要 encode res.name，否则会因为文件名不同，导致 404
-            const filename = encodePath(res.name)
+              // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
+              // 因此要 encode res.name，否则会因为文件名不同，导致 404
+              const filename = encodePath(res.name)
 
-            if (this.customDomain) {
-              if (this.customDomain.indexOf(doubleSlash) > -1)
-                url = `${this.customDomain}/${filename}`
-              else {
-                url += `${this.customDomain}/${filename}`
+              if (this.customDomain) {
+                if (this.customDomain.indexOf(doubleSlash) > -1)
+                  url = `${this.customDomain}/${filename}`
+                else {
+                  url += `${this.customDomain}/${filename}`
+                }
+              } else {
+                url += `${this.bucket}.${this.region}.aliyuncs.com/${filename}`
               }
-            } else {
-              url += `${this.bucket}.${this.region}.aliyuncs.com/${filename}`
-            }
-            this.$emit(
-              'input',
-              this.multiple ? this.uploadList.concat(url) : url
-            )
-            currentUploads.push(url)
-          })
-          .catch(err => {
-            // TODO 似乎可以干掉？🤔
-            reset()
-            this.uploading = false
+              this.$emit(
+                'input',
+                this.multiple ? this.uploadList.concat(url) : url
+              )
+              currentUploads.push(url)
+            })
+            .catch(err => {
+              // TODO 似乎可以干掉？🤔
+              reset()
 
-            // 捕获超时异常
-            if (e.code === 'ConnectionTimeoutError') {
-              /**
-               * 上传超时事件
-               */
-              this.$emit('timeout')
-            }
-            if (this.client.isCancel()) {
-              /**
-               * 上传操作被取消事件
-               */
-              this.$emit('cancel')
-            } else {
-              /**
-               * 上传失败事件
-               */
-              this.$emit('fail')
-            }
-          })
+              if (this.client.isCancel()) {
+                /**
+                 * 上传操作被取消事件
+                 */
+                this.$emit('cancel')
+              }
+
+              this.handleCatchError(err)
+            })
+        }
 
         this.newClient()
       }
@@ -494,6 +510,17 @@ export default {
     },
     removeHighlight() {
       this.isHighlight = false
+    },
+    handleCatchError(error) {
+      this.uploading = false
+
+      if (error.code === 'ConnectionTimeoutError') {
+        // 上传超时事件
+        this.$emit('timeout')
+      } else {
+        // 上传失败
+        this.$emit('fail')
+      }
     }
   }
 }
