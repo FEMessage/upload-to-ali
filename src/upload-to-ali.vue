@@ -466,7 +466,7 @@ export default {
               this.uploading = false
 
               // 捕获超时异常
-              if (e.code === 'ConnectionTimeoutError') {
+              if (err.code === 'ConnectionTimeoutError') {
                 /**
                  * 上传超时事件
                  */
