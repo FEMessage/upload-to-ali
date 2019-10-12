@@ -410,18 +410,29 @@ export default {
         key = `${name.substring(0, pos)}-${new Date().getTime()}${suffix}`
 
         if (this.httpRequest) {
-          const url = await this.httpRequest(e, file)
+          try {
+            const url = await this.httpRequest(e, file)
+            if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
+              this.$emit(
+                'input',
+                this.multiple ? this.uploadList.concat(url) : url
+              )
+              currentUploads.push(url)
+            } else {
+              console.error(
+                `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
+              )
+            }
+          } catch (error) {
+            this.uploading = false
 
-          if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
-            this.$emit(
-              'input',
-              this.multiple ? this.uploadList.concat(url) : url
-            )
-            currentUploads.push(url)
-          } else {
-            console.error(
-              `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
-            )
+            if (error.code === 'ConnectionTimeoutError') {
+              // 上传超时事件
+              this.$emit('timeout')
+            } else {
+              // 上传失败
+              this.emit('fail')
+            }
           }
         } else {
           await this.client
