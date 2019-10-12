@@ -20,8 +20,8 @@ export default {
         setTimeout(() => {
           resolve(url)
         }, 2000)
-  		})
-  	}
+      })
+    }
   }
 }
 
