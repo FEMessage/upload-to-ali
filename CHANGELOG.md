@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/FEMessage/upload-to-ali/compare/v1.8.3...v1.9.0) (2019-10-12)
+
+
+### Bug Fixes
+
+* 使用更通用的 title 信息 ([bc0a604](https://github.com/FEMessage/upload-to-ali/commit/bc0a604))
+
+
+### Features
+
+* **http-request:** 可自定义上传函数 ([#103](https://github.com/FEMessage/upload-to-ali/issues/103)) ([a184099](https://github.com/FEMessage/upload-to-ali/commit/a184099))
+
+
+
 ### [1.8.3](https://github.com/FEMessage/upload-to-ali/compare/v1.8.2...v1.8.3) (2019-10-11)
 
 
