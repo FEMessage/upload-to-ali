@@ -2,14 +2,14 @@
 
 ```vue
 <template>
-	<upload-to-ali v-model="url" :http-request="myUpload" />
+	<upload-to-ali multiple v-model="url" :http-request="myUpload" />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      url: ''
+      url: []
     }
   },
   methods: {
