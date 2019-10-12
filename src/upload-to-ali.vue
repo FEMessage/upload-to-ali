@@ -519,7 +519,7 @@ export default {
         this.$emit('timeout')
       } else {
         // 上传失败
-        this.emit('fail')
+        this.$emit('fail')
       }
     }
   }
