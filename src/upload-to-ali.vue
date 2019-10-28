@@ -91,13 +91,14 @@ const imageCompressor = new ImageCompressor()
 
 let doubleSlash = '//'
 let oneKB = 1024
-const image = 'image'
 const clipboardData = 'clipboardData'
 const dataTransfer = 'dataTransfer'
 const target = 'target'
 
 const mimeTypeFullRegex = /[\w]*\/[\*\w]/
 const mimeTypeHalfRegex = /[\w]*/
+
+const enableCompressRegex = /^image\/((?!gif).)+$/
 
 export default {
   name: 'UploadToAli',
@@ -397,8 +398,9 @@ export default {
          */
         this.$emit('loading', name)
 
-        if (file.type.indexOf(image) > -1)
+        if (enableCompressRegex.test(file.type)) {
           file = await imageCompressor.compress(file, this.compressOptions)
+        }
 
         //文件名-时间戳 作为上传文件key
         let pos = name.lastIndexOf('.')
