@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.1](https://github.com/FEMessage/upload-to-ali/compare/v1.9.0...v1.9.1) (2019-10-28)
+
+
+### Bug Fixes
+
+* 图片压缩排除gif类型 ([#105](https://github.com/FEMessage/upload-to-ali/issues/105)) ([3f865de](https://github.com/FEMessage/upload-to-ali/commit/3f865de))
+
+
+
 ## [1.9.0](https://github.com/FEMessage/upload-to-ali/compare/v1.8.3...v1.9.0) (2019-10-12)
 
 
