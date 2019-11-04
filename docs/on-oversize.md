@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-  <upload-to-ali v-model="url" :onSizeOverflow="onSizeOverflow" :onWrongFormat="onWrongFormat" />
+  <upload-to-ali v-model="url" :onOversize="onOversize" :onWrongFormat="onWrongFormat" />
 </template>
 <script>
 export default {
@@ -12,7 +12,7 @@ export default {
     }
   },
   methods: {
-    onSizeOverflow() {
+    onOversize() {
       alert('所选文件大小溢出')
     },
     onWrongFormat() {
