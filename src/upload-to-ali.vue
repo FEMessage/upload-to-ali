@@ -202,9 +202,7 @@ export default {
     max: {
       type: Number,
       default: 9,
-      validator: val => {
-        return val > 0
-      }
+      validator: val => val > 0
     },
     /**
      * 图片压缩参数，请参考：https://www.npmjs.com/package/image-compressor.js#options
@@ -259,6 +257,28 @@ export default {
       type: Function,
       default() {
         return Promise.resolve()
+      }
+    },
+    /**
+     * 所选文件超出size限制时的处理函数
+     */
+    onSizeOverflow: {
+      type: Function,
+      default() {
+        const msg = `请选择${this.size}KB内的文件！`
+        alert(msg)
+        console.warn(msg)
+      }
+    },
+    /**
+     * 所选文件类型不符合accept限制时的处理函数
+     */
+    onWrongFormat: {
+      type: Function,
+      default() {
+        const msg = `文件格式有误！`
+        alert(msg)
+        console.warn(msg)
       }
     },
 
@@ -348,71 +368,51 @@ export default {
     async upload(e, type = target) {
       // 防止loading过程重复上传
       if (this.loading) return
-
-      let files = Array.from(e[type].files)
-      let currentUploads = []
-
+      const files = [...e[type].files]
       if (!files.length) return
-
       const reset = () => (e.target.value = '')
-
       try {
         await this.beforeUpload(files)
       } catch (e) {
-        reset()
-        return
+        return reset()
       }
-
-      if (files.some(i => i.size > this.size * oneKB)) {
-        alert(`请选择${this.size}KB内的文件！`)
-        reset()
-        return
+      // 检查文件大小
+      const isSizeInvalid = files.some(i => i.size > this.size * oneKB)
+      if (isSizeInvalid) {
+        this.onSizeOverflow()
+        return reset()
       }
-
-      if (
+      // 检查文件类型
+      const isFormatInvalid =
         this.accept &&
         (this.accept.indexOf('/*') > -1
           ? files.some(
               i => i.type.indexOf(this.accept.match(mimeTypeHalfRegex)) === -1
             )
           : files.some(i => this.accept.indexOf(i.type) === -1))
-      ) {
-        alert('文件格式有误！')
-        reset()
-        return
+      if (isFormatInvalid) {
+        this.onWrongFormat()
+        return reset()
       }
 
       this.uploading = true
+      const currentUploads = []
 
       const max = this.multiple ? this.max : 1
-      for (let i = 0; i < files.length; i++) {
-        if (this.uploadList.length === max) break
-        let file = files[i]
-
-        let name = file.name
-        let key = ''
+      for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
+        // 尝试压缩文件
+        const file = enableCompressRegex.test(files[i].type)
+          ? await imageCompressor.compress(files[i], this.compressOptions)
+          : files[i]
 
         /**
          * 上传过程中
          * @property {string} name - 当前上传的图片名称
          */
-        this.$emit('loading', name)
+        this.$emit('loading', file.name)
 
-        if (enableCompressRegex.test(file.type)) {
-          file = await imageCompressor.compress(file, this.compressOptions)
-        }
-
-        //文件名-时间戳 作为上传文件key
-        let pos = name.lastIndexOf('.')
-        let suffix = ''
-        if (pos != -1) {
-          suffix = name.substring(pos)
-        }
-
-        key = `${name.substring(0, pos)}-${new Date().getTime()}${suffix}`
-
-        if (this.httpRequest) {
-          try {
+        try {
+          if (this.httpRequest) {
             const url = await this.httpRequest(file)
             if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
               this.$emit(
@@ -425,13 +425,21 @@ export default {
                 `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
               )
             }
-          } catch (error) {
-            this.handleCatchError(error)
-          }
-        } else {
-          await this.client
-            .multipartUpload(this.dir + key, file, this.uploadOptions)
-            .then(res => {
+          } else {
+            //文件名-时间戳 作为上传文件key
+            const pos = file.name.lastIndexOf('.')
+            const key =
+              pos === -1
+                ? `${file.name}-${Date.now()}`
+                : `${file.name.slice(0, pos)}-${Date.now()}${file.name.slice(
+                    pos
+                  )}`
+            try {
+              const res = await this.client.multipartUpload(
+                this.dir + key,
+                file,
+                this.uploadOptions
+              )
               // 协议无关
               let url = doubleSlash
 
@@ -453,23 +461,30 @@ export default {
                 this.multiple ? this.uploadList.concat(url) : url
               )
               currentUploads.push(url)
-            })
-            .catch(err => {
-              // TODO 似乎可以干掉？🤔
-              reset()
-
+            } catch (error) {
               if (this.client.isCancel()) {
                 /**
                  * 上传操作被取消事件
                  */
                 this.$emit('cancel')
               }
-
-              this.handleCatchError(err)
-            })
+              throw error
+            }
+            this.newClient()
+          }
+        } catch (error) {
+          if (error.code === 'ConnectionTimeoutError') {
+            /**
+             * 上传超时
+             */
+            this.$emit('timeout')
+          } else {
+            /**
+             * 上传失败
+             */
+            this.$emit('fail')
+          }
         }
-
-        this.newClient()
       }
 
       reset()
@@ -512,17 +527,6 @@ export default {
     },
     removeHighlight() {
       this.isHighlight = false
-    },
-    handleCatchError(error) {
-      this.uploading = false
-
-      if (error.code === 'ConnectionTimeoutError') {
-        // 上传超时事件
-        this.$emit('timeout')
-      } else {
-        // 上传失败
-        this.$emit('fail')
-      }
     }
   }
 }
