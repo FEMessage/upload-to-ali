@@ -261,6 +261,7 @@ export default {
     },
     /**
      * 所选文件超出size限制时的处理函数
+     * @param {File} - 超出大小的文件
      */
     onOversize: {
       type: Function,
@@ -272,6 +273,7 @@ export default {
     },
     /**
      * 所选文件类型不符合accept限制时的处理函数
+     * @param {File} - 错误类型的文件
      */
     onWrongFormat: {
       type: Function,
@@ -311,7 +313,7 @@ export default {
     }
   },
   mounted() {
-    if (this.accept && !mimeTypeFullRegex.test(this.accept)) {
+    if (!mimeTypeFullRegex.test(this.accept)) {
       console.warn(
         '请设置正确的`accept`属性, 可参考:',
         'https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types'
@@ -376,27 +378,26 @@ export default {
       } catch (e) {
         return reset()
       }
-      // 检查文件大小
-      const isSizeInvalid = files.some(i => i.size > this.size * oneKB)
-      if (isSizeInvalid) {
-        this.onOversize()
+      // 检查有无oversize的文件
+      const fileOvesize = files.find(i => i.size > this.size * oneKB)
+      if (fileOvesize) {
+        this.onOversize(fileOvesize)
         return reset()
       }
       /**
-       * 检查文件类型
-       * FYI: input已经有accept属性，为什么还要用正则再检验一次呢？
-       * 这是因为mac和windows用户在文件选择框是可以手动选择“格式：所有文件”的
+       * 检查有无错误类型的文件
+       * 问: input已经有accept属性，为什么还要用正则再检验一次呢？
+       * 答：因为mac和windows用户在文件选择框是可以手动选择“格式：所有文件”的
        * 所以光用input无法保证传入的文件类型
        */
-      const isFormatInvalid =
-        this.accept &&
-        (this.accept.indexOf('/*') > -1
-          ? files.some(
+      const fileFormatInvalid =
+        this.accept.indexOf('/*') > -1
+          ? files.find(
               i => i.type.indexOf(this.accept.match(mimeTypeHalfRegex)) === -1
             )
-          : files.some(i => this.accept.indexOf(i.type) === -1))
-      if (isFormatInvalid) {
-        this.onWrongFormat()
+          : files.find(i => this.accept.indexOf(i.type) === -1)
+      if (fileFormatInvalid) {
+        this.onWrongFormat(fileFormatInvalid)
         return reset()
       }
 
