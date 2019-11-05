@@ -260,8 +260,8 @@ export default {
       }
     },
     /**
-     * 所选文件超出size限制时的处理函数
-     * @param {File} - 超出大小的文件
+     * 所选文件超出size限制时的处理函数；
+     * 接收超出大小的文件作为参数
      */
     onOversize: {
       type: Function,
@@ -272,8 +272,8 @@ export default {
       }
     },
     /**
-     * 所选文件类型不符合accept限制时的处理函数
-     * @param {File} - 错误类型的文件
+     * 所选文件类型不符合accept限制时的处理函数；
+     * 接收错误类型的文件作为参数
      */
     onWrongFormat: {
       type: Function,
@@ -285,14 +285,57 @@ export default {
     },
 
     /**
-     * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为
+     * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为；
+     * 接收待上传文件作为参数；
      * 返回 Promise, 接收 resolve 参数为 url
      */
-    httpRequest: Function
+    httpRequest: {
+      type: Function,
+      async default(file) {
+        //文件名-时间戳 作为上传文件key
+        const pos = file.name.lastIndexOf('.')
+        const key =
+          pos === -1
+            ? `${file.name}-${Date.now()}`
+            : `${file.name.slice(0, pos)}-${Date.now()}${file.name.slice(pos)}`
+        const client = this.newClient()
+        try {
+          const res = await client.multipartUpload(
+            this.dir + key,
+            file,
+            this.uploadOptions
+          )
+          // 协议无关
+          let url = doubleSlash
+
+          // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
+          // 因此要 encode res.name，否则会因为文件名不同，导致 404
+          const filename = encodePath(res.name)
+
+          if (this.customDomain) {
+            if (this.customDomain.indexOf(doubleSlash) > -1)
+              url = `${this.customDomain}/${filename}`
+            else {
+              url += `${this.customDomain}/${filename}`
+            }
+          } else {
+            url += `${this.bucket}.${this.region}.aliyuncs.com/${filename}`
+          }
+          return url
+        } catch (error) {
+          if (client.isCancel()) {
+            /**
+             * 上传操作被取消事件
+             */
+            this.$emit('cancel')
+          }
+          throw error
+        }
+      }
+    }
   },
   data() {
     return {
-      client: {},
       previewUrl: '',
       uploading: false,
       isHighlight: false
@@ -319,27 +362,22 @@ export default {
         'https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types'
       )
     }
-
-    this.newClient()
   },
   methods: {
     newClient() {
-      if (this.httpRequest) return
-
-      if (
-        !this.region ||
-        !this.bucket ||
-        !this.accessKeyId ||
-        !this.accessKeySecret
-      ) {
-        console.error(
-          '必要参数不能为空: region bucket accessKeyId accessKeySecret'
-        )
-        return
+      // TODO: 使用validator检查必要参数
+      const missingKey = [
+        'region',
+        'bucket',
+        'accessKeyId',
+        'accessKeySecret'
+      ].find(k => !this[k])
+      if (missingKey) {
+        throw new Error(`必要参数不能为空: ${missingKey}`)
       }
 
       // https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.801.LllSVA
-      this.client = new AliOSS({
+      return new AliOSS({
         region: this.region,
         bucket: this.bucket,
         accessKeyId: this.accessKeyId,
@@ -367,6 +405,13 @@ export default {
       }
       this.$refs.uploadInput.click()
     },
+    /**
+     * 上传步骤
+     * 1. 调用beforeUpload
+     * 2. 校验文件大小和类型
+     * 3. 调用httpRequest逐个上传文件，拿到返回的url
+     * 4. 清空loading和input的状态，emit loaded事件
+     */
     async upload(e, type = target) {
       // 防止loading过程重复上传
       if (this.loading) return
@@ -418,67 +463,16 @@ export default {
         this.$emit('loading', file.name)
 
         try {
-          if (this.httpRequest) {
-            const url = await this.httpRequest(file)
-            if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
-              this.$emit(
-                'input',
-                this.multiple ? this.uploadList.concat(url) : url
-              )
-              currentUploads.push(url)
-            } else {
-              console.error(
-                `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
-              )
-            }
-          } else {
-            //文件名-时间戳 作为上传文件key
-            const pos = file.name.lastIndexOf('.')
-            const key =
-              pos === -1
-                ? `${file.name}-${Date.now()}`
-                : `${file.name.slice(0, pos)}-${Date.now()}${file.name.slice(
-                    pos
-                  )}`
-            try {
-              const res = await this.client.multipartUpload(
-                this.dir + key,
-                file,
-                this.uploadOptions
-              )
-              // 协议无关
-              let url = doubleSlash
-
-              // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
-              // 因此要 encode res.name，否则会因为文件名不同，导致 404
-              const filename = encodePath(res.name)
-
-              if (this.customDomain) {
-                if (this.customDomain.indexOf(doubleSlash) > -1)
-                  url = `${this.customDomain}/${filename}`
-                else {
-                  url += `${this.customDomain}/${filename}`
-                }
-              } else {
-                url += `${this.bucket}.${this.region}.aliyuncs.com/${filename}`
-              }
-              this.$emit(
-                'input',
-                this.multiple ? this.uploadList.concat(url) : url
-              )
-              currentUploads.push(url)
-            } catch (error) {
-              if (this.client.isCancel()) {
-                /**
-                 * 上传操作被取消事件
-                 */
-                this.$emit('cancel')
-              }
-              throw error
-            }
-            this.newClient()
+          const url = await this.httpRequest(file)
+          if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
+            throw new Error(
+              `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
+            )
           }
+          this.$emit('input', this.multiple ? this.uploadList.concat(url) : url)
+          currentUploads.push(url)
         } catch (error) {
+          console.warn(error.message)
           if (error.code === 'ConnectionTimeoutError') {
             /**
              * 上传超时
