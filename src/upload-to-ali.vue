@@ -421,13 +421,15 @@ export default {
       try {
         await this.beforeUpload(files)
       } catch (e) {
-        return reset()
+        reset()
+        return
       }
       // 检查有无oversize的文件
       const fileOvesize = files.find(i => i.size > this.size * oneKB)
       if (fileOvesize) {
         this.onOversize(fileOvesize)
-        return reset()
+        reset()
+        return
       }
       /**
        * 检查有无错误类型的文件
@@ -443,7 +445,8 @@ export default {
           : files.find(i => this.accept.indexOf(i.type) === -1)
       if (fileFormatInvalid) {
         this.onWrongFormat(fileFormatInvalid)
-        return reset()
+        reset()
+        return
       }
 
       this.uploading = true
