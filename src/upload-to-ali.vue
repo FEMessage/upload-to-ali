@@ -298,6 +298,7 @@ export default {
       )
     }
 
+    // @see https://juejin.im/post/5af4fbeff265da0b8f6297d6
     if (/^image/.test(this.accept) && /android/i.test(navigator.userAgent)) {
       this.$refs.uploadInput.setAttribute('capture', 'camera')
     }
