@@ -298,6 +298,10 @@ export default {
       )
     }
 
+    if (/^image/.test(this.accept) && /android/i.test(navigator.userAgent)) {
+      this.$refs.uploadInput.setAttribute('capture', 'camera')
+    }
+
     this.newClient()
   },
   methods: {
