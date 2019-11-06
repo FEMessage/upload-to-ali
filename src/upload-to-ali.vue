@@ -175,7 +175,7 @@ export default {
      */
     size: {
       type: Number,
-      default: oneKB
+      default: 1024
     },
     /**
      * 接受上传的文件类型, 多个值逗号分隔, 默认只接受图片
@@ -263,6 +263,16 @@ export default {
       type: Function,
       default() {
         return Promise.resolve()
+      }
+    },
+    /**
+     * 所选文件超出size限制时的处理函数；
+     * 接收超出大小的文件作为参数
+     */
+    onOversize: {
+      type: Function,
+      default() {
+        alert(`请选择${this.size}KB内的文件！`)
       }
     },
 
@@ -369,14 +379,20 @@ export default {
         reset()
         return
       }
-
-      if (files.some(i => i.size > this.size * oneKB)) {
-        // FIXME: alert不兼容微信移动端
-        alert(`请选择${this.size}KB内的文件！`)
+      // 检查有无oversize的文件
+      const fileOvesize = files.find(i => i.size > this.size * oneKB)
+      if (fileOvesize) {
+        this.onOversize(fileOvesize)
         reset()
         return
       }
 
+      /**
+       * 检查有无错误类型的文件
+       * 问: input已经有accept属性，为什么还要用正则再检验一次呢？
+       * 答：因为mac和windows用户在文件选择框是可以手动选择“格式：所有文件”的
+       * 所以光用input无法保证传入的文件类型
+       */
       if (
         this.accept &&
         (this.accept.indexOf('/*') > -1
