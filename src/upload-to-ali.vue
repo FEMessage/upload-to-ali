@@ -2,7 +2,7 @@
   <section>
     <div
       class="upload-to-oss"
-      title="粘贴或拖拽即可上传;支持拖拽排序"
+      title="粘贴或拖拽即可上传；支持拖拽排序"
       :class="{'upload-to-oss--highlight': isHighlight}"
     >
       <!--图片的展示区域-->
@@ -13,65 +13,68 @@
           :class="['upload-item-wrapper', {'is-preview': preview}]"
         >
           <i
-            title="删除"
             v-if="!disabled"
+            title="删除"
             class="upload-del-icon"
             @click.stop.prevent="onDelete(url, index)"
           ></i>
           <upload-item :url="url" @click="onClick(url, $event)" />
         </div>
+        <template #footer>
+          <!--上传区域-->
+          <div
+            v-if="canUpload"
+            key="upload-area"
+            :class="['upload-area', {disabled}]"
+            @click="selectFiles"
+            @paste="paste"
+            @dragenter="isHighlight = hasFile($event)"
+            @dragleave="isHighlight = false"
+            @dragover="$event.preventDefault()"
+            @drop="onDrop"
+          >
+            <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
+            <slot>
+              <div class="upload-box">
+                <template v-if="uploading">
+                  <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
+                  <slot name="spinner">
+                    <div class="upload-loading">
+                      <svg class="circular" viewBox="25 25 50 50">
+                        <circle
+                          class="path"
+                          cx="50"
+                          cy="50"
+                          r="20"
+                          fill="none"
+                        ></circle>
+                      </svg>
+                    </div>
+                  </slot>
+                </template>
+                <template v-else>
+                  <!--@slot 自定义placeholder内容 -->
+                  <slot name="placeholder">
+                    <div class="upload-placeholder" />
+                  </slot>
+                </template>
+              </div>
+            </slot>
+          </div>
+        </template>
       </draggable-list>
 
-      <!--上传区域-->
-      <div
-        :class="['upload-area', {disabled}]"
-        v-if="canUpload"
-        @click="selectFiles"
-        @paste="paste"
-        @dragover="onDragover"
-        @dragleave="removeHighlight"
-        @drop="onDrop"
-      >
-        <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
-        <slot>
-          <div class="upload-box">
-            <template v-if="uploading">
-              <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
-              <slot name="spinner">
-                <div class="upload-loading">
-                  <svg class="circular" viewBox="25 25 50 50">
-                    <circle
-                      class="path"
-                      cx="50"
-                      cy="50"
-                      r="20"
-                      fill="none"
-                    ></circle>
-                  </svg>
-                </div>
-              </slot>
-            </template>
-            <template v-else>
-              <!--@slot 自定义placeholder内容 -->
-              <slot name="placeholder">
-                <div class="upload-placeholder"></div>
-              </slot>
-            </template>
-          </div>
-        </slot>
-      </div>
-
       <input
-        class="upload-input"
-        type="file"
         ref="uploadInput"
+        style="display: none;"
+        type="file"
         hidden
         :disabled="uploading"
         :accept="accept"
         :multiple="multiple"
         @change="upload"
       />
-      <img-preview v-if="preview" v-model="previewUrl"></img-preview>
+      <img-preview v-if="preview" v-model="previewUrl" />
     </div>
 
     <!-- 自定义提示文字 -->
@@ -89,13 +92,10 @@ import {encodePath} from './utils'
 
 const imageCompressor = new ImageCompressor()
 
-let doubleSlash = '//'
-let oneKB = 1024
-const clipboardData = 'clipboardData'
-const dataTransfer = 'dataTransfer'
-const target = 'target'
+const doubleSlash = '//'
+const oneKB = 1024
 
-const mimeTypeFullRegex = /[\w]*\/[\*\w]/
+const mimeTypeFullRegex = /[\w]*\/[*\w]/
 const mimeTypeHalfRegex = /[\w]*/
 
 const enableCompressRegex = /^image\/((?!gif).)+$/
@@ -158,7 +158,10 @@ export default {
      * 图片地址, 支持v-model
      * @model
      */
-    value: [String, Array],
+    value: {
+      type: [String, Array],
+      required: true
+    },
     /**
      * 是否多选
      */
@@ -235,7 +238,8 @@ export default {
      * 自定义上传提示内容
      */
     tip: {
-      type: String
+      type: String,
+      default: ''
     },
     /**
      * 点击事件, 返回参数为当前点击的url
@@ -266,7 +270,10 @@ export default {
      * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为
      * 返回 Promise, 接收 resolve 参数为 url
      */
-    httpRequest: Function
+    httpRequest: {
+      type: Function,
+      default: undefined
+    }
   },
   data() {
     return {
@@ -345,7 +352,7 @@ export default {
       }
       this.$refs.uploadInput.click()
     },
-    async upload(e, type = target) {
+    async upload(e, type = 'target') {
       // 防止loading过程重复上传
       if (this.loading) return
 
@@ -364,6 +371,7 @@ export default {
       }
 
       if (files.some(i => i.size > this.size * oneKB)) {
+        // FIXME: alert不兼容微信移动端
         alert(`请选择${this.size}KB内的文件！`)
         reset()
         return
@@ -489,29 +497,30 @@ export default {
       }
     },
     paste(e) {
-      let files = e.clipboardData && e.clipboardData.files
-      if (files && files.length) this.upload(e, clipboardData)
+      if (!e.clipboardData) return
+      const {files} = e.clipboardData
+      if (!files || !files.length) return
+      this.upload(e, 'clipboardData')
     },
 
     /**
-     * 拖拽事件
+     * 用以判断被拖拽的东西是本地文件还是其他dom元素
+     * FYI: 为什么不使用files属性？
+     * 因为在dragenter事件中，files.length === 0 && types.length === 1;
+     * 而在drop事件中，files.length === types.length === 1;（在chrome的console测试）
+     * 所以用types属性，就可以在dragenter阶段就判断被拖拽的东西是不是本地文件了
+     * @see https://developer.mozilla.org/zh-CN/docs/Web/API/DataTransfer#files.28.29
      */
-    onDragover(e) {
-      e.preventDefault()
-      this.addHighlight()
+    hasFile(e) {
+      return (
+        e.dataTransfer &&
+        e.dataTransfer.types &&
+        e.dataTransfer.types.indexOf('Files') > -1
+      )
     },
     onDrop(e) {
       e.preventDefault()
-      this.removeHighlight()
-
-      const files = e.dataTransfer && e.dataTransfer.files
-      if (files && files.length) this.upload(e, dataTransfer)
-    },
-    addHighlight() {
-      this.isHighlight = true
-    },
-    removeHighlight() {
-      this.isHighlight = false
+      if (this.hasFile(e)) this.upload(e, 'dataTransfer')
     },
     handleCatchError(error) {
       this.uploading = false
@@ -539,8 +548,6 @@ export default {
 }
 
 .upload-to-oss {
-  display: inline-flex;
-
   .disabled {
     pointer-events: none;
   }
@@ -686,14 +693,10 @@ export default {
     }
   }
 
-  .upload-input {
-    display: none;
-  }
-
   .upload-area {
     cursor: pointer;
     display: inline-flex;
-    margin-bottom: 4px;
+    margin: 0 8px 8px 0;
   }
 }
 
