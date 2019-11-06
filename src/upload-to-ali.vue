@@ -92,7 +92,6 @@ import {encodePath} from './utils'
 
 const imageCompressor = new ImageCompressor()
 
-const doubleSlash = '//'
 const oneKB = 1024
 
 const mimeTypeFullRegex = /[\w]*\/[*\w]/
@@ -205,9 +204,7 @@ export default {
     max: {
       type: Number,
       default: 9,
-      validator: val => {
-        return val > 0
-      }
+      validator: val => val > 0
     },
     /**
      * 图片压缩参数，请参考：https://www.npmjs.com/package/image-compressor.js#options
@@ -272,12 +269,50 @@ export default {
      */
     httpRequest: {
       type: Function,
-      default: undefined
+      async default(file) {
+        const {name} = file
+        //文件名-时间戳 作为上传文件key
+        const pos = name.lastIndexOf('.')
+        const key =
+          pos === -1
+            ? `${name}-${Date.now()}`
+            : `${name.slice(0, pos)}-${Date.now()}${name.slice(pos)}`
+        const client = this.newClient()
+        try {
+          const res = await client.multipartUpload(
+            this.dir + key,
+            file,
+            this.uploadOptions
+          )
+          // 协议无关
+          let url
+          // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
+          // 因此要 encode res.name，否则会因为文件名不同，导致 404
+          const filename = encodePath(res.name)
+          if (this.customDomain) {
+            if (this.customDomain.indexOf('//') > -1)
+              url = `${this.customDomain}/${filename}`
+            else {
+              url = `//${this.customDomain}/${filename}`
+            }
+          } else {
+            url = `//${this.bucket}.${this.region}.aliyuncs.com/${filename}`
+          }
+          return url
+        } catch (error) {
+          if (client.isCancel()) {
+            /**
+             * 上传操作被取消事件
+             */
+            this.$emit('cancel')
+          }
+          throw error
+        }
+      }
     }
   },
   data() {
     return {
-      client: {},
       previewUrl: '',
       uploading: false,
       isHighlight: false
@@ -304,27 +339,21 @@ export default {
         'https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types'
       )
     }
-
-    this.newClient()
   },
   methods: {
     newClient() {
-      if (this.httpRequest) return
-
-      if (
-        !this.region ||
-        !this.bucket ||
-        !this.accessKeyId ||
-        !this.accessKeySecret
-      ) {
-        console.error(
-          '必要参数不能为空: region bucket accessKeyId accessKeySecret'
-        )
-        return
+      const missingKey = [
+        'region',
+        'bucket',
+        'accessKeyId',
+        'accessKeySecret'
+      ].find(k => !this[k])
+      if (missingKey) {
+        throw new Error(`必要参数不能为空: ${missingKey}`)
       }
 
       // https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.801.LllSVA
-      this.client = new AliOSS({
+      return new AliOSS({
         region: this.region,
         bucket: this.bucket,
         accessKeyId: this.accessKeyId,
@@ -352,12 +381,18 @@ export default {
       }
       this.$refs.uploadInput.click()
     },
+    /**
+     * 上传步骤
+     * 1. 调用beforeUpload
+     * 2. 校验文件大小和类型
+     * 3. 调用httpRequest逐个上传文件，拿到返回的url
+     * 4. 清空loading和input的状态，emit loaded事件
+     */
     async upload(e, type = 'target') {
       // 防止loading过程重复上传
       if (this.loading) return
 
-      let files = Array.from(e[type].files)
-      let currentUploads = []
+      const files = Array.from(e[type].files)
 
       if (!files.length) return
 
@@ -390,94 +425,45 @@ export default {
         return
       }
 
+      const currentUploads = []
       this.uploading = true
 
       const max = this.multiple ? this.max : 1
-      for (let i = 0; i < files.length; i++) {
-        if (this.uploadList.length === max) break
-        let file = files[i]
-
-        let name = file.name
-        let key = ''
+      for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
+        // 尝试压缩文件
+        const file = enableCompressRegex.test(files[i].type)
+          ? await imageCompressor.compress(files[i], this.compressOptions)
+          : files[i]
 
         /**
          * 上传过程中
          * @property {string} name - 当前上传的图片名称
          */
-        this.$emit('loading', name)
+        this.$emit('loading', file.name)
 
-        if (enableCompressRegex.test(file.type)) {
-          file = await imageCompressor.compress(file, this.compressOptions)
-        }
-
-        //文件名-时间戳 作为上传文件key
-        let pos = name.lastIndexOf('.')
-        let suffix = ''
-        if (pos != -1) {
-          suffix = name.substring(pos)
-        }
-
-        key = `${name.substring(0, pos)}-${new Date().getTime()}${suffix}`
-
-        if (this.httpRequest) {
-          try {
-            const url = await this.httpRequest(file)
-            if (typeof url === 'string' && /^(https?:)?\/\//.test(url)) {
-              this.$emit(
-                'input',
-                this.multiple ? this.uploadList.concat(url) : url
-              )
-              currentUploads.push(url)
-            } else {
-              console.error(
-                `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
-              )
-            }
-          } catch (error) {
-            this.handleCatchError(error)
+        try {
+          const url = await this.httpRequest(file)
+          if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
+            throw new Error(
+              `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
+            )
           }
-        } else {
-          await this.client
-            .multipartUpload(this.dir + key, file, this.uploadOptions)
-            .then(res => {
-              // 协议无关
-              let url = doubleSlash
-
-              // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
-              // 因此要 encode res.name，否则会因为文件名不同，导致 404
-              const filename = encodePath(res.name)
-
-              if (this.customDomain) {
-                if (this.customDomain.indexOf(doubleSlash) > -1)
-                  url = `${this.customDomain}/${filename}`
-                else {
-                  url += `${this.customDomain}/${filename}`
-                }
-              } else {
-                url += `${this.bucket}.${this.region}.aliyuncs.com/${filename}`
-              }
-              this.$emit(
-                'input',
-                this.multiple ? this.uploadList.concat(url) : url
-              )
-              currentUploads.push(url)
-            })
-            .catch(err => {
-              // TODO 似乎可以干掉？🤔
-              reset()
-
-              if (this.client.isCancel()) {
-                /**
-                 * 上传操作被取消事件
-                 */
-                this.$emit('cancel')
-              }
-
-              this.handleCatchError(err)
-            })
+          this.$emit('input', this.multiple ? this.uploadList.concat(url) : url)
+          currentUploads.push(url)
+        } catch (error) {
+          console.warn(error.message)
+          if (error.code === 'ConnectionTimeoutError') {
+            /**
+             * 上传超时
+             */
+            this.$emit('timeout')
+          } else {
+            /**
+             * 上传失败
+             */
+            this.$emit('fail')
+          }
         }
-
-        this.newClient()
       }
 
       reset()
@@ -521,17 +507,6 @@ export default {
     onDrop(e) {
       e.preventDefault()
       if (this.hasFile(e)) this.upload(e, 'dataTransfer')
-    },
-    handleCatchError(error) {
-      this.uploading = false
-
-      if (error.code === 'ConnectionTimeoutError') {
-        // 上传超时事件
-        this.$emit('timeout')
-      } else {
-        // 上传失败
-        this.$emit('fail')
-      }
     }
   }
 }
