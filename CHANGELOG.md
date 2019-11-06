@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://github.com/FEMessage/upload-to-ali/compare/v1.9.1...v1.9.2) (2019-11-06)
+
+
+### Build System
+
+* **deps:** [security] bump mixin-deep from 1.3.1 to 1.3.2 ([#89](https://github.com/FEMessage/upload-to-ali/issues/89)) ([4775fcf](https://github.com/FEMessage/upload-to-ali/commit/4775fcf))
+
+
+
 ### [1.9.1](https://github.com/FEMessage/upload-to-ali/compare/v1.9.0...v1.9.1) (2019-10-28)
 
 
