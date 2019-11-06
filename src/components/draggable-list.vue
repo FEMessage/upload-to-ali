@@ -1,6 +1,7 @@
 <template>
   <transition-group name="draggable-list" tag="div" class="draggable-list">
     <slot />
+    <slot name="footer" />
   </transition-group>
 </template>
 <script>
@@ -30,22 +31,22 @@ export default {
   },
   methods: {
     initDraggable() {
-      let nodes = this.$slots.default
+      const nodes = this.$slots.default
       if (!nodes || !Array.isArray(nodes)) return
       nodes.forEach(({elm}, i) => {
         const img = elm.querySelector('img')
         if (!img) return
 
-        img.ondragstart = e => {
+        img.ondragstart = () => {
           this.dragging = elm
           // 用上transition-group组件后，拖拽中途ghost类有时会消失
           elm.classList.add('ghost')
         }
-        img.ondragend = e => {
+        img.ondragend = () => {
           this.dragging = null
           elm.classList.remove('ghost')
         }
-        img.ondragenter = e => {
+        img.ondragenter = () => {
           if (elm === this.dragging) return
 
           const j = nodes.findIndex(n => n.elm === this.dragging)
@@ -69,5 +70,6 @@ export default {
 
 .draggable-list {
   display: inline-flex;
+  flex-wrap: wrap;
 }
 </style>
