@@ -11,7 +11,7 @@ This component can upload file to Aliyun-OSS easily.
 
 You can configure OSS information through environmental variables, customize domain, support multi-selection, limit file size, delete, paste to upload, drag and drop to upload, make files upload simpler.
 
-![](https://cdn.nlark.com/yuque/0/2019/gif/224563/1561711675156-a7375e06-509a-4722-b2d7-2a2d1ca80008.gif#align=left&display=inline&height=461&originHeight=461&originWidth=480&size=0&status=done&width=480)
+![](https://i.loli.net/2019/11/15/UZ2P7wR83GiDXky.gif)
 
 [中文文档](./README-zh.md)
 
