@@ -83,21 +83,20 @@
 </template>
 
 <script>
-import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
-import ImageCompressor from 'image-compressor.js'
+// import ImageCompressor from 'image-compressor.js'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
-import {encodePath} from './utils'
+// import {encodePath} from './utils'
 
-const imageCompressor = new ImageCompressor()
+// const imageCompressor = new ImageCompressor()
 
 const oneKB = 1024
 
 const mimeTypeFullRegex = /[\w]*\/[*\w]/
 const mimeTypeHalfRegex = /[\w]*/
 
-const enableCompressRegex = /^image\/((?!gif).)+$/
+// const enableCompressRegex = /^image\/((?!gif).)+$/
 
 export default {
   name: 'UploadToAli',
@@ -108,20 +107,11 @@ export default {
   },
   props: {
     /**
-     * 阿里云控制台创建的access key
-     * 使用前请务必设置跨域 及 ACL
-     * @link https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7
+     * 存储空间的名字
      */
-    accessKeyId: {
+    action: {
       type: String,
-      default: process.env.OSS_KEY
-    },
-    /**
-     * 阿里云控制台创建的access secret
-     */
-    accessKeySecret: {
-      type: String,
-      default: process.env.OSS_SECRET
+      default: process.env.ACTION
     },
     /**
      * 存储空间的名字
@@ -131,6 +121,7 @@ export default {
       default: process.env.OSS_BUCKET
     },
     /**
+     * @deprecated
      * 根据 存储空间 所在的存储区域, 相应的上传域名
      */
     region: {
@@ -142,7 +133,7 @@ export default {
      */
     dir: {
       type: String,
-      default: process.env.OSS_DIR || ''
+      default: process.env.OSS_DIR || 'hello/world'
     },
     /**
      * 自定义域名, 该字段有值时, 返回的文件url拼接规则为: customDomain + / + dir + filename
@@ -277,7 +268,7 @@ export default {
      * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为
      * 返回 Promise, 接收 resolve 参数为 url
      */
-    httpRequest: {
+    request: {
       type: Function,
       async default(file) {
         const {name} = file
@@ -287,37 +278,34 @@ export default {
           pos === -1
             ? `${name}-${Date.now()}`
             : `${name.slice(0, pos)}-${Date.now()}${name.slice(pos)}`
-        const client = this.newClient()
-        try {
-          const res = await client.multipartUpload(
-            this.dir + key,
-            file,
-            this.uploadOptions
-          )
-          // 协议无关
-          let url
-          // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
-          // 因此要 encode res.name，否则会因为文件名不同，导致 404
-          const filename = encodePath(res.name)
-          if (this.customDomain) {
-            if (this.customDomain.indexOf('//') > -1)
-              url = `${this.customDomain}/${filename}`
-            else {
-              url = `//${this.customDomain}/${filename}`
-            }
-          } else {
-            url = `//${this.bucket}.${this.region}.aliyuncs.com/${filename}`
-          }
-          return url
-        } catch (error) {
-          if (client.isCancel()) {
-            /**
-             * 上传操作被取消事件
-             */
-            this.$emit('cancel')
-          }
-          throw error
-        }
+        const formData = new FormData()
+        formData.append('bucket', this.bucket)
+        formData.append('folder', this.dir)
+        // FIXME: 目前接口会忽略 key，且在后端加时间戳
+        formData.append(key, file)
+        const res = await new Promise(resolve => {
+          const xhr = new XMLHttpRequest()
+          xhr.responseType = 'json'
+          xhr.onload = () => resolve(xhr.response)
+          xhr.open('POST', this.action, true)
+          xhr.send(formData)
+        })
+        // 协议无关
+        let url = res.payload.url
+        // FIXME: 目前接口直接返回url，所以不需要自己拼接；但 encodePath 不知需不需要
+        // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
+        // 因此要 encode res.name，否则会因为文件名不同，导致 404
+        // const filename = encodePath(res.name)
+        // if (this.customDomain) {
+        //   if (this.customDomain.indexOf('//') > -1)
+        //     url = `${this.customDomain}/${filename}`
+        //   else {
+        //     url = `//${this.customDomain}/${filename}`
+        //   }
+        // } else {
+        //   url = `//${this.bucket}.${this.region}.aliyuncs.com/${filename}`
+        // }
+        return url
       }
     }
   },
@@ -351,25 +339,6 @@ export default {
     }
   },
   methods: {
-    newClient() {
-      const missingKey = [
-        'region',
-        'bucket',
-        'accessKeyId',
-        'accessKeySecret'
-      ].find(k => !this[k])
-      if (missingKey) {
-        throw new Error(`必要参数不能为空: ${missingKey}`)
-      }
-
-      // https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.801.LllSVA
-      return new AliOSS({
-        region: this.region,
-        bucket: this.bucket,
-        accessKeyId: this.accessKeyId,
-        accessKeySecret: this.accessKeySecret
-      })
-    },
     onDelete(url, index) {
       const result = this.multiple ? this.uploadList.filter(v => v !== url) : ''
       this.$emit('input', result)
@@ -447,10 +416,11 @@ export default {
       const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
         // 尝试压缩文件
-        const file = enableCompressRegex.test(files[i].type)
-          ? await imageCompressor.compress(files[i], this.compressOptions)
-          : files[i]
-
+        // FIXME: 接口暂时不支持 blob
+        // const file = enableCompressRegex.test(files[i].type)
+        //   ? await imageCompressor.compress(files[i], this.compressOptions)
+        //   : files[i]
+        const file = files[i]
         /**
          * 上传过程中
          * @property {string} name - 当前上传的图片名称
@@ -458,7 +428,7 @@ export default {
         this.$emit('loading', file.name)
 
         try {
-          const url = await this.httpRequest(file)
+          const url = await this.request(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
               `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
