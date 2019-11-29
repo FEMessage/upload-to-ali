@@ -133,7 +133,7 @@ export default {
      */
     dir: {
       type: String,
-      default: process.env.OSS_DIR || 'hello/world'
+      default: process.env.OSS_DIR
     },
     /**
      * 自定义域名, 该字段有值时, 返回的文件url拼接规则为: customDomain + / + dir + filename
