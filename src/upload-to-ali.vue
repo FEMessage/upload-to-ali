@@ -108,7 +108,7 @@ export default {
      */
     action: {
       type: String,
-      default: process.env.ACTION
+      default: process.env.UPLOAD_ACTION
     },
     /**
      * 存储空间的名字
