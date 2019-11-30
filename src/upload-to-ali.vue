@@ -84,19 +84,16 @@
 
 <script>
 import ImgPreview from '@femessage/img-preview'
-// import ImageCompressor from 'image-compressor.js'
+import Compressor from 'compressorjs'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
-// import {encodePath} from './utils'
-
-// const imageCompressor = new ImageCompressor()
 
 const oneKB = 1024
 
 const mimeTypeFullRegex = /[\w]*\/[*\w]/
 const mimeTypeHalfRegex = /[\w]*/
 
-// const enableCompressRegex = /^image\/((?!gif).)+$/
+const enableCompressRegex = /^image\/((?!gif).)+$/
 
 export default {
   name: 'UploadToAli',
@@ -107,7 +104,7 @@ export default {
   },
   props: {
     /**
-     * 存储空间的名字
+     * 上传地址
      */
     action: {
       type: String,
@@ -115,14 +112,15 @@ export default {
     },
     /**
      * 存储空间的名字
+     * TODO: 暂时未用上
      */
     bucket: {
       type: String,
       default: process.env.OSS_BUCKET
     },
     /**
-     * @deprecated
      * 根据 存储空间 所在的存储区域, 相应的上传域名
+     * TODO: 暂时未用上
      */
     region: {
       type: String,
@@ -133,7 +131,7 @@ export default {
      */
     dir: {
       type: String,
-      default: process.env.OSS_DIR
+      default: process.env.OSS_DIR || ''
     },
     /**
      * 自定义域名, 该字段有值时, 返回的文件url拼接规则为: customDomain + / + dir + filename
@@ -198,7 +196,7 @@ export default {
       validator: val => val > 0
     },
     /**
-     * 图片压缩参数，请参考：https://www.npmjs.com/package/image-compressor.js#options
+     * 图片压缩参数，请参考：https://www.npmjs.com/package/compressorjs#options
      */
     compressOptions: {
       type: Object,
@@ -271,18 +269,12 @@ export default {
     request: {
       type: Function,
       async default(file) {
-        const {name} = file
-        //文件名-时间戳 作为上传文件key
-        const pos = name.lastIndexOf('.')
-        const key =
-          pos === -1
-            ? `${name}-${Date.now()}`
-            : `${name.slice(0, pos)}-${Date.now()}${name.slice(pos)}`
         const formData = new FormData()
-        formData.append('bucket', this.bucket)
+        // TODO: 以后接口应该要支持 bucket & region
+        // formData.append('bucket', this.bucket)
         formData.append('folder', this.dir)
-        // FIXME: 目前接口会忽略 key，且在后端加时间戳
-        formData.append(key, file)
+        // 后端返回的 url 的路径是 {folder}{file.name}，与传过去的 key 无关
+        formData.append('image', file)
         const res = await new Promise(resolve => {
           const xhr = new XMLHttpRequest()
           xhr.responseType = 'json'
@@ -290,22 +282,7 @@ export default {
           xhr.open('POST', this.action, true)
           xhr.send(formData)
         })
-        // 协议无关
-        let url = res.payload.url
-        // FIXME: 目前接口直接返回url，所以不需要自己拼接；但 encodePath 不知需不需要
-        // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
-        // 因此要 encode res.name，否则会因为文件名不同，导致 404
-        // const filename = encodePath(res.name)
-        // if (this.customDomain) {
-        //   if (this.customDomain.indexOf('//') > -1)
-        //     url = `${this.customDomain}/${filename}`
-        //   else {
-        //     url = `//${this.customDomain}/${filename}`
-        //   }
-        // } else {
-        //   url = `//${this.bucket}.${this.region}.aliyuncs.com/${filename}`
-        // }
-        return url
+        return res.payload.url
       }
     }
   },
@@ -416,11 +393,18 @@ export default {
       const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
         // 尝试压缩文件
-        // FIXME: 接口暂时不支持 blob
-        // const file = enableCompressRegex.test(files[i].type)
-        //   ? await imageCompressor.compress(files[i], this.compressOptions)
-        //   : files[i]
-        const file = files[i]
+        let file = files[i]
+        if (enableCompressRegex.test(file.type)) {
+          const blob = await new Promise((resolve, reject) => {
+            new Compressor(file, {
+              ...this.compressOptions,
+              success: resolve,
+              error: reject
+            })
+          })
+          /* eslint-disable-next-line require-atomic-updates */
+          file = new File([blob], file.name)
+        }
         /**
          * 上传过程中
          * @property {string} name - 当前上传的图片名称
