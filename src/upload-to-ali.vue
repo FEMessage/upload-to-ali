@@ -112,7 +112,6 @@ export default {
     },
     /**
      * 存储空间的名字
-     * TODO: 暂时未用上
      */
     bucket: {
       type: String,
@@ -120,7 +119,6 @@ export default {
     },
     /**
      * 根据 存储空间 所在的存储区域, 相应的上传域名
-     * TODO: 暂时未用上
      */
     region: {
       type: String,
@@ -270,11 +268,13 @@ export default {
       type: Function,
       async default(file) {
         const formData = new FormData()
-        // TODO: 以后接口应该要支持 bucket & region
-        // formData.append('bucket', this.bucket)
-        formData.append('folder', this.dir)
+        if (this.bucket) formData.append('bucket', this.bucket)
+        if (this.region) formData.append('region', this.region)
+        if (this.customDomain)
+          formData.append('customDomain', this.customDomain)
+        if (this.dir) formData.append('folder', this.dir)
         // 后端返回的 url 的路径是 {folder}{file.name}，与传过去的 key 无关
-        formData.append('image', file)
+        formData.append('file', file)
         const res = await new Promise(resolve => {
           const xhr = new XMLHttpRequest()
           xhr.responseType = 'json'
