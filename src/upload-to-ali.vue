@@ -272,8 +272,7 @@ export default {
         if (this.region) formData.append('region', this.region)
         if (this.customDomain)
           formData.append('customDomain', this.customDomain)
-        if (this.dir) formData.append('folder', this.dir)
-        // 后端返回的 url 的路径是 {folder}{file.name}，与传过去的 key 无关
+        if (this.dir) formData.append('dir', this.dir)
         formData.append('file', file)
         const res = await new Promise(resolve => {
           const xhr = new XMLHttpRequest()
