@@ -266,22 +266,26 @@ export default {
      */
     request: {
       type: Function,
-      async default(file) {
+      default(file) {
         const formData = new FormData()
-        if (this.bucket) formData.append('bucket', this.bucket)
-        if (this.region) formData.append('region', this.region)
-        if (this.customDomain)
-          formData.append('customDomain', this.customDomain)
-        if (this.dir) formData.append('dir', this.dir)
+        ;['bucket', 'region', 'customDomain', 'dir']
+          .filter(key => this[key])
+          .forEach(key => formData.append(key, this[key]))
         formData.append('file', file)
-        const res = await new Promise(resolve => {
+        return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.responseType = 'json'
-          xhr.onload = () => resolve(xhr.response)
+          xhr.onload = () => {
+            if (xhr.status === 200) {
+              resolve(xhr.response.payload.url)
+            } else {
+              reject(xhr.response)
+            }
+          }
+          xhr.onerror = reject
           xhr.open('POST', this.action, true)
           xhr.send(formData)
         })
-        return res.payload.url
       }
     }
   },
@@ -421,17 +425,10 @@ export default {
           currentUploads.push(url)
         } catch (error) {
           console.warn(error.message)
-          if (error.code === 'ConnectionTimeoutError') {
-            /**
-             * 上传超时
-             */
-            this.$emit('timeout')
-          } else {
-            /**
-             * 上传失败
-             */
-            this.$emit('fail')
-          }
+          /**
+           * 上传失败
+           */
+          this.$emit('fail')
         }
       }
 
