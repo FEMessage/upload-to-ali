@@ -30,9 +30,8 @@ describe('getSignature', () => {
     expect(getSignature(origin, timestamp)).toBe('VBrn5MJFxMj5OPExLx8eXq1DCCc=')
   })
   test('用例二', () => {
-    const origin =
-      'https://serverless.deepexi.top/serverless-console/index.html#/material/resource'
+    const origin = 'https://example.com'
     const timestamp = 1575362612539
-    expect(getSignature(origin, timestamp)).toBe('lXKhwPGWjKJja5nFozH4GpK3y84=')
+    expect(getSignature(origin, timestamp)).toBe('iZj/mMZghtdi1jyk9zqG8mYiKPo=')
   })
 })
