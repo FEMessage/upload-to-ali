@@ -213,7 +213,7 @@ export default {
       })
     },
     /**
-     * 是否开启预览功能，需要全局注册img-preview组件
+     * 是否开启预览功能，需要全局注册 img-preview 组件
      */
     preview: {
       type: Boolean,
@@ -262,7 +262,7 @@ export default {
     },
 
     /**
-     * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为
+     * 自定义上传, 使用此函数则会覆盖默认的上传行为
      * 返回 Promise, 接收 resolve 参数为 url
      */
     request: {
@@ -273,6 +273,7 @@ export default {
           .filter(key => this[key])
           .forEach(key => formData.append(key, this[key]))
         formData.append('file', file)
+        
         return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.responseType = 'json'
@@ -285,10 +286,12 @@ export default {
           }
           xhr.onerror = reject
           xhr.open('POST', this.action, true)
+          
           const timestamp = Date.now()
           const signature = getSignature(location.origin, timestamp)
           xhr.setRequestHeader('x-upload-timestamp', timestamp)
           xhr.setRequestHeader('x-upload-signature', signature)
+          
           xhr.send(formData)
         })
       }
