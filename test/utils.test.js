@@ -1,4 +1,4 @@
-import {getBasename, encodePath} from '../src/utils'
+import {getBasename, getSignature} from '../src/utils'
 
 describe('getBasename', () => {
   test('仅存在文件名', () => {
@@ -23,9 +23,16 @@ describe('getBasename', () => {
   })
 })
 
-describe('encodePath', () => {
-  test('文件名带有特殊字符的文件地址', () => {
-    const url = '//example+1-1563433997757.jpg'
-    expect(encodePath(url)).toBe('//example%2B1-1563433997757.jpg')
+describe('getSignature', () => {
+  test('用例一', () => {
+    const origin = 'http://localhost:6060'
+    const timestamp = 1575362612539
+    expect(getSignature(origin, timestamp)).toBe('VBrn5MJFxMj5OPExLx8eXq1DCCc=')
+  })
+  test('用例二', () => {
+    const origin =
+      'https://serverless.deepexi.top/serverless-console/index.html#/material/resource'
+    const timestamp = 1575362612539
+    expect(getSignature(origin, timestamp)).toBe('lXKhwPGWjKJja5nFozH4GpK3y84=')
   })
 })

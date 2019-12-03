@@ -87,6 +87,7 @@ import ImgPreview from '@femessage/img-preview'
 import Compressor from 'compressorjs'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
+import {getSignature} from './utils'
 
 const oneKB = 1024
 
@@ -284,6 +285,10 @@ export default {
           }
           xhr.onerror = reject
           xhr.open('POST', this.action, true)
+          const timestamp = Date.now()
+          const signature = getSignature(location.origin, timestamp)
+          xhr.setRequestHeader('x-upload-timestamp', timestamp)
+          xhr.setRequestHeader('x-upload-signature', signature)
           xhr.send(formData)
         })
       }

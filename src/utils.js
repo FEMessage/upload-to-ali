@@ -1,9 +1,21 @@
-// TODO: 确认用不上时移除
-export function encodePath(url) {
-  return url
-    .split('/')
-    .map(str => encodeURIComponent(str))
-    .join('/')
+import crypto from 'crypto-browserify'
+
+export function getSignature(origin, timestamp) {
+  const param = {
+    origin,
+    timestamp,
+    signatureMethod: 'HMAC-SHA1'
+  }
+  const paramStr = Object.keys(param)
+    .sort()
+    .map(k => `${k}=${encodeURIComponent(param[k])}`)
+    .join('&')
+  const signStr = 'POST&%2F&' + encodeURIComponent(paramStr)
+
+  return crypto
+    .createHmac('sha1', 'nonce')
+    .update(signStr)
+    .digest('base64')
 }
 
 export function getBasename(url = '') {
