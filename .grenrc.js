@@ -21,12 +21,13 @@ module.exports = {
     '✨ New Features:': ['enhancement'],
     '🐛 Bug Fixes:': ['bug'],
     '📖 Documentation:': ['documentation'],
-    '💅 Refactors:': ['refactor'],
+    '💄 Refactors:': ['refactor'],
     '♻️ Tests:': ['test'],
     '🚀 Performance:': ['performance'],
     '⚓ Dependency upgrades:': ['dependencies'],
     '🏡 Chore:': ['chore'],
-    '💄 Style:': ['style'],
-    '🎩 Hack': ['hack']
+    '💅 Style:': ['style'],
+    '🎩 Hack': ['hack'],
+    '💥 Breaking Changes': ['breaking-change']
   }
 }
