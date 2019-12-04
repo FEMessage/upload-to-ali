@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/FEMessage/upload-to-ali/compare/v1.9.2...v2.0.0) (2019-12-04)
+
+
+### Build System
+
+* **deps:** [security] bump https-proxy-agent from 2.2.1 to 2.2.4 ([#118](https://github.com/FEMessage/upload-to-ali/issues/118)) ([252cf44](https://github.com/FEMessage/upload-to-ali/commit/252cf44))
+
+
+### Features
+
+* 可以通过action直接请求上传接口，并移除key与secret的注入 ([#119](https://github.com/FEMessage/upload-to-ali/issues/119)) ([455cf18](https://github.com/FEMessage/upload-to-ali/commit/455cf18))
+
+
+### BREAKING CHANGES
+
+* 可以通过action直接请求上传接口，并移除key与secret的注入 (#119)
+
 
 
 ### [1.9.2](https://github.com/FEMessage/upload-to-ali/compare/v1.9.1...v1.9.2) (2019-11-06)
