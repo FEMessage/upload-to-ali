@@ -28,7 +28,6 @@ You can configure OSS information through environmental variables, customize dom
 
 ## Feature
 
-- Pure front-end implementation, no need for backend cooperation
 - The upload function can be done with little oss configuration
 - Automatically compress pictures before uploading, and loading prompts during uploading, support picture display and deletion
 - With default styles and support customize
@@ -36,6 +35,11 @@ You can configure OSS information through environmental variables, customize dom
 - Support paste screenshot to upload
 - Can drag and drop to upload
 - Can preivew img
+- support v-model
+
+You can only set `action` props, that refers to upload url, the component has a default implement to post data to the url.
+
+You can set `request` props to customize own upload function.
 
 [⬆Back to Top](#table-of-contents)
 
@@ -54,32 +58,18 @@ yarn add @femessage/upload-to-ali
 
 [⬆Back to Top](#table-of-contents)
 
-## Config
-
-The following props are required:`accessKeyId` - Created by Alibaba Cloud Console `accessKeyId`<br />`accessKeySecret` - Created by Alibaba Cloud Console `accessKeySecret`<br />`bucket` - Storage space name<br />`region` - Alibaba Cloud area name
-
-[Be sure to set cross-domain and ACL before using](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
-
-[⬆Back to Top](#table-of-contents)
-
 ## Dotenv
 
-Recommend using environment variables to configure OSS parameters<br />With dotenv, we just need to write the environment variable in `.env`. With CI tools, this can meet the needs of using different OSS in different environments without change the source code.<br />Here are all can passed-in environment variables
+Recommend using environment variables to configure upload parameters<br />With dotenv, we just need to write the environment variable in `.env`. With CI tools, this can meet the needs of using different configuration in different environments without change the source code.<br />Here are all can passed-in environment variables
 
 ```sh
-# .env文件
-# OSS上传设置
-# required
-OSS_KEY=xxx
-# required
-OSS_SECRET=xxx
-# required
+# .env file
+# these params are all optional
+UPLOAD_ACTION=upload-url
+
 OSS_BUCKET=your-bucket
-# required
 OSS_REGION=oss-cn-beijing
-# optional
 OSS_DIR=oss-dir
-# optional
 OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 

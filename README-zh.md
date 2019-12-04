@@ -7,7 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
-对接阿里云-OSS，可通过环境变量配置 OSS 信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
+对接阿里云 OSS，可通过环境变量配置上传信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
 
 ![](https://i.loli.net/2019/11/15/UZ2P7wR83GiDXky.gif)
 
@@ -24,14 +24,18 @@
 
 ## Feature
 
-- 纯前端实现，不需要后台配合
-- 只需配置 OSS 的基本信息，即可实现上传功能
+- 只需配置少量上传信息，即可实现上传功能
 - 上传前自动压缩图片，上传过程中有 loading 提示，支持图片显示及删除
 - 可拓展自定义 loading 和默认上传样式
 - 可限制上传文件大小和上传文件数量
 - 可截图粘贴上传
 - 可拖拽上传
 - 可预览图片
+- 支持 v-model 
+
+可以只设置 `action` props, 指向上传地址，组件内部默认实现了一套 post 方法，向上传地址传递数据
+
+可以设置 `request`，实现自定义上传函数，覆盖原有默认的上传行为
 
 [⬆ Back to Top](#table-of-contents)
 
@@ -50,45 +54,22 @@ yarn add @femessage/upload-to-ali
 
 [⬆ Back to Top](#table-of-contents)
 
-## Config
-
-使用时组件以下四个参数必传：
-
-`accessKeyId` - `阿里云控制台创建的access key`
-
-`accessKeySecret` - `阿里云控制台创建的access secret`
-
-`bucket` - `存储空间的名字`
-
-`region` - `根据 存储空间 所在的存储区域, 相应的上传域名`
-
-[使用前请务必设置跨域 及 ACL](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
-
-[⬆ Back to Top](#table-of-contents)
-
 ## Dotenv
 
-推荐使用环境变量配置 OSS 参数
+推荐使用环境变量配置上传参数
 
-使用 dotenv，我们只需要将环境变量配置写在`.env`文件中，配合 CI 工具，可满足同一套代码在不同环境对接不同 OSS 的需求
+使用 dotenv，我们只需要将环境变量配置写在`.env`文件中，配合 CI 工具，可满足同一套代码在不同环境对接不同上传配置的需求
 
 以下是所有可传入的环境变量
 
 ```sh
 # .env文件
-# OSS上传设置
+# 以下所有参数都是可选的
+UPLOAD_ACTION=upload-url
 
-# 对应组件必要参数 accessKeyId
-OSS_KEY=xxx
-# 对应组件必要参数 accessKeySecret
-OSS_SECRET=xxx
-# 对应组件必要参数 bucket
 OSS_BUCKET=your-bucket
-# 对应组件必要参数 region
 OSS_REGION=oss-cn-beijing
-# 对应组件可选参数 dir
 OSS_DIR=oss-dir
-# 对应组件可选参数 customDomain
 OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 
