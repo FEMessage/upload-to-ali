@@ -83,14 +83,11 @@
 </template>
 
 <script>
-import AliOSS from 'ali-oss'
 import ImgPreview from '@femessage/img-preview'
-import ImageCompressor from 'image-compressor.js'
+import Compressor from 'compressorjs'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
-import {encodePath} from './utils'
-
-const imageCompressor = new ImageCompressor()
+import {getSignature} from './utils'
 
 const oneKB = 1024
 
@@ -108,20 +105,11 @@ export default {
   },
   props: {
     /**
-     * 阿里云控制台创建的access key
-     * 使用前请务必设置跨域 及 ACL
-     * @link https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7
+     * 上传地址
      */
-    accessKeyId: {
+    action: {
       type: String,
-      default: process.env.OSS_KEY
-    },
-    /**
-     * 阿里云控制台创建的access secret
-     */
-    accessKeySecret: {
-      type: String,
-      default: process.env.OSS_SECRET
+      default: process.env.UPLOAD_ACTION
     },
     /**
      * 存储空间的名字
@@ -207,7 +195,7 @@ export default {
       validator: val => val > 0
     },
     /**
-     * 图片压缩参数，请参考：https://www.npmjs.com/package/image-compressor.js#options
+     * 图片压缩参数，请参考：https://www.npmjs.com/package/compressorjs#options
      */
     compressOptions: {
       type: Object,
@@ -225,7 +213,7 @@ export default {
       })
     },
     /**
-     * 是否开启预览功能，需要全局注册img-preview组件
+     * 是否开启预览功能，需要全局注册 img-preview 组件
      */
     preview: {
       type: Boolean,
@@ -274,50 +262,40 @@ export default {
     },
 
     /**
-     * 自定义上传, 使用此函数则不采用默认 AliOSS 上传行为
+     * 自定义上传, 使用此函数则会覆盖默认的上传行为
      * 返回 Promise, 接收 resolve 参数为 url
      */
-    httpRequest: {
+    request: {
       type: Function,
-      async default(file) {
-        const {name} = file
-        //文件名-时间戳 作为上传文件key
-        const pos = name.lastIndexOf('.')
-        const key =
-          pos === -1
-            ? `${name}-${Date.now()}`
-            : `${name.slice(0, pos)}-${Date.now()}${name.slice(pos)}`
-        const client = this.newClient()
-        try {
-          const res = await client.multipartUpload(
-            this.dir + key,
-            file,
-            this.uploadOptions
-          )
-          // 协议无关
-          let url
-          // 上传时阿里 OSS 会对文件名 encode，但 res.name 没有 encode
-          // 因此要 encode res.name，否则会因为文件名不同，导致 404
-          const filename = encodePath(res.name)
-          if (this.customDomain) {
-            if (this.customDomain.indexOf('//') > -1)
-              url = `${this.customDomain}/${filename}`
-            else {
-              url = `//${this.customDomain}/${filename}`
+      default(file) {
+        const formData = new FormData()
+        ;['bucket', 'region', 'customDomain', 'dir']
+          .filter(key => this[key])
+          .forEach(key => formData.append(key, this[key]))
+        formData.append('file', file)
+
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.responseType = 'json'
+          xhr.onload = () => {
+            if (xhr.status === 200) {
+              resolve(xhr.response.payload.url)
+            } else {
+              reject(xhr.response)
             }
-          } else {
-            url = `//${this.bucket}.${this.region}.aliyuncs.com/${filename}`
           }
-          return url
-        } catch (error) {
-          if (client.isCancel()) {
-            /**
-             * 上传操作被取消事件
-             */
-            this.$emit('cancel')
-          }
-          throw error
-        }
+          xhr.onerror = reject
+          const timestamp = Date.now()
+          const sep = this.action.indexOf('?') > -1 ? '&' : '?'
+          const url = `${this.action}${sep}_=${timestamp}`
+          xhr.open('POST', url, true)
+
+          const signature = getSignature(location.origin, timestamp)
+          xhr.setRequestHeader('x-upload-timestamp', timestamp)
+          xhr.setRequestHeader('x-upload-signature', signature)
+
+          xhr.send(formData)
+        })
       }
     }
   },
@@ -351,25 +329,6 @@ export default {
     }
   },
   methods: {
-    newClient() {
-      const missingKey = [
-        'region',
-        'bucket',
-        'accessKeyId',
-        'accessKeySecret'
-      ].find(k => !this[k])
-      if (missingKey) {
-        throw new Error(`必要参数不能为空: ${missingKey}`)
-      }
-
-      // https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.801.LllSVA
-      return new AliOSS({
-        region: this.region,
-        bucket: this.bucket,
-        accessKeyId: this.accessKeyId,
-        accessKeySecret: this.accessKeySecret
-      })
-    },
     onDelete(url, index) {
       const result = this.multiple ? this.uploadList.filter(v => v !== url) : ''
       this.$emit('input', result)
@@ -447,10 +406,18 @@ export default {
       const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
         // 尝试压缩文件
-        const file = enableCompressRegex.test(files[i].type)
-          ? await imageCompressor.compress(files[i], this.compressOptions)
-          : files[i]
-
+        let file = files[i]
+        if (enableCompressRegex.test(file.type)) {
+          const blob = await new Promise((resolve, reject) => {
+            new Compressor(file, {
+              ...this.compressOptions,
+              success: resolve,
+              error: reject
+            })
+          })
+          /* eslint-disable-next-line require-atomic-updates */
+          file = new File([blob], file.name)
+        }
         /**
          * 上传过程中
          * @property {string} name - 当前上传的图片名称
@@ -458,7 +425,7 @@ export default {
         this.$emit('loading', file.name)
 
         try {
-          const url = await this.httpRequest(file)
+          const url = await this.request(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
               `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
@@ -468,17 +435,10 @@ export default {
           currentUploads.push(url)
         } catch (error) {
           console.warn(error.message)
-          if (error.code === 'ConnectionTimeoutError') {
-            /**
-             * 上传超时
-             */
-            this.$emit('timeout')
-          } else {
-            /**
-             * 上传失败
-             */
-            this.$emit('fail')
-          }
+          /**
+           * 上传失败
+           */
+          this.$emit('fail')
         }
       }
 
