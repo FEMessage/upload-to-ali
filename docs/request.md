@@ -2,7 +2,7 @@
 
 ```vue
 <template>
-	<upload-to-ali multiple v-model="url" :http-request="myUpload" />
+	<upload-to-ali multiple v-model="url" :request="myUpload" />
 </template>
 
 <script>

@@ -7,11 +7,9 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
-This component can upload file to Aliyun-OSS easily.
+对接阿里云 OSS，可通过环境变量配置上传信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
 
-You can configure OSS information through environmental variables, customize domain, support multi-selection, limit file size, delete, paste to upload, drag and drop to upload, make files upload simpler.
-
-![](https://cdn.nlark.com/yuque/0/2019/gif/224563/1561711675156-a7375e06-509a-4722-b2d7-2a2d1ca80008.gif#align=left&display=inline&height=461&originHeight=461&originWidth=480&size=0&status=done&width=480)
+![](https://i.loli.net/2019/11/15/UZ2P7wR83GiDXky.gif)
 
 ## Table of Contents
 
@@ -26,16 +24,20 @@ You can configure OSS information through environmental variables, customize dom
 
 ## Feature
 
-- Pure front-end implementation, no need for backend cooperation
-- The upload function can be done with little oss configuration
-- Automatically compress pictures before uploading, and loading prompts during uploading, support picture display and deletion
-- With default styles and support customize
-- Can limit the size or the number of files to upload
-- Support paste screenshot to upload
-- Can drag and drop to upload
-- Can preivew img
+- 只需配置少量上传信息，即可实现上传功能
+- 上传前自动压缩图片，上传过程中有 loading 提示，支持图片显示及删除
+- 可拓展自定义 loading 和默认上传样式
+- 可限制上传文件大小和上传文件数量
+- 可截图粘贴上传
+- 可拖拽上传
+- 可预览图片
+- 支持 v-model 
 
-[⬆Back to Top](#table-of-contents)
+可以只设置 `action` props, 指向上传地址，组件内部默认实现了一套 post 方法，向上传地址传递数据
+
+可以设置 `request`，实现自定义上传函数，覆盖原有默认的上传行为
+
+[⬆ Back to Top](#table-of-contents)
 
 ## Links
 
@@ -46,46 +48,36 @@ You can configure OSS information through environmental variables, customize dom
 
 ## Install
 
-```bash
+```sh
 yarn add @femessage/upload-to-ali
 ```
 
-[⬆Back to Top](#table-of-contents)
-
-## Config
-
-The following props are required:`accessKeyId` - Created by Alibaba Cloud Console `accessKeyId`<br />`accessKeySecret` - Created by Alibaba Cloud Console `accessKeySecret`<br />`bucket` - Storage space name<br />`region` - Alibaba Cloud area name
-
-[Be sure to set cross-domain and ACL before using](https://help.aliyun.com/document_detail/32069.html?spm=a2c4g.11186623.6.920.9ddd5557vJ6QU7)
-
-[⬆Back to Top](#table-of-contents)
+[⬆ Back to Top](#table-of-contents)
 
 ## Dotenv
 
-Recommend using environment variables to configure OSS parameters<br />With dotenv, we just need to write the environment variable in `.env`. With CI tools, this can meet the needs of using different OSS in different environments without change the source code.<br />Here are all can passed-in environment variables
+推荐使用环境变量配置上传参数
+
+使用 dotenv，我们只需要将环境变量配置写在`.env`文件中，配合 CI 工具，可满足同一套代码在不同环境对接不同上传配置的需求
+
+以下是所有可传入的环境变量
 
 ```sh
 # .env文件
-# OSS上传设置
-# required
-OSS_KEY=xxx
-# required
-OSS_SECRET=xxx
-# required
+# 以下所有参数都是可选的
+UPLOAD_ACTION=upload-url
+
 OSS_BUCKET=your-bucket
-# required
 OSS_REGION=oss-cn-beijing
-# optional
 OSS_DIR=oss-dir
-# optional
 OSS_CUSTOM_DOMAIN=cdn.xxx.com
 ```
 
-`dotenv` document reference [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv)
+`dotenv` 文档参考 https://www.npmjs.com/package/dotenv
 
 ### vue-cli3
 
-vue-cli3 offers an easy solution to replace [process.env](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F), but it requires a pattern(VUE*APP*\*) to inject in client side. So we need to use `dotenv-webpack`'s solution.
+vue-cli3 提供了简便的方案替换[环境变量](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F)，但无法在客户端注入。这个场景需要结合`dotenv-webpack`插件。
 
 ```js
 // vue.config.js
@@ -97,7 +89,7 @@ module.exports = {
 }
 ```
 
-[⬆Back to Top](#table-of-contents)
+[⬆ Back to Top](#table-of-contents)
 
 ## Contributing
 
