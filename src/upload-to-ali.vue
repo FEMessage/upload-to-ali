@@ -273,7 +273,7 @@ export default {
           .filter(key => this[key])
           .forEach(key => formData.append(key, this[key]))
         formData.append('file', file)
-        
+
         return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest()
           xhr.responseType = 'json'
@@ -285,13 +285,15 @@ export default {
             }
           }
           xhr.onerror = reject
-          xhr.open('POST', this.action, true)
-          
           const timestamp = Date.now()
+          const sep = this.action.indexOf('?') > -1 ? '&' : '?'
+          const url = `${this.action}${sep}_=${timestamp}`
+          xhr.open('POST', url, true)
+
           const signature = getSignature(location.origin, timestamp)
           xhr.setRequestHeader('x-upload-timestamp', timestamp)
           xhr.setRequestHeader('x-upload-signature', signature)
-          
+
           xhr.send(formData)
         })
       }
