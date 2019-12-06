@@ -490,6 +490,7 @@ export default {
 <style lang="less">
 @border-color: #cad1e8;
 @active-color: #5d81f9;
+@error-color: #ff4d4f;
 
 .upload-to-oss--highlight {
   .upload-box {
@@ -649,6 +650,10 @@ export default {
     display: inline-flex;
     margin: 0 8px 8px 0;
   }
+}
+
+.el-form-item.is-error .upload-box {
+  border-color: @error-color;
 }
 
 .upload-tip {
