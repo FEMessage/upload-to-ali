@@ -2,9 +2,12 @@
 import Component from './upload-to-ali.vue'
 
 // install function executed by Vue.use()
-export function install(Vue) {
+export function install(Vue, opts = {}) {
   if (install.installed) return
   install.installed = true
+  if (opts.request) {
+    Vue.prototype.$uploadRequest = opts.request
+  }
   Vue.component('UploadToAli', Component)
 }
 

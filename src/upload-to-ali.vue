@@ -87,7 +87,7 @@ import ImgPreview from '@femessage/img-preview'
 import Compressor from 'compressorjs'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
-import {getSignature} from './utils'
+import {defaultRequest} from './utils'
 
 const oneKB = 1024
 
@@ -262,41 +262,11 @@ export default {
     },
 
     /**
-     * 自定义上传, 使用此函数则会覆盖默认的上传行为
+     * 自定义上传, 使用此函数则会覆盖默认的上传行为和全局上传行为
      * 返回 Promise, 接收 resolve 参数为 url
      */
     request: {
-      type: Function,
-      default(file) {
-        const formData = new FormData()
-        ;['bucket', 'region', 'customDomain', 'dir']
-          .filter(key => this[key])
-          .forEach(key => formData.append(key, this[key]))
-        formData.append('file', file)
-
-        return new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest()
-          xhr.responseType = 'json'
-          xhr.onload = () => {
-            if (xhr.status === 200) {
-              resolve(xhr.response.payload.url)
-            } else {
-              reject(xhr.response)
-            }
-          }
-          xhr.onerror = reject
-          const timestamp = Date.now()
-          const sep = this.action.indexOf('?') > -1 ? '&' : '?'
-          const url = `${this.action}${sep}_=${timestamp}`
-          xhr.open('POST', url, true)
-
-          const signature = getSignature(location.origin, timestamp)
-          xhr.setRequestHeader('x-upload-timestamp', timestamp)
-          xhr.setRequestHeader('x-upload-signature', signature)
-
-          xhr.send(formData)
-        })
-      }
+      type: Function
     }
   },
   data() {
@@ -318,6 +288,11 @@ export default {
     canUpload() {
       const maxLen = this.multiple ? this.max : 1
       return this.uploadList.length < maxLen
+    },
+    // 上传方法优先级
+    // 自定义 > 全局注册 > 默认
+    httpRequest() {
+      return this.request || this.prototype.$uploadRequest || defaultRequest
     }
   },
   mounted() {
@@ -425,7 +400,7 @@ export default {
         this.$emit('loading', file.name)
 
         try {
-          const url = await this.request(file)
+          const url = await this.httpRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
               `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
