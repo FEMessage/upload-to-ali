@@ -292,7 +292,7 @@ export default {
     // 上传方法优先级
     // 自定义 > 全局注册 > 默认
     httpRequest() {
-      return this.request || this.prototype.$uploadRequest || defaultRequest
+      return this.request || this.$uploadRequest || defaultRequest
     }
   },
   mounted() {
