@@ -124,6 +124,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://colmugx.github.io"><img src="https://avatars1.githubusercontent.com/u/21327913?v=4" width="100px;" alt="ColMugX"/><br /><sub><b>ColMugX</b></sub></a><br /><a href="https://github.com/FEMessage/upload-to-ali/issues?q=author%3Acolmugx" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://rexer.wang"><img src="https://avatars2.githubusercontent.com/u/15629940?v=4" width="100px;" alt="Rexer Wang"/><br /><sub><b>Rexer Wang</b></sub></a><br /><a href="https://github.com/FEMessage/upload-to-ali/issues?q=author%3Arexerwang" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://www.ccc1996.cn"><img src="https://avatars1.githubusercontent.com/u/20502762?v=4" width="100px;" alt="cjf"/><br /><sub><b>cjf</b></sub></a><br /><a href="https://github.com/FEMessage/upload-to-ali/commits?author=cjfff" title="Code">💻</a> <a href="https://github.com/FEMessage/upload-to-ali/commits?author=cjfff" title="Documentation">📖</a></td>
   </tr>
 </table>
 
