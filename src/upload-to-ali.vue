@@ -87,7 +87,7 @@ import ImgPreview from '@femessage/img-preview'
 import Compressor from 'compressorjs'
 import DraggableList from './components/draggable-list.vue'
 import UploadItem from './components/upload-item.vue'
-import {getSignature} from './utils'
+import {defaultRequest} from './utils'
 
 const oneKB = 1024
 
@@ -262,41 +262,11 @@ export default {
     },
 
     /**
-     * 自定义上传, 使用此函数则会覆盖默认的上传行为
+     * 自定义上传, 使用此函数则会覆盖默认的上传行为和全局上传行为
      * 返回 Promise, 接收 resolve 参数为 url
      */
     request: {
-      type: Function,
-      default(file) {
-        const formData = new FormData()
-        ;['bucket', 'region', 'customDomain', 'dir']
-          .filter(key => this[key])
-          .forEach(key => formData.append(key, this[key]))
-        formData.append('file', file)
-
-        return new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest()
-          xhr.responseType = 'json'
-          xhr.onload = () => {
-            if (xhr.status === 200) {
-              resolve(xhr.response.payload.url)
-            } else {
-              reject(xhr.response)
-            }
-          }
-          xhr.onerror = reject
-          const timestamp = Date.now()
-          const sep = this.action.indexOf('?') > -1 ? '&' : '?'
-          const url = `${this.action}${sep}_=${timestamp}`
-          xhr.open('POST', url, true)
-
-          const signature = getSignature(location.origin, timestamp)
-          xhr.setRequestHeader('x-upload-timestamp', timestamp)
-          xhr.setRequestHeader('x-upload-signature', signature)
-
-          xhr.send(formData)
-        })
-      }
+      type: Function
     }
   },
   data() {
@@ -318,6 +288,11 @@ export default {
     canUpload() {
       const maxLen = this.multiple ? this.max : 1
       return this.uploadList.length < maxLen
+    },
+    // 上传方法优先级
+    // 自定义 > 全局注册 > 默认
+    uploadRequest() {
+      return this.request || this.$uploadRequest || defaultRequest
     }
   },
   mounted() {
@@ -352,10 +327,10 @@ export default {
     },
     /**
      * 上传步骤
-     * 1. 调用beforeUpload
+     * 1. 调用 beforeUpload
      * 2. 校验文件大小和类型
-     * 3. 调用httpRequest逐个上传文件，拿到返回的url
-     * 4. 清空loading和input的状态，emit loaded事件
+     * 3. 逐个上传文件，拿到返回的url
+     * 4. 清空 loading 和 input 的状态，emit loaded 事件
      */
     async upload(e, type = 'target') {
       // 防止loading过程重复上传
@@ -425,7 +400,7 @@ export default {
         this.$emit('loading', file.name)
 
         try {
-          const url = await this.request(file)
+          const url = await this.uploadRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
               `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`

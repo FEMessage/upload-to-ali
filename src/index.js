@@ -1,16 +1,15 @@
 // Import vue component
-import Component from './upload-to-ali.vue'
+import Component from './upload-to-ali'
 
-// install function executed by Vue.use()
-export function install(Vue) {
-  if (install.installed) return
-  install.installed = true
-  Vue.component('UploadToAli', Component)
-}
-
-// Create module definition for Vue.use()
-const plugin = {
-  install
+// `Vue.use` automatically prevents you from using
+// the same plugin more than once,
+// so calling it multiple times on the same plugin
+// will install the plugin only once
+Component.install = (Vue, opts) => {
+  if (opts.request) {
+    Vue.prototype.$uploadRequest = opts.request
+  }
+  Vue.component(Component.name, Component)
 }
 
 // To auto-install when vue is found
@@ -21,7 +20,7 @@ if (typeof window !== 'undefined') {
   GlobalVue = global.Vue
 }
 if (GlobalVue) {
-  GlobalVue.use(plugin)
+  GlobalVue.use(Component)
 }
 
 // To allow use as module (npm/webpack/etc.) export component
