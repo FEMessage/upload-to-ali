@@ -291,7 +291,7 @@ export default {
     },
     // 上传方法优先级
     // 自定义 > 全局注册 > 默认
-    httpRequest() {
+    uploadRequest() {
       return this.request || this.$uploadRequest || defaultRequest
     }
   },
@@ -327,10 +327,10 @@ export default {
     },
     /**
      * 上传步骤
-     * 1. 调用beforeUpload
+     * 1. 调用 beforeUpload
      * 2. 校验文件大小和类型
-     * 3. 调用httpRequest逐个上传文件，拿到返回的url
-     * 4. 清空loading和input的状态，emit loaded事件
+     * 3. 逐个上传文件，拿到返回的url
+     * 4. 清空 loading 和 input 的状态，emit loaded 事件
      */
     async upload(e, type = 'target') {
       // 防止loading过程重复上传
@@ -400,7 +400,7 @@ export default {
         this.$emit('loading', file.name)
 
         try {
-          const url = await this.httpRequest(file)
+          const url = await this.uploadRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
               `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
