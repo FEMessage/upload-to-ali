@@ -1,5 +1,5 @@
 // Import vue component
-import Component from './upload-to-ali'
+import Component from './upload-to-ali.vue'
 
 // `Vue.use` automatically prevents you from using
 // the same plugin more than once,

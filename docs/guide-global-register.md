@@ -8,7 +8,7 @@
 import Vue from 'vue';
 import UploadToAli from 'upload-to-ali'
 
-Vue.vue(UploadToAli, {
+Vue.use(UploadToAli, {
   // 回调的文件
   async request(file) {
     const url = await customRequest(file)
