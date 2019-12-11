@@ -380,26 +380,26 @@ export default {
 
       const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
-        // 尝试压缩文件
-        let file = files[i]
-        if (enableCompressRegex.test(file.type)) {
-          const blob = await new Promise((resolve, reject) => {
-            new Compressor(file, {
-              ...this.compressOptions,
-              success: resolve,
-              error: reject
-            })
-          })
-          /* eslint-disable-next-line require-atomic-updates */
-          file = new File([blob], file.name)
-        }
-        /**
-         * 上传过程中
-         * @property {string} name - 当前上传的图片名称
-         */
-        this.$emit('loading', file.name)
-
         try {
+          // 尝试压缩文件
+          let file = files[i]
+          if (enableCompressRegex.test(file.type)) {
+            const blob = await new Promise((resolve, reject) => {
+              new Compressor(file, {
+                ...this.compressOptions,
+                success: resolve,
+                error: reject
+              })
+            })
+            /* eslint-disable-next-line require-atomic-updates */
+            file = new File([blob], file.name)
+          }
+          /**
+           * 上传过程中
+           * @property {string} name - 当前上传的图片名称
+           */
+          this.$emit('loading', file.name)
+
           const url = await this.uploadRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
