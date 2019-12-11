@@ -380,26 +380,27 @@ export default {
 
       const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
-        try {
-          // 尝试压缩文件
-          let file = files[i]
-          if (enableCompressRegex.test(file.type)) {
-            const blob = await new Promise((resolve, reject) => {
-              new Compressor(file, {
-                ...this.compressOptions,
-                success: resolve,
-                error: reject
-              })
-            })
-            /* eslint-disable-next-line require-atomic-updates */
-            file = new File([blob], file.name)
+        // 尝试压缩图片
+        let file = files[i]
+        if (enableCompressRegex.test(file.type)) {
+          try {
+            file = await this.compressImg(file)
+          } catch (error) {
+            /**
+             * 图片压缩失败
+             * @property {Error} error - compressorjs 抛出的 error
+             */
+            this.$emit('compress-fail', error)
+            continue
           }
-          /**
-           * 上传过程中
-           * @property {string} name - 当前上传的图片名称
-           */
-          this.$emit('loading', file.name)
+        }
+        /**
+         * 上传过程中
+         * @property {string} name - 当前上传的图片名称
+         */
+        this.$emit('loading', file.name)
 
+        try {
           const url = await this.uploadRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
@@ -438,6 +439,16 @@ export default {
       const {files} = e.clipboardData
       if (!files || !files.length) return
       this.upload(e, 'clipboardData')
+    },
+
+    compressImg(img) {
+      return new Promise((resolve, reject) => {
+        new Compressor(img, {
+          ...this.compressOptions,
+          success: blob => resolve(new File([blob], img.name)),
+          error: reject
+        })
+      })
     },
 
     /**
