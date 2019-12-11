@@ -405,7 +405,7 @@ export default {
           this.$emit('input', this.multiple ? this.uploadList.concat(url) : url)
           currentUploads.push(url)
         } catch (error) {
-          console.warn(error.message)
+          console.error('上传失败', error.message)
           /**
            * 上传失败
            * @property {Error} error - 上传失败或压缩失败抛出的 error 对象。当压缩失败时，error.message === 'compress-fail'
