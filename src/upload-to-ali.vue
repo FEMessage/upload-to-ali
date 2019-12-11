@@ -381,26 +381,21 @@ export default {
       const max = this.multiple ? this.max : 1
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
         // 尝试压缩图片
-        let file = files[i]
-        if (enableCompressRegex.test(file.type)) {
-          try {
-            file = await this.compressImg(file)
-          } catch (error) {
-            /**
-             * 图片压缩失败
-             * @property {Error} error - compressorjs 抛出的 error
-             */
-            this.$emit('compress-fail', error)
-            continue
-          }
-        }
-        /**
-         * 上传过程中
-         * @property {string} name - 当前上传的图片名称
-         */
-        this.$emit('loading', file.name)
-
         try {
+          let file = files[i]
+          if (enableCompressRegex.test(file.type)) {
+            try {
+              file = await this.compressImg(file)
+            } catch (error) {
+              throw new Error('compress-fail')
+            }
+          }
+          /**
+           * 上传过程中
+           * @property {string} name - 当前上传的图片名称
+           */
+          this.$emit('loading', file.name)
+
           const url = await this.uploadRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
@@ -413,8 +408,9 @@ export default {
           console.warn(error.message)
           /**
            * 上传失败
+           * @property {Error} error - 上传失败或压缩失败抛出的 error 对象。当压缩失败时，error.message === 'compress-fail'
            */
-          this.$emit('fail')
+          this.$emit('fail', error)
         }
       }
 
