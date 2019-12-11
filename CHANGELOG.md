@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/FEMessage/upload-to-ali/compare/v2.1.0...v2.1.1) (2019-12-11)
+
+
+### Bug Fixes
+
+* catch compressor 报的错 ([#133](https://github.com/FEMessage/upload-to-ali/issues/133)) ([d3158df](https://github.com/FEMessage/upload-to-ali/commit/d3158df))
+
+
+
 ## [2.1.0](https://github.com/FEMessage/upload-to-ali/compare/v2.0.1...v2.1.0) (2019-12-08)
 
 
