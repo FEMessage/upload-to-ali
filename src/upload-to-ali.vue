@@ -5,36 +5,36 @@
       title="粘贴或拖拽即可上传；支持拖拽排序"
       :class="{'upload-to-oss--highlight': isHighlight}"
     >
-      <!--图片的展示区域-->
-      <draggable-list v-if="!$slots.default" v-model="uploadList">
-        <div
-          v-for="(url, index) in uploadList"
-          :key="url"
-          :class="['upload-item-wrapper', {'is-preview': preview}]"
-        >
-          <i
-            v-if="!disabled"
-            title="删除"
-            class="upload-del-icon"
-            @click.stop.prevent="onDelete(url, index)"
-          ></i>
-          <upload-item :url="url" @click="onClick(url, $event)" />
-        </div>
-        <template #footer>
-          <!--上传区域-->
+      <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
+      <slot>
+        <!--图片的展示区域-->
+        <draggable-list v-if="!$slots.default" v-model="uploadList">
           <div
-            v-if="canUpload"
-            key="upload-area"
-            :class="['upload-area', {disabled}]"
-            @click="selectFiles"
-            @paste="paste"
-            @dragenter="isHighlight = hasFile($event)"
-            @dragleave="isHighlight = false"
-            @dragover="$event.preventDefault()"
-            @drop="onDrop"
+            v-for="(url, index) in uploadList"
+            :key="url"
+            :class="['upload-item-wrapper', {'is-preview': preview}]"
           >
-            <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
-            <slot>
+            <i
+              v-if="!disabled"
+              title="删除"
+              class="upload-del-icon"
+              @click.stop.prevent="onDelete(url, index)"
+            ></i>
+            <upload-item :url="url" @click="onClick(url, $event)" />
+          </div>
+          <template #footer>
+            <!--上传区域-->
+            <div
+              v-if="canUpload"
+              key="upload-area"
+              :class="['upload-area', {disabled}]"
+              @click="selectFiles"
+              @paste="paste"
+              @dragenter="isHighlight = hasFile($event)"
+              @dragleave="isHighlight = false"
+              @dragover="$event.preventDefault()"
+              @drop="onDrop"
+            >
               <div class="upload-box">
                 <template v-if="uploading">
                   <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
@@ -47,7 +47,7 @@
                           cy="50"
                           r="20"
                           fill="none"
-                        ></circle>
+                        />
                       </svg>
                     </div>
                   </slot>
@@ -59,11 +59,10 @@
                   </slot>
                 </template>
               </div>
-            </slot>
-          </div>
-        </template>
-      </draggable-list>
-
+            </div>
+          </template>
+        </draggable-list>
+      </slot>
       <input
         ref="uploadInput"
         style="display: none;"
