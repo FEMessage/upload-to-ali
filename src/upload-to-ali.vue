@@ -8,7 +8,7 @@
       <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
       <slot>
         <!--图片的展示区域-->
-        <draggable-list v-if="!$slots.default" v-model="uploadList">
+        <draggable-list v-model="uploadList">
           <div
             v-for="(url, index) in uploadList"
             :key="url"
