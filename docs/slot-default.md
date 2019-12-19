@@ -5,8 +5,8 @@
 ```vue
 <template>
   <form>
-    <upload-to-ali v-model="fileUrl" accept="application/pdf">
-      <button type="button">选择文件</button>
+    <upload-to-ali v-model="fileUrl" accept="application/pdf" ref="uploader">
+      <button type="button" @click="selectFiles">选择文件</button>
     </upload-to-ali>
   </form>
 </template>
@@ -15,6 +15,12 @@ export default {
   data() {
     return {
       fileUrl: ''
+    }
+  },
+
+  methods: {
+    selectFiles() {
+      this.$refs.uploader.selectFiles()
     }
   }
 }
