@@ -38,6 +38,9 @@ export function defaultRequest(file) {
   formData.append('file', file)
 
   return new Promise((resolve, reject) => {
+    if (!this.action) {
+      return reject(new Error('missing UPLOAD_ACTION'))
+    }
     const xhr = new XMLHttpRequest()
     xhr.responseType = 'json'
     xhr.onload = () => {
