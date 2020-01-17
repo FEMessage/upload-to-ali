@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.3](https://github.com/FEMessage/upload-to-ali/compare/v2.1.2...v2.1.3) (2020-01-17)
+
+
+### Bug Fixes
+
+* 如果没有 upload-action 调用上传应该提示一个明确的error ([#141](https://github.com/FEMessage/upload-to-ali/issues/141)) ([a302e74](https://github.com/FEMessage/upload-to-ali/commit/a302e74))
+
+
+
 ### [2.1.2](https://github.com/FEMessage/upload-to-ali/compare/v2.1.1...v2.1.2) (2019-12-19)
 
 
