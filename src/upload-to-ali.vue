@@ -281,6 +281,7 @@ export default {
         return [].concat(this.value).filter(v => !!v)
       },
       set(list) {
+        if (!this.multiple) return
         this.$emit('input', list)
       }
     },
