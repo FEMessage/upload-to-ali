@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.4](https://github.com/FEMessage/upload-to-ali/compare/v2.1.3...v2.1.4) (2020-02-11)
+
+
+### Bug Fixes
+
+* 跨组件拖拽图片会导致数据类型变为数组 ([#143](https://github.com/FEMessage/upload-to-ali/issues/143)) ([f5ab26b](https://github.com/FEMessage/upload-to-ali/commit/f5ab26b))
+
+
+
 ### [2.1.3](https://github.com/FEMessage/upload-to-ali/compare/v2.1.2...v2.1.3) (2020-01-17)
 
 
