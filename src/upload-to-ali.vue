@@ -281,6 +281,15 @@ export default {
         return [].concat(this.value).filter(v => !!v)
       },
       set(list) {
+        /**
+         * 仅能在 Windows OS 存在
+         * 当组件本身已经存在图片的时候,
+         * 再把一张图片拖进来会将当前的数据格式变更为 `Array`, 即使是没有开启 `multiple` 的情况下,
+         * 因此在单张图片的情况禁止 `v-model` 同步行为, 防止触发上面的 `get` 变更为数组
+         *
+         * 单张图片不依靠此值来更新值, 在 `async upload()` 那里会触发更新.
+         */
+        if (!this.multiple) return
         this.$emit('input', list)
       }
     },
