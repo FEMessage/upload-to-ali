@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.5](https://github.com/FEMessage/upload-to-ali/compare/v2.1.4...v2.1.5) (2020-02-23)
+
+
+### Bug Fixes
+
+* component install options should set a default empty object ([#144](https://github.com/FEMessage/upload-to-ali/issues/144)) ([17c3753](https://github.com/FEMessage/upload-to-ali/commit/17c3753))
+
+
+
 ### [2.1.4](https://github.com/FEMessage/upload-to-ali/compare/v2.1.3...v2.1.4) (2020-02-11)
 
 
