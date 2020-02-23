@@ -5,7 +5,7 @@ import Component from './upload-to-ali.vue'
 // the same plugin more than once,
 // so calling it multiple times on the same plugin
 // will install the plugin only once
-Component.install = (Vue, opts) => {
+Component.install = (Vue, opts = {}) => {
   if (opts.request) {
     Vue.prototype.$uploadRequest = opts.request
   }
