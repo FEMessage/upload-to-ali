@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.6](https://github.com/FEMessage/upload-to-ali/compare/v2.1.5...v2.1.6) (2020-05-27)
+
+
+### Bug Fixes
+
+* default slot not working ([#147](https://github.com/FEMessage/upload-to-ali/issues/147)) ([f0149a7](https://github.com/FEMessage/upload-to-ali/commit/f0149a7))
+
+
+
 ### [2.1.5](https://github.com/FEMessage/upload-to-ali/compare/v2.1.4...v2.1.5) (2020-02-23)
 
 
