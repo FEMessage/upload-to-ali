@@ -5,10 +5,9 @@
       title="粘贴或拖拽即可上传；支持拖拽排序"
       :class="{'upload-to-oss--highlight': isHighlight}"
     >
-      <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
-      <slot>
-        <!--图片的展示区域-->
-        <draggable-list v-model="uploadList">
+      <!--图片的展示区域-->
+      <draggable-list v-model="uploadList">
+        <template v-if="!$slots.default">
           <div
             v-for="(url, index) in uploadList"
             :key="url"
@@ -22,19 +21,22 @@
             ></i>
             <upload-item :url="url" @click="onClick(url, $event)" />
           </div>
-          <template #footer>
-            <!--上传区域-->
-            <div
-              v-if="canUpload"
-              key="upload-area"
-              :class="['upload-area', {disabled}]"
-              @click="selectFiles"
-              @paste="paste"
-              @dragenter="isHighlight = hasFile($event)"
-              @dragleave="isHighlight = false"
-              @dragover="$event.preventDefault()"
-              @drop="onDrop"
-            >
+        </template>
+        <template #footer>
+          <!--上传区域-->
+          <div
+            v-if="canUpload"
+            key="upload-area"
+            :class="['upload-area', {disabled}]"
+            @click="selectFiles"
+            @paste="paste"
+            @dragenter="isHighlight = hasFile($event)"
+            @dragleave="isHighlight = false"
+            @dragover="$event.preventDefault()"
+            @drop="onDrop"
+          >
+            <!--@slot 自定义上传区域，会覆盖 slot=spinner、slot=placeholder-->
+            <slot>
               <div class="upload-box">
                 <template v-if="uploading">
                   <!--@slot 自定义loading内容，默认类似 element-ui 的 v-loading -->
@@ -59,10 +61,10 @@
                   </slot>
                 </template>
               </div>
-            </div>
-          </template>
-        </draggable-list>
-      </slot>
+            </slot>
+          </div>
+        </template>
+      </draggable-list>
       <input
         ref="uploadInput"
         style="display: none;"
