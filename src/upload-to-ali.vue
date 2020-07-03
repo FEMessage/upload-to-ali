@@ -389,7 +389,6 @@ export default {
       this.uploading = true
 
       const max = this.multiple ? this.max : 1
-      let url
       for (let i = 0; i < files.length && this.uploadList.length < max; i++) {
         // 尝试压缩图片
         try {
@@ -407,7 +406,7 @@ export default {
            */
           this.$emit('loading', file.name)
 
-          url = await this.uploadRequest(file)
+          const url = await this.uploadRequest(file)
           if (typeof url !== 'string' || !/^(https?:)?\/\//.test(url)) {
             throw new Error(
               `\`Promise.resolve\` 接收的参数应该是超链接(url), 当前为 ${typeof url}.`
@@ -433,14 +432,15 @@ export default {
 
       if (this.multiple) {
         this.$emit('loaded', currentUploads)
+        return currentUploads
       } else {
         /**
          * 上传完成后触发的事件。
          * @property {string[]|string} urls - multiple模式返回此次成功上传的文件url数组； 单张模式返回上传的url
          */
         this.$emit('loaded', currentUploads[0])
+        return currentUploads[0]
       }
-      return url
     },
     paste(e) {
       if (!e.clipboardData) return
