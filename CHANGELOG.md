@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.7](https://github.com/FEMessage/upload-to-ali/compare/v2.1.6...v2.1.7) (2020-07-07)
+
+
+### Bug Fixes
+
+* 返回上传文件的url，以便外部更好地调用 ([10729bc](https://github.com/FEMessage/upload-to-ali/commit/10729bc))
+
+
+
 ### [2.1.6](https://github.com/FEMessage/upload-to-ali/compare/v2.1.5...v2.1.6) (2020-05-27)
 
 
