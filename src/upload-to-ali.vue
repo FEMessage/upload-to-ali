@@ -432,12 +432,14 @@ export default {
 
       if (this.multiple) {
         this.$emit('loaded', currentUploads)
+        return currentUploads
       } else {
         /**
          * 上传完成后触发的事件。
          * @property {string[]|string} urls - multiple模式返回此次成功上传的文件url数组； 单张模式返回上传的url
          */
         this.$emit('loaded', currentUploads[0])
+        return currentUploads[0]
       }
     },
     paste(e) {
