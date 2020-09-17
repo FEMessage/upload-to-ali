@@ -46,7 +46,7 @@ You can set `request` props to customize own upload function.
 ## Links
 
 - [docs](https://FEMessage.github.io/upload-to-ali/)
-- [ali oss guide](docs/ali-oss-guide.md)
+- [ali oss guide](docs/guide-ali-oss.md)
 
 [⬆ Back to Top](#table-of-contents)
 
@@ -130,6 +130,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

@@ -31,7 +31,7 @@
 - 可截图粘贴上传
 - 可拖拽上传
 - 可预览图片
-- 支持 v-model 
+- 支持 v-model
 
 可以只设置 `action` props, 指向上传地址，组件内部默认实现了一套 post 方法，向上传地址传递数据
 
@@ -42,7 +42,7 @@
 ## Links
 
 - [docs](https://FEMessage.github.io/upload-to-ali/)
-- [ali oss guide](docs/ali-oss-guide.md)
+- [ali oss guide](docs/guide-ali-oss.md)
 
 [⬆ Back to Top](#table-of-contents)
 
