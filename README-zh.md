@@ -7,7 +7,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
-对接阿里云 OSS，可通过环境变量配置上传信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单
+可通过环境变量配置上传信息，可自定义域名，支持多选、限制文件大小、删除、粘贴上传功能，拖拽上传功能，让上传功能更加简单。
+> 虽然最初的设计是上传至阿里云，但现在已可通过设置环境变量 `UPLOAD_ACTION` 把数据传送至自定义的后端接口，因此，理论上可以上传至任何云！考虑到有许多项目在用，就暂时不改包名了。
 
 ![](https://i.loli.net/2019/11/15/UZ2P7wR83GiDXky.gif)
 
