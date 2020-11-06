@@ -7,7 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/FEMessage/upload-to-ali/pulls)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
-This component can upload file to Aliyun-OSS easily.
+In the beginning, this component is designed to upload file to Aliyun-OSS easily，but now it can upload to any oss as you wish.
 
 You can configure OSS information through environmental variables, customize domain, support multi-selection, limit file size, delete, paste to upload, drag and drop to upload, make files upload simpler.
 
