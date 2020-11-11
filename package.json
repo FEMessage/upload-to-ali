@@ -23,6 +23,7 @@
   "browser": {
     "./sfc": "src/upload-to-ali.vue"
   },
+  "types": "src/upload-to-ali.d.ts",
   "scripts": {
     "dev": "vue-styleguidist server",
     "test": "jest",
