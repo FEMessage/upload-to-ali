@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/FEMessage/upload-to-ali/compare/v2.1.7...v2.2.0) (2020-11-11)
+
+
+### Features
+
+* add types ([#151](https://github.com/FEMessage/upload-to-ali/issues/151)) ([c92d7ac](https://github.com/FEMessage/upload-to-ali/commit/c92d7ac))
+
+
+
 ### [2.1.7](https://github.com/FEMessage/upload-to-ali/compare/v2.1.6...v2.1.7) (2020-07-07)
 
 
