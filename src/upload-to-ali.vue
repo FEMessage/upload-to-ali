@@ -388,7 +388,7 @@ export default {
       const currentUploads = []
       this.uploading = true
 
-      const max = this.multiple ? (this.max- this.uploadList.length) : 1
+      const max = this.multiple ? (this.max - this.uploadList.length) : 1
       for (let i = 0; i < files.length && i < max; i++) {
         // 尝试压缩图片
         try {
