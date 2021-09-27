@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/FEMessage/upload-to-ali/compare/v2.2.0...v2.2.1) (2021-09-27)
+
+
+### Bug Fixes
+
+* 当已上传文件有值时，再次上传多文件可以超出max配置限制值 ([#152](https://github.com/FEMessage/upload-to-ali/issues/152)) ([894f896](https://github.com/FEMessage/upload-to-ali/commit/894f896))
+
+
+
 ## [2.2.0](https://github.com/FEMessage/upload-to-ali/compare/v2.1.7...v2.2.0) (2020-11-11)
 
 
