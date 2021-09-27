@@ -110,6 +110,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "Django-Tung",
+      "name": "Django.Tung",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23208972?v=4",
+      "profile": "https://github.com/Django-Tung",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
